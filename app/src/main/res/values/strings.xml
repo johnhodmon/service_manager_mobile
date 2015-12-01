@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Hodmon Services</string>
+    <string name="job_row_product_name">Product Name</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="loginButtonLabel">Log In</string>
@@ -81,5 +82,6 @@
     <string name="dateHint">dd/mm/yyyy</string>
     <string name="moreText"><![CDATA[Observations & Repairs]]></string>
     <string name="pickDateHeader">Select Date for Service Requests</string>
+    <string name="job_row_phone">Phone</string>
 
 </resources>

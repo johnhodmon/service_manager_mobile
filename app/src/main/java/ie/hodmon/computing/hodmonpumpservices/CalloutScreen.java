@@ -1,6 +1,7 @@
 package ie.hodmon.computing.hodmonpumpservices;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.format.Time;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,6 +104,18 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
     {
 
         startActivity(new Intent(this,PickDate.class));
+    }
+
+    public void callCustomer(View view)
+    {
+        RelativeLayout rowContainingButton=(RelativeLayout)view.getParent();
+
+
+        TextView phoneTextViewThisRow=(TextView)rowContainingButton.getChildAt(3);
+
+        Uri number = Uri.parse("tel:" + phoneTextViewThisRow.getText().toString());
+        Intent dial = new Intent(Intent.ACTION_CALL, number);
+        startActivity(dial);
     }
 
     @Override

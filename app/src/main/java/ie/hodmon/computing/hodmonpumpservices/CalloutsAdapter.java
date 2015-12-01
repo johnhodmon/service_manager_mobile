@@ -32,15 +32,17 @@ public class CalloutsAdapter extends ArrayAdapter<Callout>
 
         View viewOfRow=inflaterForReport.inflate(R.layout.row_callout,parent,false);
         Callout calloutToShow=calloutList.get(position);
-        TextView calloutNameInThisRow=(TextView)viewOfRow.findViewById(R.id.calloutName);
+        TextView productNameInThisRow=(TextView)viewOfRow.findViewById(R.id.job_row_product_name);
         TextView calloutTownInThisRow=(TextView)viewOfRow.findViewById(R.id.calloutTown);
+        TextView calloutPhoneInThisRow=(TextView)viewOfRow.findViewById(R.id.job_row_phone);
 
 
 
 
         if (!calloutList.isEmpty()) {
-            calloutNameInThisRow.setText("" + calloutToShow.getCustomerName());
+            productNameInThisRow.setText("" + calloutToShow.getPumpNumber());
             calloutTownInThisRow.setText("" + calloutToShow.getTown());
+            calloutPhoneInThisRow.setText(""+calloutToShow.getPhoneNumber());
 
         }
 
