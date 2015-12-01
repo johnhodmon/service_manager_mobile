@@ -97,4 +97,11 @@ public class CalloutDetails extends ClassForCommonAttributes {
         super.onDestroy();
 
     }
+
+    public void openReport(View view)
+    {
+        startActivity(new Intent(this,Report.class));
+
+    }
+
 }

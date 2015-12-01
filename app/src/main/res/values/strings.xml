@@ -55,8 +55,8 @@
     <string name="action_edit_report">Edit</string>
     <string name="editCalloutButtonLabel">Save</string>
     <string name="title_activity_report">Report</string>
-    <string name="reportHeader">Service Persons Report</string>
-    <string name="sparesHeader">Spares Ordered</string>
+    <string name="reportHeader">Report</string>
+    <string name="sparesHeader">Parts Ordered</string>
     <string name="reportText">report text here</string>
     <string name="action_report">Report</string>
     <string name="sparesOrderRowDateDefault">Date</string>
@@ -89,5 +89,10 @@
     <string name="job_details_phone_number">Phone</string>
     <string name="job_details_street" >street</string>
     <string name="job_details_town">town</string>
+    <string name="report_product_name">Product Name</string>
+    <string name="report_fault">Fault</string>
+    <string name="report_service_engineer">Engineer Name</string>
+    <string name="job_details_go_to_report" >Report</string>
+    <string name="report_heading">Observations</string>
 
 </resources>

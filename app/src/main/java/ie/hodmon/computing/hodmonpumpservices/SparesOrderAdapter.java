@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +39,8 @@ public class SparesOrderAdapter extends ArrayAdapter<SparesOrderItem>
 
         TextView descriptionInThisRow=(TextView)viewOfRow.findViewById(R.id.sparesOrderRowDescription);
         TextView quantityThisRow=(TextView)viewOfRow.findViewById(R.id.sparesOrderRowQuantity);
-        Button deleteButtonThisRow=(Button)viewOfRow.findViewById(R.id.deleteSpareButton);
-        Button editButtonThisRow=(Button)viewOfRow.findViewById(R.id.sparesOrderRowEditButton);
+        ImageView deleteButtonThisRow=(ImageView)viewOfRow.findViewById(R.id.spares_row_delete_symbol);
+        ImageView editButtonThisRow=(ImageView)viewOfRow.findViewById(R.id.spares_row_edit_symbol);
         Spinner spinnerForQuantity=(Spinner) viewOfRow.findViewById(R.id.spinnerForQuantity);
         spinnerForQuantity.setVisibility(View.INVISIBLE);
 

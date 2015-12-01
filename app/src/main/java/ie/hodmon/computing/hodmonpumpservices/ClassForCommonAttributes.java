@@ -36,8 +36,9 @@ public class ClassForCommonAttributes extends ActionBarActivity
             Log.v("service", "Service App Started");
             mapOfEmailsToPasswords=new HashMap<String,String>();
             mapOfEmailsToNames=new HashMap<String,String>();
-            mapOfEmailsToPasswords.put("johnhodmon@gmail.com","p");
+            mapOfEmailsToPasswords.put("johnhodmon@gmail.com", "p");
             mapOfEmailsToNames.put("johnhodmon@gmail.com","John Hodmon");
+
         }
 
 
@@ -50,6 +51,11 @@ public class ClassForCommonAttributes extends ActionBarActivity
         if(dbManager.getCallouts("01/12/2015").isEmpty())
         {
             addData();
+        }
+
+        if(dbManager.getSparesOrderForReport(11).isEmpty())
+        {
+            addSpares();
         }
     }
 
@@ -64,9 +70,9 @@ public class ClassForCommonAttributes extends ActionBarActivity
     public void addData()
     {
         dbManager.addPump(new Pump("05015000","Piranha S17"));
-        dbManager.addPump(new Pump("01135002","Robusta 202"));
-        dbManager.addPump(new Pump("05065001","MF 254"));
-        dbManager.addPump(new Pump("06085002","AS16"));
+        dbManager.addPump(new Pump("01135002", "Robusta 202"));
+        dbManager.addPump(new Pump("05065001", "MF 254"));
+        dbManager.addPump(new Pump("06085002", "AS16"));
         dbManager.addCallout(new Callout("01/12/2015","Bernard Grant","5, The Heights","Rosslare","Wexford","0872565871","06085002: AS16",
                 "Pump not running, sump overflowing",""));
         dbManager.addCallout(new Callout("01/12/2015","John Hodmon","Ballyhack","New Ross","Wexford","0852828731","05015000: Piranha S17",
@@ -81,15 +87,13 @@ public class ClassForCommonAttributes extends ActionBarActivity
                 "Pump running but not pumping",""));
         dbManager.addCallout(new Callout("01/04/2015","Ben Breen","","Ballycanew","Wexford","0852829713","06085002: AS16",
                 "Explosion from control panel",""));
-        dbManager.addCallout(new Callout("01/04/2015","Johnny O'Grady","","Castlebridge","Wexford","0539125471","05065001: MF254",
-                "Grinding noise",""));
-        dbManager.addCallout(new Callout("01/04/2015","Noel Kinsella","6, High Street","Arthurstown","Wexford","051389571","05015000: Piranha S17",
-                "Only one pump working on unit",""));
-        dbManager.addCallout(new Callout("01/04/2015","Mike Hunt","1, Moby Drive","Glasnevin","Dublin 9","01999123","05065001: MF254",
-                "Float cable broken",""));
-        dbManager.addSparesOrderItem(new SparesOrderItem(1,"31005000","Motor Housing AS16",1));
-        dbManager.addSparesOrderItem(new SparesOrderItem(1,"31055015","Volute AS16",1));
-        dbManager.addSparesOrderItem(new SparesOrderItem(1, "31065003", "Wear Plate AS16", 1));
+        dbManager.addCallout(new Callout("01/04/2015", "Johnny O'Grady", "", "Castlebridge", "Wexford", "0539125471", "05065001: MF254",
+                "Grinding noise", ""));
+        dbManager.addCallout(new Callout("01/04/2015", "Noel Kinsella", "6, High Street", "Arthurstown", "Wexford", "051389571", "05015000: Piranha S17",
+                "Only one pump working on unit", ""));
+        dbManager.addCallout(new Callout("01/04/2015", "Mike Hunt", "1, Moby Drive", "Glasnevin", "Dublin 9", "01999123", "05065001: MF254",
+                "Float cable broken", ""));
+
         dbManager.addPart(new Part("31005000","Motorhousing AS16"));
         dbManager.addPart(new Part("31055000","Volute AS16"));
         dbManager.addPart(new Part("31075000","Impeller AS16"));
@@ -145,5 +149,10 @@ public class ClassForCommonAttributes extends ActionBarActivity
     }
 
 
-
+public void addSpares()
+{
+    dbManager.addSparesOrderItem(new SparesOrderItem(11,"31005000","Motor Housing AS16",1));
+    dbManager.addSparesOrderItem(new SparesOrderItem(11,"31055015","Volute AS16",1));
+    dbManager.addSparesOrderItem(new SparesOrderItem(11, "31065003", "Wear Plate AS16", 1));
+}
 }

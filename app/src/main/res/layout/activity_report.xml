@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/parchment"
+
     android:layout_height="match_parent"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
@@ -16,7 +16,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/backgroundBlue"
+        android:background="#14cd8d"
         android:layout_width="match_parent"
         android:id="@+id/layout4"
         android:paddingTop="16dp"
@@ -44,7 +44,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@drawable/parchment"
+
         android:layout_width="match_parent"
 
         android:paddingLeft="16dp"
@@ -52,15 +52,47 @@
         android:paddingBottom="16dp"
         android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:text="@string/report_product_name"
+            android:id="@+id/report_product_name"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="31dp"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/report_fault"
+            android:id="@+id/report_fault"
+          android:layout_below="@+id/report_product_name"
+            android:layout_marginTop="16dp"
+            android:layout_alignStart="@+id/report_product_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/report_heading"
+            android:id="@+id/report_observations"
+            android:layout_below="@+id/report_service_engineer"
+            android:layout_marginTop="32dp"
+            android:layout_alignStart="@+id/report_service_engineer" />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/reportTextDefault"
         android:id="@+id/reportText"
-
-        android:layout_marginTop="32dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/report_observations"
+        android:layout_alignStart="@+id/report_observations" />
 
 
     <TextView
@@ -70,87 +102,56 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/sparesHeader"
         android:id="@+id/sparesHeader"
-        android:layout_marginTop="32dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/reportText" />
+        android:layout_marginTop="63dp"
+        android:layout_below="@+id/reportText"
+        android:layout_alignStart="@+id/report_fault" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/report_service_engineer"
+            android:id="@+id/report_service_engineer"
+            android:layout_below="@+id/report_fault"
+            android:layout_marginTop="32dp"
+            android:layout_alignStart="@+id/report_fault" />
 
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:id="@+id/listOfSparesOrders"
+        android:layout_marginTop="32dp"
+        android:nestedScrollingEnabled="false"
         android:layout_below="@+id/sparesHeader"
-        android:layout_marginTop="32dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:nestedScrollingEnabled="false" />
+        android:layout_alignStart="@+id/sparesHeader" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/editReportButtonLabel"
-        android:id="@+id/editReportButton"
-        android:onClick="editReport"
-        android:layout_alignTop="@+id/reportText"
-        android:layout_alignEnd="@+id/reportText" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
-        android:text="@string/orderSpareHeader"
-        android:id="@+id/orderSpareHeader"
-        android:layout_below="@+id/listOfSparesOrders"
-        android:layout_centerHorizontal="true" />
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:id="@+id/spinnerForNewOrder"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/orderSpareHeader"
-        android:layout_marginTop="32dp"
-        android:layout_alignEnd="@+id/orderSpareHeader"
-        android:layout_alignParentStart="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerForOrderQuantity"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="32dp"
-        android:layout_below="@+id/orderSpareHeader"
-        android:layout_toEndOf="@+id/spinnerForNewOrder"
-        android:entries="@array/quantitySpinnerValues"
-        android:layout_toStartOf="@+id/addSpare"/>
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/addSpareButtonLabel"
-        android:id="@+id/addSpare"
-        android:layout_alignTop="@+id/spinnerForOrderQuantity"
-        android:layout_alignParentEnd="true"
-        android:onClick="addSpare" />
-
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
-            android:text="@string/moreText"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:id="@+id/report_add_part"
+            android:src="@drawable/ic_add_black_36dp"
+            android:layout_above="@+id/listOfSparesOrders"
+            android:layout_alignParentEnd="true"
+            android:onClick="addUsedPart" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/report_edit_report"
+            android:src="@drawable/ic_create_black_36dp"
+            android:onClick="editReport"
+            android:layout_alignBottom="@+id/report_observations"
+            android:layout_alignEnd="@+id/reportText" />
+
+
 
 
     </RelativeLayout>
 
 </ScrollView>
+
+
 
 
 </RelativeLayout>

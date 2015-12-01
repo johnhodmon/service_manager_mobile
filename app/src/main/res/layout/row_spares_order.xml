@@ -22,34 +22,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/speresOrderRowEditButtonDefault"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/sparesOrderRowEditButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:onClick="editSpare"
-        />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/deleteSparesOrderButton"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/deleteSpareButton"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/sparesOrderRowEditButton"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:onClick="deleteSpare"
-         />
-
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,8 +29,40 @@
         android:entries="@array/quantitySpinnerValues"
         android:spinnerMode="dropdown"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/sparesOrderRowDescription"
-        android:layout_toStartOf="@+id/deleteSpareButton"
-        />
+        android:layout_alignEnd="@+id/sparesOrderRowQuantity"
+        android:layout_alignStart="@+id/spares_row_edit_symbol"
+         />
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spares_row_delete_symbol"
+        android:src="@drawable/ic_delete_black_36dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="deleteSpare" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spares_row_edit_symbol"
+        android:src="@drawable/ic_create_black_36dp"
+        android:layout_toLeftOf="@+id/spares_row_delete_symbol"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+
+        android:onClick="editSpare" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spares_row_done"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:visibility="invisible"
+        android:src="@drawable/ic_done_black_24dp"
+        android:onClick="editSpare" />
 
 </RelativeLayout>

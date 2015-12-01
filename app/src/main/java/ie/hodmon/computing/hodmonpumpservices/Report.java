@@ -1,6 +1,7 @@
 package ie.hodmon.computing.hodmonpumpservices;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -30,18 +32,25 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
 
 
     private TextView reportText;
+    private TextView engineerName;
+    private TextView productName;
+    private TextView fault;
     private ListView listOfSparesOrdersView;
     private Callout calloutToWhichReportBelongs;
-    private Button editReportButton;
-    private Button addSpareButton;
-    private Spinner spinnerForNewOrder;
-    private Spinner spinnerForOrderQuantity;
+    private ImageView editReport;
+    private ImageView addSpare;
     private Spinner quantitySpinner;
     private List<String> listOfPartsThisPump;
     private String partSelected;
     private SparesOrderItem sparesOrderItemSelected;
     private int quantitySelected;
     private String updateQuantity;
+    private ImageView deleteSpare;
+    private ImageView editSpare;
+    private ImageView saveSymbol;
+    private String description;
+
+
 
 
 
@@ -51,7 +60,7 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         setContentView(R.layout.activity_report);
 
 
-        editReportButton=(Button)findViewById(R.id.editReportButton);
+
         calloutToWhichReportBelongs=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
         listOfSparesOrdersView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
@@ -81,14 +90,21 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         SparesOrderAdapter adapterForListOfSparesOrderView=new SparesOrderAdapter(this,listOfSparesOrderItemsToBeUsedForAdapter);
         listOfSparesOrdersView.setAdapter(adapterForListOfSparesOrderView);
         listOfSparesOrdersView.setOnItemClickListener(this);
-        addSpareButton=(Button)findViewById(R.id.addSpare);
+
         ArrayAdapter<String> adapterForSparePartsSpinner= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfPartsThisPump);
         adapterForSparePartsSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerForNewOrder=(Spinner)findViewById(R.id.spinnerForNewOrder);
-        spinnerForNewOrder.setAdapter(adapterForSparePartsSpinner);
-        spinnerForNewOrder.setOnItemSelectedListener(this);
-        spinnerForOrderQuantity=(Spinner)findViewById(R.id.spinnerForOrderQuantity);
-        spinnerForOrderQuantity.setOnItemSelectedListener(this);
+
+        editReport=(ImageView)findViewById(R.id.report_edit_report);
+        addSpare=(ImageView)findViewById(R.id.report_add_part);
+        engineerName=(TextView)findViewById(R.id.report_service_engineer);
+        engineerName.setText(mapOfEmailsToNames.get(emailAddressEntered));
+        productName=(TextView)findViewById(R.id.report_product_name);
+        fault=(TextView)findViewById(R.id.report_fault);
+        fault.setText(calloutToWhichReportBelongs.getReportedFault());
+        productName.setText(calloutToWhichReportBelongs.getPumpNumber());
+        System.out.println("id:" + calloutToWhichReportBelongs.getId());
+
+
 
     }
 
@@ -171,13 +187,16 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
 
         RelativeLayout rowContainingButton=(RelativeLayout)view.getParent();
 
-        quantitySpinner=(Spinner)rowContainingButton.getChildAt(4);
+        quantitySpinner=(Spinner)rowContainingButton.getChildAt(2);
         quantitySpinner.setOnItemSelectedListener(this);
         TextView quantityTextView=(TextView)rowContainingButton.getChildAt(1);
         TextView descriptionTextView=(TextView)rowContainingButton.getChildAt(0);
-        String description=descriptionTextView.getText().toString();
+        description=descriptionTextView.getText().toString();
+        saveSymbol=(ImageView)rowContainingButton.getChildAt(5);
 
-        Button buttonPressed=(Button)view;
+        deleteSpare=(ImageView)rowContainingButton.getChildAt(3);
+        editSpare=(ImageView)view;
+
 
 
         if(quantitySpinner.getVisibility()==View.INVISIBLE) {
@@ -185,18 +204,20 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
             quantitySpinner.setVisibility(View.VISIBLE);
             quantitySpinner.performClick();
             quantityTextView.setVisibility(View.INVISIBLE);
+            deleteSpare.setVisibility(View.INVISIBLE);
+            editSpare.setVisibility(View.INVISIBLE);
+            //saveSymbol.setVisibility(View.VISIBLE);
 
-            buttonPressed.setText("Save");
         }
 
         else
         {
             quantitySpinner.setVisibility(View.INVISIBLE);
             quantityTextView.setVisibility(View.VISIBLE);
-            buttonPressed.setText("Edit");
-            dbManager.editSparePartsItem(idOfCalloutToDisplayInDetail,Integer.parseInt(updateQuantity),description);
-            finish();
-            startActivity(new Intent(this,Report.class));
+            deleteSpare.setVisibility(View.VISIBLE);
+            editSpare.setVisibility(View.VISIBLE);
+           // saveSymbol.setVisibility(View.INVISIBLE);
+
 
         }
 
@@ -214,19 +235,15 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(parent==spinnerForNewOrder) {
 
-            partSelected = parent.getSelectedItem().toString();
-        }
 
-        else if(parent==spinnerForOrderQuantity)
-        {
-            quantitySelected=(Integer.parseInt((String)parent.getSelectedItem()));
-        }
-
-        else if(parent==quantitySpinner)
+        if(parent==quantitySpinner)
         {
             updateQuantity=(String)parent.getSelectedItem();
+            dbManager.editSparePartsItem(idOfCalloutToDisplayInDetail,Integer.parseInt(updateQuantity),description);
+            finish();
+            startActivity(new Intent(this,Report.class));
+
         }
     }
 
