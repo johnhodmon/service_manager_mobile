@@ -46,7 +46,13 @@
         android:layout_alignStart="@+id/job_row_product_name"
         android:layout_marginTop="10dp" />
 
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/ic_chevron_right_black_36dp"
+        android:layout_alignBottom="@+id/calloutTown"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>
