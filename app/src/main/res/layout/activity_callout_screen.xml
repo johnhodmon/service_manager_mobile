@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/parchment"
+
     android:layout_height="match_parent"
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
@@ -17,63 +17,51 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/backgroundBlue"
+        android:background="#14cd8d"
         android:layout_width="match_parent"
         android:id="@+id/layout1"
         android:paddingTop="16dp"
-        android:paddingBottom="32dp"
+        android:paddingBottom="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:layout_height="wrap_content">
-    <TextView
+
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold"
-
-        android:text="@string/calloutDateLabel"
-        android:id="@+id/calloutDateLabel"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/calloutsTitle"
         android:textStyle="bold"
-        android:layout_below="@+id/calloutDateLabel"
         android:layout_marginTop="32dp"
         android:id="@+id/calloutsTitle"
-        android:layout_centerHorizontal="true" />
+            android:layout_marginLeft="50dp"
+         />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/changeDateButton"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="12dp"
-        android:layout_toEndOf="@+id/calloutDateLabel"
-        android:onClick="changeDate"
-        android:background="@drawable/calendar"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jobs_screen_calendar_icon"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="40dp"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/calloutScreenServiceMan"
-        android:id="@+id/calloutScreenServiceMan"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:textStyle="bold"/>
+            android:src="@drawable/ic_event_black_48dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/directions_icon"
+
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_map_black_48dp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@drawable/parchment"
+
         android:layout_width="match_parent"
         android:layout_below="@+id/layout1"
         android:paddingLeft="16dp"
@@ -84,7 +72,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
                android:id="@+id/calloutListView"
-            android:background="@drawable/parchment"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true" />

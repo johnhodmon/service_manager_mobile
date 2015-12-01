@@ -8,7 +8,7 @@
     <string name="emailAddressLabel">email</string>
     <string name="passwordLabel">Password</string>
     <string name="title_activity_callouts">Service Requests</string>
-    <string name="calloutsTitle">Service Requests</string>
+    <string name="calloutsTitle">My Jobs</string>
     <string name="calloutDateLabel">Date</string>
     <string name="calloutDateDefault">date</string>
     <string name="calloutNameDefault">name</string>
