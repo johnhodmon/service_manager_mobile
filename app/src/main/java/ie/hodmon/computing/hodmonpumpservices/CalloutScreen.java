@@ -20,8 +20,7 @@ import java.util.Calendar;
 public class CalloutScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener {
 
     private ListView calloutListView;
-    private TextView calloutDate;
-    private TextView calloutScreenServiceMan;
+
 
 
 
@@ -34,28 +33,28 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_callout_screen);
-        calloutScreenServiceMan=(TextView)findViewById(R.id.calloutScreenServiceMan);
 
 
-        calloutScreenServiceMan.setText(mapOfEmailsToNames.get(emailAddressEntered));
+
+
         calloutListView=(ListView)findViewById(R.id.calloutListView);
         calloutListView.setOnItemClickListener(this);
-        Button changeDateButton=(Button)findViewById(R.id.changeDateButton);
-        calloutDate=(TextView)findViewById(R.id.calloutDateLabel);
+
+
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = df.format(c.getTime());
+        String formattedDate ="";
         if(notToday) {
-            calloutDate.setText(dateToShow);
+            formattedDate=dateToShow;
 
         }
 
         else
         {
-            calloutDate.setText(formattedDate);
+            formattedDate = df.format(c.getTime());
         }
 
-        CalloutsAdapter adapterForCalloutListView =new CalloutsAdapter(this,dbManager.getCallouts(calloutDate.getText().toString()));
+        CalloutsAdapter adapterForCalloutListView =new CalloutsAdapter(this,dbManager.getCallouts(formattedDate));
         calloutListView.setAdapter(adapterForCalloutListView);
 
     }

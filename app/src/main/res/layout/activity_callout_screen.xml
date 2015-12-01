@@ -42,19 +42,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/jobs_screen_calendar_icon"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="40dp"
 
-            android:src="@drawable/ic_event_black_48dp" />
+            android:src="@drawable/ic_event_black_36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignTop="@+id/directions_icon"
+            android:layout_toStartOf="@+id/directions_icon"
+            android:onClick="changeDate" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/directions_icon"
-
-            android:layout_marginLeft="250dp"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/ic_map_black_48dp" />
+            android:src="@drawable/ic_directions_car_black_36dp"
+            android:layout_alignBottom="@+id/calloutsTitle"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

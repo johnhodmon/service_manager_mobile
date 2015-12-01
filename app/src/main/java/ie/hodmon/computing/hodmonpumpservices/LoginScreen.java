@@ -23,7 +23,9 @@ public class LoginScreen extends ClassForCommonAttributes {
         password = (EditText) findViewById(R.id.password);
         emailAddress = (EditText) findViewById(R.id.emailAddress);
 
+        emailAddressEntered = "johnhodmon@gmail.com";
 
+        startActivity(new Intent(this, CalloutScreen.class));
 
 
 
@@ -37,7 +39,7 @@ public class LoginScreen extends ClassForCommonAttributes {
     public void login(View view)
     {
 
-       if(emailAddress.getText()==null||password.getText()==null)
+      /* if(emailAddress.getText()==null||password.getText()==null)
         {
             Toast.makeText(this, "Enter user name and password", Toast.LENGTH_SHORT).show();
         }
@@ -63,6 +65,7 @@ public class LoginScreen extends ClassForCommonAttributes {
         }
 
 
+*/
 
 
     }

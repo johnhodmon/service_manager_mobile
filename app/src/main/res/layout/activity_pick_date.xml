@@ -3,19 +3,20 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#14cd8d"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/backgroundBlue"
+
     tools:context="ie.hodmon.computing.hodmonpumpservices.PickDate">
 
     <CalendarView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/calendarView"
-        android:layout_below="@+id/pickDateHeader"
         android:layout_marginTop="16dp"
         android:layout_above="@+id/pickDateButton"
-        android:background="@drawable/parchment"
-        android:layout_centerHorizontal="true" />
+
+        android:layout_centerHorizontal="true"
+        android:background="#ffffff" />
 
     <Button
         android:layout_width="wrap_content"
@@ -26,13 +27,4 @@
         android:layout_centerHorizontal="true"
         android:onClick="confirmDate" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/pickDateHeader"
-        android:id="@+id/pickDateHeader"
-        android:layout_alignParentTop="true"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
