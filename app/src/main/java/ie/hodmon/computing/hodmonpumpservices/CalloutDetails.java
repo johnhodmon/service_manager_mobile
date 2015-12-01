@@ -17,39 +17,33 @@ import org.w3c.dom.Text;
 public class CalloutDetails extends ClassForCommonAttributes {
 
 
-    private TextView calloutDetailsDate;
+
     private TextView calloutDetailsName;
     private TextView calloutDetailsStreet;
     private TextView calloutDetailsTown;
-    private TextView calloutDetailsCounty;
     private TextView calloutDetailsPhone;
     private TextView calloutDetailsPump;
     private TextView calloutDetailsReportedFault;
     private Callout calloutToDisplayInDetail;
-    private Button diallerButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_callout_details);
-        calloutDetailsDate=(TextView)findViewById(R.id.calloutDetailsDate);
-        calloutDetailsName=(TextView)findViewById(R.id.calloutDetailsName);
-        calloutDetailsStreet=(TextView)findViewById(R.id.calloutDetailsStreet);
-        calloutDetailsTown=(TextView)findViewById(R.id.calloutDetailsTown);
-        calloutDetailsCounty=(TextView)findViewById(R.id.calloutDetailsCounty);
-        calloutDetailsPump=(TextView)findViewById(R.id.calloutDetailsPump);
-        calloutDetailsReportedFault=(TextView)findViewById(R.id.calloutDetailsReportedFault);
-        diallerButton=(Button)findViewById(R.id.diallerButton);
+        calloutDetailsName=(TextView)findViewById(R.id.job_details_customer_name);
+        calloutDetailsStreet=(TextView)findViewById(R.id.job_details_street);
+        calloutDetailsTown=(TextView)findViewById(R.id.job_details_town);
+        calloutDetailsPump=(TextView)findViewById(R.id.job_details_product_name);
+        calloutDetailsReportedFault=(TextView)findViewById(R.id.job_details_fault);
         calloutToDisplayInDetail=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
-
-        calloutDetailsDate.setText(calloutToDisplayInDetail.getDate());
+        calloutDetailsPhone=(TextView)findViewById(R.id.job_details_phone_number);
         calloutDetailsName.setText(calloutToDisplayInDetail.getCustomerName());
         calloutDetailsStreet.setText(calloutToDisplayInDetail.getStreet());
         calloutDetailsTown.setText(calloutToDisplayInDetail.getTown());
-        calloutDetailsCounty.setText(calloutToDisplayInDetail.getCounty());
-        diallerButton.setText(calloutToDisplayInDetail.getPhoneNumber());
         calloutDetailsPump.setText(calloutToDisplayInDetail.getPumpNumber());
         calloutDetailsReportedFault.setText(calloutToDisplayInDetail.getReportedFault());
+        calloutDetailsPhone.setText(calloutToDisplayInDetail.getPhoneNumber());
 
     }
 
@@ -92,7 +86,7 @@ public class CalloutDetails extends ClassForCommonAttributes {
 
     public void dialNumber(View view)
     {
-        Uri number = Uri.parse("tel:" + diallerButton.getText().toString());
+        Uri number = Uri.parse("tel:" + calloutDetailsPhone.getText().toString());
         Intent dial = new Intent(Intent.ACTION_CALL, number);
         startActivity(dial);
     }

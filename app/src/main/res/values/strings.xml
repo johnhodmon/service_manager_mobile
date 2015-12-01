@@ -41,7 +41,7 @@
     <string name="rowPumpNumberDefault">PumpNr</string>
     <string name="rowPumpDescriptionDefault">PumpDescription</string>
     <string name="title_activity_callout_details">Service Details</string>
-    <string name="calloutDetailsHeader">Service Request Details</string>
+    <string name="calloutDetailsHeader">Job Details</string>
     <string name="calloutDetailsDateDefault">Date</string>
     <string name="calloutDetailsNameDefault">Name</string>
     <string name="calloutDetailsStreetDefault">Street</string>
@@ -83,5 +83,11 @@
     <string name="moreText"><![CDATA[Observations & Repairs]]></string>
     <string name="pickDateHeader">Select Date for Service Requests</string>
     <string name="job_row_phone">Phone</string>
+    <string name="job_details_product_name">Product Name</string>
+    <string name="job_details_fault">Fault</string>
+    <string name="job_details_customer_name">Customer Name</string>
+    <string name="job_details_phone_number">Phone</string>
+    <string name="job_details_street" >street</string>
+    <string name="job_details_town">town</string>
 
 </resources>

@@ -47,7 +47,7 @@ public class ClassForCommonAttributes extends ActionBarActivity
             e.printStackTrace();
         }
 
-        if(dbManager.getCallouts("01/03/2015").isEmpty())
+        if(dbManager.getCallouts("01/12/2015").isEmpty())
         {
             addData();
         }
@@ -67,15 +67,15 @@ public class ClassForCommonAttributes extends ActionBarActivity
         dbManager.addPump(new Pump("01135002","Robusta 202"));
         dbManager.addPump(new Pump("05065001","MF 254"));
         dbManager.addPump(new Pump("06085002","AS16"));
-        dbManager.addCallout(new Callout("01/03/2015","Bernard Grant","5, The Heights","Rosslare","Wexford","0872565871","06085002: AS16",
+        dbManager.addCallout(new Callout("01/12/2015","Bernard Grant","5, The Heights","Rosslare","Wexford","0872565871","06085002: AS16",
                 "Pump not running, sump overflowing",""));
-        dbManager.addCallout(new Callout("01/03/2015","John Hodmon","Ballyhack","New Ross","Wexford","0852828731","05015000: Piranha S17",
+        dbManager.addCallout(new Callout("01/12/2015","John Hodmon","Ballyhack","New Ross","Wexford","0852828731","05015000: Piranha S17",
                 "MCB in fuse board tripping and won't reset",""));
-        dbManager.addCallout(new Callout("01/03/2015","Seamus Cooney","11, Knackers Row","New Ross","Wexford","08798765432","05065001: MF254",
+        dbManager.addCallout(new Callout("01/12/2015","Seamus Cooney","11, Knackers Row","New Ross","Wexford","08798765432","05065001: MF254",
                 "Pump making loud grinding noise",""));
-        dbManager.addCallout(new Callout("01/03/2015","Peter Dempsey","11,Ballybeg","Waterford","","08612345678","01135002: Robusta 202",
+        dbManager.addCallout(new Callout("01/12/2015","Peter Dempsey","11,Ballybeg","Waterford","","08612345678","01135002: Robusta 202",
                 "Won't switch off, feels very hot",""));
-        dbManager.addCallout(new Callout("01/03/2015","Mary Foley","13, Griffith Avenue","Dublin 9","","0864589712","05015000: Piranha S17",
+        dbManager.addCallout(new Callout("01/12/2015","Mary Foley","13, Griffith Avenue","Dublin 9","","0864589712","05015000: Piranha S17",
                 "Cellar Flooded,alarm sounding in control panel",""));
         dbManager.addCallout(new Callout("01/04/2015","Ciaran Quirke","11, Main Street","Gorey","Wexford","0539236589","01135002: Robusta 202",
                 "Pump running but not pumping",""));
