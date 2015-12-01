@@ -1,0 +1,142 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:background="@drawable/parchment"
+    tools:context="ie.hodmon.computing.hodmonpumpservices.CalloutForm"
+    >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/backgroundBlue"
+        android:layout_width="match_parent"
+        android:id="@+id/layout3"
+        android:paddingTop="16dp"
+        android:paddingBottom="32dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:text="@string/calloutDetailsHeader"
+        android:id="@+id/calloutDetailsHeader"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/layout3"
+
+    >
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/parchment"
+    tools:context="ie.hodmon.computing.hodmonpumpservices.CalloutDetails">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/calloutDetailsDateDefault"
+        android:id="@+id/calloutDetailsDate"
+        android:layout_marginTop="32dp"
+
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/calloutDetailsNameDefault"
+        android:id="@+id/calloutDetailsName"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/calloutDetailsDate"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/calloutDetailsStreetDefault"
+        android:id="@+id/calloutDetailsStreet"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/calloutDetailsName"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/calloutDetailsTownDefault"
+        android:id="@+id/calloutDetailsTown"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/calloutDetailsStreet"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/callotoutDetailsCountyDefault"
+        android:id="@+id/calloutDetailsCounty"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/calloutDetailsTown"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/diallerButton"
+        android:id="@+id/diallerButton"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:onClick="dialNumber"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/calloutDetailsCounty"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/calloutDetailsPumpDefault"
+        android:id="@+id/calloutDetailsPump"
+        android:layout_marginTop="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/diallerButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/calloutDetailsReportedFaultDefault"
+        android:id="@+id/calloutDetailsReportedFault"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/calloutDetailsPump"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
+</ScrollView>
+    </RelativeLayout>

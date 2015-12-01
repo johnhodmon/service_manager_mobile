@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ie.hodmon.computing.hodmonpumpservices.CalloutScreen">
+
+  
+
+    <item android:id="@+id/addNewCalloutMenuItem" android:title="@string/addNewCallOutMenuItemLabel"
+        android:orderInCategory="100" app:showAsAction="never" />
+</menu>

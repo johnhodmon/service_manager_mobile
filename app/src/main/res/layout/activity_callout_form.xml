@@ -1,0 +1,238 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:background="@drawable/parchment"
+    tools:context="ie.hodmon.computing.hodmonpumpservices.CalloutForm"
+    >
+
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/layout2"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/backgroundBlue"
+    >
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:text="@string/calloutFormHeader"
+        android:id="@+id/calloutFormHeader"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+<ScrollView
+
+android:layout_width="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_below="@+id/layout2"
+    android:background="@drawable/parchment"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+        >
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:hint="@string/dateHint"
+        android:id="@+id/calloutFormDate"
+        android:layout_marginTop="53dp"
+       android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/calloutFormDateLabel"
+        android:id="@+id/calloutFormDateLabel"
+        android:layout_alignBottom="@+id/calloutFormDate"
+        android:layout_alignParentStart="true"
+        android:labelFor="@id/calloutFormDate" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/calloutFormName"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/calloutFormDate"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/calloutFormNameLabel"
+        android:id="@+id/calloutFormNameLabel"
+        android:layout_alignBottom="@+id/calloutFormName"
+        android:layout_alignParentStart="true"
+        android:labelFor="@id/calloutFormName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calloutFormStreet"
+        android:layout_below="@+id/calloutFormName"
+        android:layout_marginTop="32dp"
+        android:layout_alignStart="@+id/calloutFormName"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/calloutFormStreetLabel"
+        android:id="@+id/calloutFormStreetLabel"
+        android:layout_alignBottom="@+id/calloutFormStreet"
+        android:layout_alignParentStart="true"
+        android:labelFor="@id/calloutFormStreet" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calloutFormTown"
+        android:layout_below="@+id/calloutFormStreet"
+        android:layout_alignStart="@+id/calloutFormStreet"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/calloutFormTownLabel"
+        android:labelFor="@id/calloutFormTown"
+        android:layout_alignBottom="@+id/calloutFormTown"
+        android:layout_alignParentStart="true"
+        android:text="@string/calloutFormTownLabel" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/calloutFormPhone"
+        android:layout_below="@+id/calloutFormCounty"
+        android:hint="No spaces or brackets"
+        android:layout_marginTop="32dp"
+
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calloutFormCounty"
+        android:layout_below="@+id/calloutFormTown"
+        android:layout_marginTop="32dp"
+        android:layout_alignEnd="@+id/calloutFormTown"
+        android:layout_alignStart="@+id/calloutFormTown" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/calloutFormCountyLabel"
+        android:id="@+id/calloutFormCountyLabel"
+        android:layout_alignBottom="@+id/calloutFormCounty"
+        android:layout_alignParentStart="true"
+        android:labelFor="@id/calloutFormCounty" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/calloutFormPhoneLabel"
+        android:id="@+id/calloutFormPhoneLabel"
+        android:layout_alignBottom="@+id/calloutFormPhone"
+        android:layout_alignParentStart="true"
+        android:labelFor="@id/calloutFormPhone" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/calloutFormPumpLabel"
+        android:id="@+id/calloutFormPumpLabel"
+        android:layout_alignParentStart="true"
+        android:labelFor="@+id/calloutFormPumpSelectionSpinner" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calloutFormPumpSelectionSpinner"
+       android:layout_alignStart="@+id/calloutFormDate"
+        android:spinnerMode="dropdown" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calloutFormReportedFault"
+        android:layout_below="@+id/calloutFormPhone"
+        android:layout_marginTop="32dp"
+        android:layout_alignStart="@+id/calloutFormPhone"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/calloutFormReportedFaultLabel"
+        android:id="@+id/calloutFormReportedFaultLabel"
+        android:layout_alignBottom="@+id/calloutFormReportedFault"
+        android:layout_alignParentStart="true"
+        android:labelFor="@id/calloutFormReportedFault" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/editCalloutButtonLabel"
+            android:id="@+id/editCalloutButton"
+            android:onClick="editCallout"
+            android:layout_below="@+id/calloutFormReportedFault"
+            android:layout_marginTop="32dp"
+            android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calloutFormAddButtonLabel"
+            android:id="@+id/calloutFormAddButton"
+            android:onClick="addCallout"
+           android:layout_below="@+id/calloutFormReportedFault"
+            android:layout_marginTop="32dp"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</ScrollView>
+
+
+
+
+</RelativeLayout>
+

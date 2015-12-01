@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ie.hodmon.computing.hodmonpumpservices.CalloutDetails">
+
+
+
+    <item android:id="@+id/action_edit_report" android:title="@string/action_edit_report"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_report" android:title="@string/action_report"
+        android:orderInCategory="100" app:showAsAction="never" />
+</menu>
