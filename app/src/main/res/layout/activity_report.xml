@@ -52,6 +52,17 @@
         android:paddingBottom="16dp"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/report_pump_image"
+            android:src="@drawable/as"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            />
+
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,10 +70,18 @@
             android:textStyle="bold"
             android:text="@string/report_product_name"
             android:id="@+id/report_product_name"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="31dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/report_pump_image"
+            android:layout_marginEnd="12dp"/>
 
-            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/report_profile_pic"
+
+            android:src="@drawable/profile"
+            android:layout_alignTop="@+id/report_service_engineer"
+            android:layout_toStartOf="@+id/report_observations" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -116,8 +135,23 @@
             android:layout_marginTop="32dp"
             android:layout_alignStart="@+id/report_fault" />
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/report_edit_text"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/report_observations"
+            android:layout_alignStart="@+id/report_observations"
+            android:visibility="invisible"
 
-    <ListView
+
+            />
+
+
+
+        <ListView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:id="@+id/listOfSparesOrders"
@@ -144,7 +178,15 @@
             android:layout_alignBottom="@+id/report_observations"
             android:layout_alignEnd="@+id/reportText" />
 
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/report_save"
+            android:layout_alignBottom="@+id/report_observations"
+            android:layout_alignEnd="@+id/reportText"
+            android:onClick="saveReport"
+            android:visibility="invisible"
+            android:src="@drawable/ic_done_black_36dp" />
 
 
     </RelativeLayout>
