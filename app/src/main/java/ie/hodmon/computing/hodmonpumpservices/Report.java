@@ -40,6 +40,7 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
     private ImageView editReport;
     private ImageView addSpare;
     private Spinner quantitySpinner;
+    private Spinner orderPartQuantitySpinner;
     private List<String> listOfPartsThisPump;
     private String partSelected;
     private SparesOrderItem sparesOrderItemSelected;
@@ -49,6 +50,10 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
     private ImageView editSpare;
     private ImageView saveSymbol;
     private String description;
+    private EditText editText;
+    private ImageView addPartSave;
+
+    private Spinner partDescriptionSpinner;
 
 
 
@@ -59,8 +64,8 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
-
-
+        addSpare=(ImageView)findViewById(R.id.report_add_part);
+        addPartSave=(ImageView)findViewById(R.id.report_add_part_save);
         calloutToWhichReportBelongs=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
         listOfSparesOrdersView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
@@ -84,15 +89,25 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
             }
 
         }
-
         listOfPartsThisPump.removeAll(listToRemove);
         listOfPartsThisPump.removeAll(Arrays.asList("", null));
+        partDescriptionSpinner=(Spinner)findViewById(R.id.report_part_spinner);
+        String array[] = listOfPartsThisPump.toArray(new String[listOfPartsThisPump.size()]);
+        ArrayAdapter<String> ad =new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, array);
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        partDescriptionSpinner.setAdapter(ad);
+        orderPartQuantitySpinner=(Spinner)findViewById(R.id.report_order_part_quantity);
+        String qty[]={"1","2","3","4","5","6","7","8","9"};
+        ArrayAdapter<String> ad1 =new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,qty);
+        orderPartQuantitySpinner.setAdapter(ad1);
+
         SparesOrderAdapter adapterForListOfSparesOrderView=new SparesOrderAdapter(this,listOfSparesOrderItemsToBeUsedForAdapter);
         listOfSparesOrdersView.setAdapter(adapterForListOfSparesOrderView);
         listOfSparesOrdersView.setOnItemClickListener(this);
 
-        ArrayAdapter<String> adapterForSparePartsSpinner= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listOfPartsThisPump);
-        adapterForSparePartsSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
 
         editReport=(ImageView)findViewById(R.id.report_edit_report);
         addSpare=(ImageView)findViewById(R.id.report_add_part);
@@ -103,7 +118,8 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         fault.setText(calloutToWhichReportBelongs.getReportedFault());
         productName.setText(calloutToWhichReportBelongs.getPumpNumber());
         System.out.println("id:" + calloutToWhichReportBelongs.getId());
-
+        editText=(EditText)findViewById(R.id.report_edit_text);
+        saveSymbol=(ImageView)findViewById(R.id.report_save);
 
 
     }
@@ -150,19 +166,49 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
 
     public void editReport(View view)
     {
-        finish();
-        startActivity(new Intent(this,EditReport.class));
+        editText.setVisibility(View.VISIBLE);
+        editReport.setVisibility(View.INVISIBLE);
+        saveSymbol.setVisibility(View.VISIBLE);
+        reportText.setVisibility(View.INVISIBLE);
+        editText.setText(reportText.getText().toString());
+        editText.hasFocus();
+    }
 
+    public void saveReport(View view)
+    {
+        editReport.setVisibility(View.VISIBLE);
+        saveSymbol.setVisibility(View.INVISIBLE);
+        editText.setVisibility(View.INVISIBLE);
+        reportText.setVisibility(View.VISIBLE);
+        calloutToWhichReportBelongs.setReportText(editText.getText().toString());
+        reportText.setText(editText.getText().toString());
+        dbManager.editCallout(calloutToWhichReportBelongs);
     }
 
     public void addSpare(View view)
     {
 
+        addSpare.setVisibility(View.INVISIBLE);
+        orderPartQuantitySpinner.setVisibility(View.VISIBLE);
+        partDescriptionSpinner.setVisibility(View.VISIBLE);
+        addPartSave.setVisibility(View.VISIBLE);
 
-        dbManager.addSparesOrderItem(new SparesOrderItem(idOfCalloutToDisplayInDetail,dbManager.getPartNumber(partSelected),partSelected,quantitySelected));
+    }
+
+    public void saveAddedPart(View view)
+    {
+        orderPartQuantitySpinner.setVisibility(View.INVISIBLE);
+        partDescriptionSpinner.setVisibility(View.INVISIBLE);
+        addPartSave.setVisibility(View.INVISIBLE);
+        addSpare.setVisibility(View.VISIBLE);
+        String description=(String)partDescriptionSpinner.getSelectedItem();
+        int qty=Integer.parseInt((String)orderPartQuantitySpinner.getSelectedItem());
+        dbManager.addSparesOrderItem(new SparesOrderItem(idOfCalloutToDisplayInDetail,
+                dbManager.getPartNumber(description),description,qty));
         finish();
 
-            startActivity(new Intent(this,Report.class));
+        startActivity(new Intent(this, Report.class));
+
     }
 
     public void deleteSpare(View view)
@@ -243,6 +289,11 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
             dbManager.editSparePartsItem(idOfCalloutToDisplayInDetail,Integer.parseInt(updateQuantity),description);
             finish();
             startActivity(new Intent(this,Report.class));
+
+        }
+
+        else if( parent==partDescriptionSpinner)
+        {
 
         }
     }

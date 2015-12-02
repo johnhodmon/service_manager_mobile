@@ -94,5 +94,8 @@
     <string name="report_service_engineer">Engineer Name</string>
     <string name="job_details_go_to_report" >Report</string>
     <string name="report_heading">Observations</string>
+    <string name="part_list_row_description">description</string>
+    <string name="part_list_row_quantity" >Qty</string>
+    <string name="report_orrder_parts_header">Order Spare Parts</string>
 
 </resources>
