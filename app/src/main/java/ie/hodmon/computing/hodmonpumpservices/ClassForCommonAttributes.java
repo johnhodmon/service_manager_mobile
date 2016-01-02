@@ -5,6 +5,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.parse.Parse;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,14 +19,12 @@ public class ClassForCommonAttributes extends ActionBarActivity
 
 {
 
-    public static Map<String,String> mapOfEmailsToPasswords;
-    public static Map<String,String> mapOfEmailsToNames;
+
     public DatabaseManagement dbManager=new DatabaseManagement(this);
     public static int idOfCalloutToDisplayInDetail;
-    public static boolean formCalledFromEdit;
     public static String dateToShow;
     public static boolean notToday;
-    public static String emailAddressEntered;
+    public static String engineerEmail;
     public static long dateSelected;
 
 
@@ -33,11 +34,11 @@ public class ClassForCommonAttributes extends ActionBarActivity
         try {
             super.onCreate(savedInstanceState);
             dbManager.open();
+            Parse.enableLocalDatastore(this);
+            Parse.initialize(this, "usLwRiTvH6M49iUJCLMpw2YHu8dQDdiTBIP2miMN", "oMK6P68M5pHr4bXss119mhHxEERxmB1IMo51xHEA");
+
             Log.v("service", "Service App Started");
-            mapOfEmailsToPasswords=new HashMap<String,String>();
-            mapOfEmailsToNames=new HashMap<String,String>();
-            mapOfEmailsToPasswords.put("johnhodmon@gmail.com", "p");
-            mapOfEmailsToNames.put("johnhodmon@gmail.com","John Hodmon");
+
 
         }
 
@@ -48,15 +49,12 @@ public class ClassForCommonAttributes extends ActionBarActivity
             e.printStackTrace();
         }
 
-        if(dbManager.getCallouts("01/12/2015").isEmpty())
+        if(dbManager.getCallouts("johnhodmon@gmail.com", "01/12/2015").isEmpty())
         {
             addData();
         }
 
-        if(dbManager.getSparesOrderForReport(11).isEmpty())
-        {
-            addSpares();
-        }
+
     }
 
     @Override
@@ -73,30 +71,30 @@ public class ClassForCommonAttributes extends ActionBarActivity
         dbManager.addPump(new Pump("01135002", "Robusta 202"));
         dbManager.addPump(new Pump("05065001", "MF 254"));
         dbManager.addPump(new Pump("06085002", "AS16"));
-        dbManager.addCallout(new Callout("01/12/2015","Bernard Grant","5, The Heights","Rosslare","Wexford","0872565871","06085002: AS16",
-                "Pump not running, sump overflowing",""));
-        dbManager.addCallout(new Callout("01/12/2015","John Hodmon","Ballyhack","New Ross","Wexford","0852828731","05015000: Piranha S17",
-                "MCB in fuse board tripping and won't reset",""));
-        dbManager.addCallout(new Callout("01/12/2015","Seamus Cooney","11, Knackers Row","New Ross","Wexford","08798765432","05065001: MF254",
-                "Pump making loud grinding noise",""));
-        dbManager.addCallout(new Callout("01/12/2015","Peter Dempsey","11,Ballybeg","Waterford","","08612345678","01135002: Robusta 202",
-                "Won't switch off, feels very hot",""));
-        dbManager.addCallout(new Callout("01/12/2015","Mary Foley","13, Griffith Avenue","Dublin 9","","0864589712","05015000: Piranha S17",
-                "Cellar Flooded,alarm sounding in control panel",""));
-        dbManager.addCallout(new Callout("01/04/2015","Ciaran Quirke","11, Main Street","Gorey","Wexford","0539236589","01135002: Robusta 202",
-                "Pump running but not pumping",""));
-        dbManager.addCallout(new Callout("01/04/2015","Ben Breen","","Ballycanew","Wexford","0852829713","06085002: AS16",
-                "Explosion from control panel",""));
-        dbManager.addCallout(new Callout("01/04/2015", "Johnny O'Grady", "", "Castlebridge", "Wexford", "0539125471", "05065001: MF254",
-                "Grinding noise", ""));
-        dbManager.addCallout(new Callout("01/04/2015", "Noel Kinsella", "6, High Street", "Arthurstown", "Wexford", "051389571", "05015000: Piranha S17",
-                "Only one pump working on unit", ""));
-        dbManager.addCallout(new Callout("01/04/2015", "Mike Hunt", "1, Moby Drive", "Glasnevin", "Dublin 9", "01999123", "05065001: MF254",
-                "Float cable broken", ""));
 
-        dbManager.addPart(new Part("31005000","Motorhousing AS16"));
-        dbManager.addPart(new Part("31055000","Volute AS16"));
-        dbManager.addPart(new Part("31075000","Impeller AS16"));
+        dbManager.addCallout(new Callout("johnhodmon@gmail.com", "01/12/2015", "Noel Kinsella", "6, High Street", "Arthurstown", "Wexford", "051389571", "05015000: Piranha S17",
+                "Only one pump working on unit", "", new LatLng(52.2420291, -6.9601263)));
+        dbManager.addCallout(new Callout("johnhodmon@gmail.com", "01/12/2015", "Bernard Grant", "5, The Heights", "Rosslare", "Wexford", "0872565871", "06085002: AS16",
+                "Pump not running, sump overflowing", "", new LatLng(52.2720398, -6.3979802)));
+        dbManager.addCallout(new Callout("johnhodmon@gmail.com", "01/12/2015", "John Hodmon", "Ballyhack", "New Ross", "Wexford", "0852828731", "05015000: Piranha S17",
+                "MCB in fuse board tripping and won't reset", "", new LatLng(52.2484872, -6.9729468)));
+        dbManager.addCallout(new Callout("johnhodmon@gmail.com","01/12/2015","Seamus Cooney","11, Knackers Row","New Ross","Wexford","08798765432","05065001: MF254",
+                "Pump making loud grinding noise","",new LatLng(52.3946149,-6.9615096)));
+        dbManager.addCallout(new Callout("johnhodmon@gmail.com","01/12/2015","Peter Dempsey","11,Ballybeg","Waterford","","08612345678","01135002: Robusta 202",
+                "Won't switch off, feels very hot","",new LatLng(52.2420643,-7.1509622)));
+
+        dbManager.addCallout(new Callout("johnhodmon@gmail.com","02/12/2015","Ciaran Quirke","11, Main Street","Gorey","Wexford","0539236589","01135002: Robusta 202",
+                "Pump running but not pumping","",new LatLng(52.6757387,-6.2964909)));
+        dbManager.addCallout(new Callout("johnhodmon@gmail.com","02/12/2015","Ben Breen","","Ballycanew","Wexford","0852829713","06085002: AS16",
+                "Explosion from control panel","",new LatLng(52.6118702,-6.3211213)));
+        dbManager.addCallout(new Callout("johnhodmon@gmail.com","02/12/2015", "Johnny O'Grady", "", "Castlebridge", "Wexford", "0539125471", "05065001: MF254",
+                "Grinding noise", "",new LatLng(52.3856753,-6.45683)));
+
+
+
+        dbManager.addPart(new Part("31005000", "Motorhousing AS16"));
+        dbManager.addPart(new Part("31055000", "Volute AS16"));
+        dbManager.addPart(new Part("31075000", "Impeller AS16"));
         dbManager.addPart(new Part("35015000","Rotorshaft AS16"));
         dbManager.addPart(new Part("11120106","O_Ring 25x3"));
         dbManager.addPart(new Part("11200100","Screw hex M8x25"));
@@ -119,9 +117,9 @@ public class ClassForCommonAttributes extends ActionBarActivity
         dbManager.addPart(new Part("31075003","Impeller Piranha S17"));
         dbManager.addPart(new Part("35015003","Rotorshaft Piranha S17"));
         dbManager.addPart(new Part("11120109","O_Ring 150x5"));
-        dbManager.addPartsList(new PartsList("31005000","06085002",1));
-        dbManager.addPartsList(new PartsList("31055000","06085002",1));
-        dbManager.addPartsList(new PartsList("31075000","06085002",1));
+        dbManager.addPartsList(new PartsList("31005000", "06085002", 1));
+        dbManager.addPartsList(new PartsList("31055000", "06085002", 1));
+        dbManager.addPartsList(new PartsList("31075000", "06085002", 1));
         dbManager.addPartsList(new PartsList("35015000","06085002",1));
         dbManager.addPartsList(new PartsList("11120106","06085002",2));
         dbManager.addPartsList(new PartsList("11200100","06085002",8));
@@ -146,13 +144,9 @@ public class ClassForCommonAttributes extends ActionBarActivity
         dbManager.addPartsList(new PartsList("11120109","05015000",2));
         dbManager.addPartsList(new PartsList("11200100","05015000",8));
         dbManager.addPartsList(new PartsList("11560200","05015000",2));
+      
     }
 
 
-public void addSpares()
-{
-    dbManager.addSparesOrderItem(new SparesOrderItem(11,"31005000","Motor Housing AS16",1));
-    dbManager.addSparesOrderItem(new SparesOrderItem(11,"31055015","Volute AS16",1));
-    dbManager.addSparesOrderItem(new SparesOrderItem(11, "31065003", "Wear Plate AS16", 1));
-}
+
 }

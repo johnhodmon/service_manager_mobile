@@ -14,17 +14,24 @@ public class DatabaseCreator extends SQLiteOpenHelper
 {
 
     public static final String TABLE_CALLOUT = "TableCallout";
+    public static final String TABLE_PICTURE = "TablePicture";
+    public static final String PICTURES_COLUMN_PICTURE_ID = "picturesId";
+      public static final String PICTURES_COLUMN_JOB_ID = "jobId";
+    public static final String PICTURES_COLUMN_BLOB = "blob";
+    public static final String PICTURES_COLUMN_BIG_BLOB = "bigBlob";
     public static final String TABLE_PUMP= "TablePump";
     public static final String TABLE_PART = "TablePart";
     public static final String TABLE_PARTS_LIST = "TablePartsList";
     public static final String TABLE_SPARES_ORDER_ITEM = "TableSparesOrderItem";
     public static final String CALLOUT_COLUMN_ID = "calloutId";
+    public static final String CALLOUT_COLUMN_ENGINEER_EMAIL = "email";
     public static final String CALLOUT_COLUMN_DATE = "calloutDate";
     public static final String CALLOUT_COLUMN_CUSTOMER_NAME = "name";
     public static final String CALLOUT_COLUMN_STREET = "street";
     public static final String CALLOUT_COLUMN_TOWN = "town";
     public static final String CALLOUT_COLUMN_COUNTY = "county";
     public static final String CALLOUT_COLUMN_PHONE = "phone";
+    public static final String CALLOUT_COLUMN_LAT_LNG = "latLng";
     public static final String CALLOUT_COLUMN_PUMP_NR = "pumpNumber";
     public static final String CALLOUT_COLUMN_REPORTED_FAULT = "reportedFault";
     public static final String CALLOUT_COLUMN_REPORT_TEXT = "reportText";
@@ -55,6 +62,7 @@ public class DatabaseCreator extends SQLiteOpenHelper
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_CREATE_TABLE_CALLOUT = "CREATE TABLE "
             + TABLE_CALLOUT + " ( " + CALLOUT_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + CALLOUT_COLUMN_ENGINEER_EMAIL + " TEXT NOT NULL, "
             + CALLOUT_COLUMN_DATE + " TEXT NOT NULL, "
             + CALLOUT_COLUMN_CUSTOMER_NAME + " TEXT NOT NULL,"
             + CALLOUT_COLUMN_STREET + " TEXT NOT NULL,"
@@ -63,9 +71,14 @@ public class DatabaseCreator extends SQLiteOpenHelper
             + CALLOUT_COLUMN_PHONE + " TEXT NOT NULL,"
             + CALLOUT_COLUMN_REPORTED_FAULT + " TEXT,"
             + CALLOUT_COLUMN_REPORT_TEXT + " TEXT,"
-            + CALLOUT_COLUMN_PUMP_NR + " TEXT );";
+            + CALLOUT_COLUMN_PUMP_NR + " TEXT ,"
+            + CALLOUT_COLUMN_LAT_LNG + " TEXT );";
 
-
+    public static final String DATABASE_CREATE_TABLE_PICTURE = "CREATE TABLE "
+            + TABLE_PICTURE + " ( " + PICTURES_COLUMN_PICTURE_ID + "  TEXT PRIMARY KEY, "
+            + PICTURES_COLUMN_JOB_ID+ " INTEGER ,"
+            + PICTURES_COLUMN_BLOB+ " BLOB );";
+          ;
 
     public static final String DATABASE_CREATE_TABLE_PUMP = "CREATE TABLE "
             + TABLE_PUMP + " ( " + PUMP_COLUMN_PUMP_NR + " TEXT PRIMARY KEY, "
@@ -107,6 +120,7 @@ public class DatabaseCreator extends SQLiteOpenHelper
         db.execSQL(DATABASE_CREATE_TABLE_PART);
        db.execSQL(DATABASE_CREATE_TABLE_PARTS_LIST);
         db.execSQL(DATABASE_CREATE_TABLE_SPARES_ORDER_ITEM);
+        db.execSQL(DATABASE_CREATE_TABLE_PICTURE);
     }
 
     @Override
@@ -119,6 +133,7 @@ public class DatabaseCreator extends SQLiteOpenHelper
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PART);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PARTS_LIST);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SPARES_ORDER_ITEM);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PICTURE);
         onCreate(db);
     }
 

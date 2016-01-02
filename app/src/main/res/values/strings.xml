@@ -97,5 +97,14 @@
     <string name="part_list_row_description">description</string>
     <string name="part_list_row_quantity" >Qty</string>
     <string name="report_orrder_parts_header">Order Spare Parts</string>
+    <string name="report_photos_header">Photos</string>
+    <string name="selectPhotoMethod">Choose to browse gallery for a photo or take photo with camera</string>
+    <string name="browse">Gallery</string>
+    <string name="takePhoto">Camera</string>
+    <string name="report_pictures_header">Photos</string>
+    <string name="title_activity_report_photos">Report Photos</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="login_header">Log In</string>
+
 
 </resources>

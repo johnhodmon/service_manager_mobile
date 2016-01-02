@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,10 +66,55 @@ public class DatabaseManagement
         return calloutToReturn;
     }
 
+
+    public void saveReportPhoto(String photoId,int jobId,byte[] blob)
+    {
+        ContentValues values=new ContentValues();
+        values.put(DatabaseCreator.PICTURES_COLUMN_PICTURE_ID,photoId);
+        values.put(DatabaseCreator.PICTURES_COLUMN_JOB_ID,jobId);
+        values.put(DatabaseCreator.PICTURES_COLUMN_BLOB, blob);
+
+
+        pumpServicesDatabase.insert(DatabaseCreator.TABLE_PICTURE, null, values);
+    }
+
+    public void deleteReportPhoto(String photoId)
+    {
+        pumpServicesDatabase.delete(DatabaseCreator.TABLE_PICTURE, DatabaseCreator.PICTURES_COLUMN_PICTURE_ID + "='"+photoId+"'", null);
+    }
+
+    public List<ReportPhoto>getReportImages(int jobId)
+    {
+
+        List<ReportPhoto>photoList=new ArrayList<ReportPhoto>();
+
+        Log.v("gallery select", "entering get report images");
+        Cursor cursor = pumpServicesDatabase.rawQuery("SELECT * FROM " + DatabaseCreator.TABLE_PICTURE+
+                " WHERE "+DatabaseCreator.PICTURES_COLUMN_JOB_ID+"='"+jobId+"'", null);
+
+
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast())
+        {
+            Log.v("gallery select", "calling convert photo");
+            photoList.add(convertCursorToReportPhoto(cursor));
+
+            cursor.moveToNext();
+
+        }
+
+
+        cursor.close();
+        return photoList;
+    }
+
     public void editCallout(Callout c)
 {
 
     ContentValues values=new ContentValues();
+    values.put(DatabaseCreator.CALLOUT_COLUMN_ENGINEER_EMAIL,c.getEngineerEmail());
     values.put(DatabaseCreator.CALLOUT_COLUMN_DATE,c.getDate());
     values.put(DatabaseCreator.CALLOUT_COLUMN_CUSTOMER_NAME,c.getCustomerName());
     values.put(DatabaseCreator.CALLOUT_COLUMN_STREET,c.getStreet());
@@ -76,10 +123,14 @@ public class DatabaseManagement
     values.put(DatabaseCreator.CALLOUT_COLUMN_PHONE,c.getPhoneNumber());
     values.put(DatabaseCreator.CALLOUT_COLUMN_PUMP_NR ,c.getPumpNumber());
     values.put(DatabaseCreator.CALLOUT_COLUMN_REPORTED_FAULT ,c.getReportedFault());
-    values.put(DatabaseCreator.CALLOUT_COLUMN_REPORT_TEXT ,c.getReportText());
+    values.put(DatabaseCreator.CALLOUT_COLUMN_REPORT_TEXT, c.getReportText());
+    LatLng latLng=c.getLatLng();
+    String latLngAsString=latLng.latitude+","+latLng.longitude;
+    Log.v("test lat long insert", latLngAsString);
+    values.put(DatabaseCreator.CALLOUT_COLUMN_LAT_LNG, latLngAsString);
 
 
-    pumpServicesDatabase.update(DatabaseCreator.TABLE_CALLOUT,values,DatabaseCreator.CALLOUT_COLUMN_ID+"="+c.getId(),null);
+    pumpServicesDatabase.update(DatabaseCreator.TABLE_CALLOUT, values, DatabaseCreator.CALLOUT_COLUMN_ID + "=" + c.getId(), null);
 }
 
     public void editSparePartsItem(int calloutId,int quantity,String description)
@@ -98,14 +149,14 @@ public class DatabaseManagement
 
 
 
-    public List<Callout>getCallouts(String date)
+    public List<Callout>getCallouts(String engineerEmail, String date)
     {
         List<Callout> calloutList=new ArrayList<Callout>();
 
 
 
         Cursor cursor = pumpServicesDatabase.rawQuery("SELECT * FROM " + DatabaseCreator.TABLE_CALLOUT+
-                " WHERE "+DatabaseCreator.CALLOUT_COLUMN_DATE+"='"+date+"'", null);
+                " WHERE "+DatabaseCreator.CALLOUT_COLUMN_DATE+"='"+date+"' AND "+DatabaseCreator.CALLOUT_COLUMN_ENGINEER_EMAIL+"='"+engineerEmail+"'", null);
 
 
 
@@ -126,6 +177,7 @@ public class DatabaseManagement
     public void addCallout(Callout c)
     {
         ContentValues values=new ContentValues();
+        values.put(DatabaseCreator.CALLOUT_COLUMN_ENGINEER_EMAIL,c.getEngineerEmail());
         values.put(DatabaseCreator.CALLOUT_COLUMN_DATE,c.getDate());
         values.put(DatabaseCreator.CALLOUT_COLUMN_CUSTOMER_NAME,c.getCustomerName());
         values.put(DatabaseCreator.CALLOUT_COLUMN_STREET,c.getStreet());
@@ -133,7 +185,11 @@ public class DatabaseManagement
         values.put(DatabaseCreator.CALLOUT_COLUMN_COUNTY,c.getCounty());
         values.put(DatabaseCreator.CALLOUT_COLUMN_PHONE,c.getPhoneNumber());
         values.put(DatabaseCreator.CALLOUT_COLUMN_PUMP_NR ,c.getPumpNumber());
-        values.put(DatabaseCreator.CALLOUT_COLUMN_REPORTED_FAULT ,c.getReportedFault());
+        values.put(DatabaseCreator.CALLOUT_COLUMN_REPORTED_FAULT, c.getReportedFault());
+        LatLng latLng=c.getLatLng();
+        String latLngAsString=latLng.latitude+","+latLng.longitude;
+        Log.v("test lat long insert",latLngAsString);
+        values.put(DatabaseCreator.CALLOUT_COLUMN_LAT_LNG, latLngAsString);
         pumpServicesDatabase.insert(DatabaseCreator.TABLE_CALLOUT, null, values);
     }
 
@@ -204,22 +260,44 @@ public class DatabaseManagement
 
 
     private Callout convertCursorToCallout(Cursor cursor)
+{
+    Callout calloutToReturn=new Callout();
+    calloutToReturn.setId(cursor.getInt(0));
+    calloutToReturn.setEngineerEmail(cursor.getString(1));
+    calloutToReturn.setDate(cursor.getString(2));
+    calloutToReturn.setCustomerName(cursor.getString(3));
+    calloutToReturn.setStreet(cursor.getString(4));
+    calloutToReturn.setTown(cursor.getString(5));
+    calloutToReturn.setCounty(cursor.getString(6));
+    calloutToReturn.setPhoneNumber(cursor.getString(7));
+    calloutToReturn.setPumpNumber(cursor.getString(10));
+    calloutToReturn.setReportedFault(cursor.getString(8));
+    calloutToReturn.setReportText(cursor.getString(9));
+    String[] latlongArray = (cursor.getString(11).split(","));
+    double latitude = Double.parseDouble(latlongArray[0]);
+    double longitude = Double.parseDouble(latlongArray[1]);
+    LatLng latLng=new LatLng(latitude,longitude);
+    calloutToReturn.setLatLng(latLng);
+
+
+
+    return calloutToReturn;
+}
+
+
+    private ReportPhoto convertCursorToReportPhoto(Cursor cursor)
     {
-        Callout calloutToReturn=new Callout();
-        calloutToReturn.setId(cursor.getInt(0));
-        calloutToReturn.setDate(cursor.getString(1));
-        calloutToReturn.setCustomerName(cursor.getString(2));
-        calloutToReturn.setStreet(cursor.getString(3));
-        calloutToReturn.setTown(cursor.getString(4));
-        calloutToReturn.setCounty(cursor.getString(5));
-        calloutToReturn.setPhoneNumber(cursor.getString(6));
-        calloutToReturn.setPumpNumber(cursor.getString(9));
-        calloutToReturn.setReportedFault(cursor.getString(7));
-        calloutToReturn.setReportText(cursor.getString(8));
+        Log.v("gallery select","convert cursor to photo");
+        ReportPhoto photoToReturn=new ReportPhoto();
+
+        photoToReturn.setPhotoId(cursor.getString(0));
+        photoToReturn.setJobId(cursor.getInt(1));
+        photoToReturn.setBlob(cursor.getBlob(2));
 
 
 
-        return calloutToReturn;
+
+        return photoToReturn;
     }
 
 

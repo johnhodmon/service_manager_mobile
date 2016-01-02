@@ -20,7 +20,8 @@
         android:text="@string/sparesOrderRowQuantityDefault"
         android:id="@+id/sparesOrderRowQuantity"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/spares_row_edit_symbol" />
 
     <Spinner
         android:layout_width="wrap_content"

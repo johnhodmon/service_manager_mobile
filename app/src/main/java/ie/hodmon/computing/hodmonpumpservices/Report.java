@@ -1,8 +1,16 @@
 package ie.hodmon.computing.hodmonpumpservices;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -19,6 +28,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,8 +62,15 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
     private String description;
     private EditText editText;
     private ImageView addPartSave;
-
+    private String galleryFilePath;
     private Spinner partDescriptionSpinner;
+
+
+
+
+
+
+
 
 
 
@@ -63,17 +80,14 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-
         addSpare=(ImageView)findViewById(R.id.report_add_part);
         addPartSave=(ImageView)findViewById(R.id.report_add_part_save);
         calloutToWhichReportBelongs=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
         listOfSparesOrdersView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
         reportText.setText(calloutToWhichReportBelongs.getReportText());
-
         List<SparesOrderItem>listOfSparesOrderItemsToBeUsedForAdapter=dbManager.getSparesOrderForReport(idOfCalloutToDisplayInDetail);
         listOfPartsThisPump=dbManager.getListOfPartsThisPump(dbManager.getSingleCallout(idOfCalloutToDisplayInDetail).getPumpNumber().substring(0,8));
-
         String toRemove="";
         List <String> listToRemove=new ArrayList<String>();
         for (SparesOrderItem soi:listOfSparesOrderItemsToBeUsedForAdapter)
@@ -111,8 +125,8 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
 
         editReport=(ImageView)findViewById(R.id.report_edit_report);
         addSpare=(ImageView)findViewById(R.id.report_add_part);
-        engineerName=(TextView)findViewById(R.id.report_service_engineer);
-        engineerName.setText(mapOfEmailsToNames.get(emailAddressEntered));
+
+
         productName=(TextView)findViewById(R.id.report_product_name);
         fault=(TextView)findViewById(R.id.report_fault);
         fault.setText(calloutToWhichReportBelongs.getReportedFault());
@@ -123,7 +137,6 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
 
 
     }
-
 
 
 
@@ -143,18 +156,7 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -162,6 +164,11 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         sparesOrderItemSelected=(SparesOrderItem)parent.getItemAtPosition(position);
 
 
+    }
+
+    public void openPhotographs(View view)
+    {
+        startActivity(new Intent(this, ReportPhotos.class));
     }
 
     public void editReport(View view)
@@ -187,9 +194,10 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
 
     public void addSpare(View view)
     {
-
+        listOfSparesOrdersView.setVisibility(View.INVISIBLE);
         addSpare.setVisibility(View.INVISIBLE);
         orderPartQuantitySpinner.setVisibility(View.VISIBLE);
+        partDescriptionSpinner.performClick();
         partDescriptionSpinner.setVisibility(View.VISIBLE);
         addPartSave.setVisibility(View.VISIBLE);
 
@@ -199,12 +207,13 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
     {
         orderPartQuantitySpinner.setVisibility(View.INVISIBLE);
         partDescriptionSpinner.setVisibility(View.INVISIBLE);
+        listOfSparesOrdersView.setVisibility(View.VISIBLE);
         addPartSave.setVisibility(View.INVISIBLE);
         addSpare.setVisibility(View.VISIBLE);
         String description=(String)partDescriptionSpinner.getSelectedItem();
         int qty=Integer.parseInt((String)orderPartQuantitySpinner.getSelectedItem());
         dbManager.addSparesOrderItem(new SparesOrderItem(idOfCalloutToDisplayInDetail,
-                dbManager.getPartNumber(description),description,qty));
+                dbManager.getPartNumber(description), description, qty));
         finish();
 
         startActivity(new Intent(this, Report.class));
@@ -227,6 +236,11 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         startActivity(new Intent(this,Report.class));
 
     }
+
+
+
+
+
 
     public void editSpare(View view)
     {

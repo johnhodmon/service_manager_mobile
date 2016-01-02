@@ -31,10 +31,20 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
         android:text="@string/reportHeader"
+        android:textColor="@color/white"
         android:id="@+id/reportHeader"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
-        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/go_to_pictures"
+            android:src="@drawable/ic_camera_alt_black_36dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="openPhotographs" />
+    </RelativeLayout>
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -58,30 +68,19 @@
             android:id="@+id/report_pump_image"
             android:src="@drawable/as"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            />
+            android:layout_alignParentRight="true" />
 
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+
             android:text="@string/report_product_name"
             android:id="@+id/report_product_name"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/report_pump_image"
-            android:layout_marginEnd="12dp"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/report_profile_pic"
-
-            android:src="@drawable/profile"
-            android:layout_alignTop="@+id/report_service_engineer"
-            android:layout_toStartOf="@+id/report_observations" />
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -99,9 +98,9 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/report_heading"
             android:id="@+id/report_observations"
-            android:layout_below="@+id/report_service_engineer"
             android:layout_marginTop="32dp"
-            android:layout_alignStart="@+id/report_service_engineer" />
+            android:layout_below="@+id/report_fault"
+            android:layout_alignStart="@+id/report_fault" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -113,17 +112,6 @@
         android:layout_below="@+id/report_observations"
         android:layout_alignStart="@+id/report_observations" />
 
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/report_service_engineer"
-            android:id="@+id/report_service_engineer"
-            android:layout_below="@+id/report_fault"
-            android:layout_marginTop="32dp"
-            android:layout_alignStart="@+id/report_fault" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -139,44 +127,52 @@
 
             />
 
+
+
+
+
+
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/report_orrder_parts_header"
-            android:id="@+id/report_orrder_parts_header"
-            android:layout_below="@+id/report_edit_text"
-            android:layout_alignStart="@+id/report_edit_text" />
 
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/sparesHeader"
+            android:id="@+id/sparesHeader"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/report_edit_text"
+            android:layout_alignStart="@+id/report_fault" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/report_add_part"
-            android:src="@drawable/ic_add_black_36dp"
+            android:layout_alignBottom="@+id/sparesHeader"
+            android:layout_marginTop="16dp"
             android:onClick="addSpare"
-             android:layout_alignParentRight="true"
-           android:layout_alignBottom="@+id/report_orrder_parts_header"
-            />
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_add_black_36dp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/report_add_part_save"
             android:layout_alignParentRight="true"
-            android:layout_alignBottom="@+id/report_orrder_parts_header"
             android:visibility="invisible"
+            android:layout_alignBottom="@+id/sparesHeader"
             android:src="@drawable/ic_done_black_36dp"
             android:nestedScrollingEnabled="false"
             android:onClick="saveAddedPart" />
+
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/report_part_spinner"
             android:spinnerMode="dropdown"
             android:layout_marginTop="16dp"
-            android:layout_below="@+id/report_orrder_parts_header"
-            android:visibility="invisible"
-            android:layout_toEndOf="@+id/report_profile_pic" />
+            android:layout_below="@+id/sparesHeader"
+            android:visibility="invisible" />
 
 
         <Spinner
@@ -184,25 +180,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/report_order_part_quantity"
             android:spinnerMode="dropdown"
+            android:layout_below="@+id/sparesHeader"
             android:layout_marginTop="16dp"
-            android:layout_below="@+id/report_orrder_parts_header"
             android:layout_alignParentRight="true"
             android:visibility="invisible"
-             />
-
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/sparesHeader"
-            android:id="@+id/sparesHeader"
-            android:layout_marginTop="16dp"
-            android:layout_below="@+id/report_part_spinner"
-            android:layout_alignStart="@+id/report_fault" />
+           />
 
         <ListView
         android:layout_width="wrap_content"
@@ -211,7 +193,8 @@
         android:layout_marginTop="16dp"
         android:nestedScrollingEnabled="false"
             android:layout_below="@+id/sparesHeader"
-            android:layout_alignStart="@+id/sparesHeader" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
 
 
 
@@ -236,13 +219,9 @@
             android:src="@drawable/ic_done_black_36dp" />
 
 
-
-
     </RelativeLayout>
 
 </ScrollView>
-
-
 
 
 </RelativeLayout>

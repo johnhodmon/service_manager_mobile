@@ -55,7 +55,8 @@
             android:id="@+id/directions_icon"
             android:src="@drawable/ic_directions_car_black_36dp"
             android:layout_alignBottom="@+id/calloutsTitle"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:onClick="map" />
 
     </RelativeLayout>
 

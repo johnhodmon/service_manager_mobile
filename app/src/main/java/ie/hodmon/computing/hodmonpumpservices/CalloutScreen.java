@@ -5,23 +5,31 @@ import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class CalloutScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener {
 
     private ListView calloutListView;
+    private List<Callout> callouts;
+    private ImageView mapButton;
 
 
 
@@ -36,14 +44,15 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_callout_screen);
 
-
-
+        Log.v("check email","email: "+engineerEmail);
+        mapButton = (ImageView)findViewById(R.id.directions_icon);
 
         calloutListView=(ListView)findViewById(R.id.calloutListView);
         calloutListView.setOnItemClickListener(this);
 
 
         Calendar c = Calendar.getInstance();
+
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate ="";
         if(notToday) {
@@ -55,8 +64,12 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
         {
             formattedDate = df.format(c.getTime());
         }
-
-        CalloutsAdapter adapterForCalloutListView =new CalloutsAdapter(this,dbManager.getCallouts(formattedDate));
+        callouts=dbManager.getCallouts(engineerEmail,formattedDate);
+        if (callouts.isEmpty())
+        {
+            mapButton.setVisibility(View.INVISIBLE);
+        }
+        CalloutsAdapter adapterForCalloutListView =new CalloutsAdapter(this,callouts);
         calloutListView.setAdapter(adapterForCalloutListView);
 
     }
@@ -71,22 +84,6 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
 
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if(id==R.id.addNewCalloutMenuItem)
-        {
-            startActivity(new Intent(this,CalloutForm.class
-            ));
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
 
@@ -123,6 +120,23 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
     {
         super.onDestroy();
 
+    }
+
+
+    public void map(View view)
+    {
+        Bundle args = new Bundle();
+        Intent intent=new Intent(this,MapsActivity.class);
+
+        for(Callout c: callouts)
+        {
+            args.putParcelable(c.getCustomerName(),c.getLatLng());
+        }
+        args.putInt("zoom",10);
+
+
+        intent.putExtra("bundle",args);
+        startActivity(intent);
     }
 }
 

@@ -33,6 +33,7 @@ public class PickDate extends ClassForCommonAttributes implements CalendarView.O
         setContentView(R.layout.activity_pick_date);
         calendarView=(CalendarView)findViewById(R.id.calendarView);
         calendarView.setOnDateChangeListener(this);
+
         pickDateButton=(Button)findViewById(R.id.pickDateButton);
         if(notToday)
         {

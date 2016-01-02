@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/report_image"
+        android:layout_alignParentTop="true"
+        android:paddingTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:paddingBottom="16dp"
+        android:layout_alignParentLeft="true"
+        android:onClick="enlarge" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reportImagesDelete"
+       android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:src="@drawable/ic_delete_black_36dp"
+        android:nestedScrollingEnabled="false"
+        android:onClick="deletePhoto" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/photo_id"
+        android:visibility="invisible"
+        android:layout_below="@+id/reportImagesDelete"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/report_image_big_invisible"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        android:layout_alignEnd="@+id/reportImagesDelete" />
+</RelativeLayout>

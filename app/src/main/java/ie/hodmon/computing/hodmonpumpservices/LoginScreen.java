@@ -1,10 +1,18 @@
 package ie.hodmon.computing.hodmonpumpservices;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 
 public class LoginScreen extends ClassForCommonAttributes {
@@ -13,63 +21,88 @@ public class LoginScreen extends ClassForCommonAttributes {
     private EditText password;
 
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
         password = (EditText) findViewById(R.id.password);
         emailAddress = (EditText) findViewById(R.id.emailAddress);
 
-        emailAddressEntered = "johnhodmon@gmail.com";
-
-        startActivity(new Intent(this, CalloutScreen.class));
-
-
-
     }
 
 
-
-
-
-
-    public void login(View view)
-    {
-
-      /* if(emailAddress.getText()==null||password.getText()==null)
-        {
-            Toast.makeText(this, "Enter user name and password", Toast.LENGTH_SHORT).show();
+    public boolean connectedToInternet(Context context) {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
         }
 
-        else {
-            emailAddressEntered = emailAddress.getText().toString();
-            String passwordEntered = password.getText().toString();
+        return false;
+    }
 
 
-            if (!mapOfEmailsToPasswords.containsKey(emailAddressEntered)) {
-                Toast.makeText(this, "No Such User", Toast.LENGTH_SHORT).show();
-            } else {
-                if (mapOfEmailsToPasswords.get(emailAddressEntered).equals(passwordEntered)) {
-                    finish();
-                    startActivity(new Intent(this, CalloutScreen.class));
-                } else {
-                    Toast.makeText(this, "Password Incorrect", Toast.LENGTH_SHORT).show();
-                }
+    public void login(View view) {
+        try {
+
+            if (connectedToInternet(this) == false)
+            {
+                Toast.makeText(this, "Check your internet connection and try again", Toast.LENGTH_LONG).show();
+            }
+
+            else
+            {
+
+
+                User.logInInBackground(emailAddress.getText().toString(), password.getText().toString(), new LogInCallback() {
+
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        if (user != null)
+                        {
+                            engineerEmail=emailAddress.getText().toString();
+                            startActivity(new Intent(LoginScreen.this, CalloutScreen.class));
+
+                        } else {
+
+                            Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
 
             }
 
+        } catch (Exception e)
 
+        {
+            e.printStackTrace();
         }
-
-
-*/
-
-
     }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

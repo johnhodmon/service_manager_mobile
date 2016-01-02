@@ -101,7 +101,8 @@
         android:id="@+id/call_details_directions"
         android:layout_above="@+id/job_details_phone_number"
         android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_directions_car_black_36dp" />
+        android:src="@drawable/ic_directions_car_black_36dp"
+        android:onClick="map" />
 
     <ImageView
         android:layout_width="wrap_content"

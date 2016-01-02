@@ -3,5 +3,7 @@
     <color name="backgroundBlue">#0B5FA5</color>
     <color name="buttonBrown">#FF9400</color>
     <color name="white">#FFFFFF</color>
+    <color name="green">#14cd8d</color>
+    <color name="gray">#eeeeee</color>
 
 </resources>

@@ -1,8 +1,13 @@
 package ie.hodmon.computing.hodmonpumpservices;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Callout
 {
     private int id;
+
+
+    private String engineerEmail;
     private String date;
     private String customerName;
     private String street;
@@ -12,15 +17,13 @@ public class Callout
     private String pumpNumber;
     private String reportedFault;
     private String reportText;
+    private LatLng latLng;
 
 
-
-
-
-
-
-    public Callout(String date, String customerName,String street,String town,String county,String phoneNumber, String pumpNumber, String reportedFault,String reportText)
+    public Callout(String engineerEmail,String date, String customerName,String street,String town,String county,String phoneNumber,
+                   String pumpNumber, String reportedFault,String reportText, LatLng latLng)
     {
+        this.engineerEmail=engineerEmail;
         this.date=date;
         this.customerName=customerName;
         this.street=street;
@@ -31,7 +34,27 @@ public class Callout
         this. reportedFault=reportedFault;
         this.reportText=reportText;
 
+
+        this.latLng=latLng;
+
     }
+    public LatLng getLatLng() {
+        return latLng;
+    }
+
+    public void setLatLng(LatLng latLng) {
+        this.latLng = latLng;
+    }
+
+    public String getEngineerEmail() {
+        return engineerEmail;
+    }
+
+    public void setEngineerEmail(String engineerEmail) {
+        this.engineerEmail = engineerEmail;
+    }
+
+
 
     public String getPumpNumber() {
         return pumpNumber;
