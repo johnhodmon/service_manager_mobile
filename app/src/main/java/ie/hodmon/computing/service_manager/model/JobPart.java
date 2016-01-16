@@ -6,19 +6,19 @@ package ie.hodmon.computing.service_manager.model;
 public class JobPart
 
 {
-
-    private int sparesOrderItemId;
-    private int calloutId;
-    private String partNumber;
-    private String partDescription;
+    private int id;
+    private int job_id;
+    private int part_id;
     private int quantity;
 
-    public JobPart(int calloutId, String partNumber, String partDescription, int quantity)
+
+
+    public JobPart(int id,int job_id,int part_id,int quantity)
     {
-        this.calloutId =calloutId;
+       this.id=id;
+        this.job_id=job_id;
+        this.part_id=part_id;
         this.quantity=quantity;
-        this.partNumber=partNumber;
-        this.partDescription=partDescription;
     }
 
     public JobPart()
@@ -26,43 +26,5 @@ public class JobPart
 
     }
 
-    public int getCalloutId() {
-        return calloutId;
-    }
 
-    public void setCalloutId(int calloutId) {
-        this.calloutId = calloutId;
-    }
-
-    public String getPartNumber() {
-        return partNumber;
-    }
-
-    public void setPartNumber(String partNumber) {
-        this.partNumber = partNumber;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getPartDescription() {
-        return partDescription;
-    }
-
-    public void setPartDescription(String partDescription) {
-        this.partDescription = partDescription;
-    }
-
-    public int getSparesOrderItemId() {
-        return sparesOrderItemId;
-    }
-
-    public void setSparesOrderItemId(int sparesOrderItemId) {
-        this.sparesOrderItemId = sparesOrderItemId;
-    }
 }

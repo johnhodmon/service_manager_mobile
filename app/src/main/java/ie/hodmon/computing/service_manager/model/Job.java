@@ -5,118 +5,29 @@ import com.google.android.gms.maps.model.LatLng;
 public class Job
 {
     private int id;
+    private String reported_fault;
+    private int miles;
+    private int labour_time;
+    private int engineer_id;
+    private int customer_product_id;
+    private String status;
 
 
-    private String engineerEmail;
-    private String date;
-    private String customerName;
-    private String street;
-    private String town;
-    private String county;
-    private String phoneNumber;
-    private String pumpNumber;
-    private String reportedFault;
-    private String reportText;
-    private LatLng latLng;
 
-
-    public Job(String engineerEmail, String date, String customerName, String street, String town, String county, String phoneNumber,
-               String pumpNumber, String reportedFault, String reportText, LatLng latLng)
+    public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status)
     {
-        this.engineerEmail=engineerEmail;
-        this.date=date;
-        this.customerName=customerName;
-        this.street=street;
-        this.town=town;
-        this.county=county;
-        this.phoneNumber=phoneNumber;
-        this.pumpNumber=pumpNumber;
-        this. reportedFault=reportedFault;
-        this.reportText=reportText;
-
-
-        this.latLng=latLng;
-
+        this.id=id;
+        this .reported_fault=reported_fault;
+        this.miles=miles;
+        this .labour_time=labour_time;
+        this.engineer_id=engineer_id;
+        this.customer_product_id=customer_product_id;
+        this.status=status;
     }
-    public LatLng getLatLng() {
-        return latLng;
-    }
-
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
-    }
-
-    public String getEngineerEmail() {
-        return engineerEmail;
-    }
-
-    public void setEngineerEmail(String engineerEmail) {
-        this.engineerEmail = engineerEmail;
-    }
-
-
-
-    public String getPumpNumber() {
-        return pumpNumber;
-    }
-
-    public void setPumpNumber(String pumpNumber) {
-        this.pumpNumber = pumpNumber;
-    }
-
     public Job()
     {
 
     }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getTown() {
-        return town;
-    }
-
-    public void setTown(String town) {
-        this.town = town;
-    }
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
 
     public int getId() {
         return id;
@@ -126,19 +37,61 @@ public class Job
         this.id = id;
     }
 
-    public String getReportedFault() {
-        return reportedFault;
+    public String getReported_fault() {
+        return reported_fault;
     }
 
-    public void setReportedFault(String reportedFault) {
-        this.reportedFault = reportedFault;
+    public void setReported_fault(String reported_fault) {
+        this.reported_fault = reported_fault;
     }
 
-    public String getReportText() {
-        return reportText;
+    public int getMiles() {
+        return miles;
     }
 
-    public void setReportText(String reportText) {
-        this.reportText = reportText;
+    public void setMiles(int miles) {
+        this.miles = miles;
+    }
+
+    public int getLabour_time() {
+        return labour_time;
+    }
+
+    public void setLabour_time(int labour_time) {
+        this.labour_time = labour_time;
+    }
+
+    public int getEngineer_id() {
+        return engineer_id;
+    }
+
+    public void setEngineer_id(int engineer_id) {
+        this.engineer_id = engineer_id;
+    }
+
+    public int getCustomer_product_id() {
+        return customer_product_id;
+    }
+
+    public void setCustomer_product_id(int customer_product_id) {
+        this.customer_product_id = customer_product_id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
+
+
+
+
+
+
+
+
+
+

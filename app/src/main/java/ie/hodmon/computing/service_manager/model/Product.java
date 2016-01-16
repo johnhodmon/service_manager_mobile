@@ -5,33 +5,48 @@ package ie.hodmon.computing.service_manager.model;
  */
 public class Product
 {
-    private String pumpNr;
-    private String pumpDescription;
+    private int id;
+    private String product_number;
+    private String description;
+    private int manufacturer_id;
 
-    public Product()
+    public Product(int id,String product_number,String description,int manufacturer_id)
     {
-
+        this.id=id;
+        this.product_number=product_number;
+        this.description=description;
+        this.manufacturer_id=manufacturer_id;
     }
 
-    public Product(String pumpNr, String pumpDescription)
-    {
-        this.pumpNr=pumpNr;
-        this.pumpDescription=pumpDescription;
+    public int getId() {
+        return id;
     }
 
-    public String getPumpDescription() {
-        return pumpDescription;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setPumpDescription(String pumpDescription) {
-        this.pumpDescription = pumpDescription;
+    public String getProduct_number() {
+        return product_number;
     }
 
-    public String getPumpNr() {
-        return pumpNr;
+    public void setProduct_number(String product_number) {
+        this.product_number = product_number;
     }
 
-    public void setPumpNr(String pumpNr) {
-        this.pumpNr = pumpNr;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getManufacturer_id() {
+        return manufacturer_id;
+    }
+
+    public void setManufacturer_id(int manufacturer_id) {
+        this.manufacturer_id = manufacturer_id;
     }
 }

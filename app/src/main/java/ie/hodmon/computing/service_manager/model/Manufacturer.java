@@ -3,8 +3,7 @@ package ie.hodmon.computing.service_manager.model;
 /**
  * Created by john on 16/01/16.
  */
-public class Customer
-
+public class Manufacturer
 {
     private int id;
     private String name;
@@ -13,9 +12,9 @@ public class Customer
     private String county;
     private String phone;
     private String email;
-    private String lat_lng;
+    private String country;
 
-    public Customer(int id,String name,String street, String town,String county,String phone, String email,String lat_lng)
+    public Manufacturer(int id,String name,String street, String town,String county,String phone, String email,String country)
     {
         this.id=id;
         this.name=name;
@@ -24,7 +23,15 @@ public class Customer
         this.county=county;
         this.phone=phone;
         this.email=email;
-        this.lat_lng=lat_lng;
+        this.country=country;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -75,11 +82,11 @@ public class Customer
         this.email = email;
     }
 
-    public String getLat_lng() {
-        return lat_lng;
+    public String getCountry() {
+        return country;
     }
 
-    public void setLat_lng(String lat_lng) {
-        this.lat_lng = lat_lng;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

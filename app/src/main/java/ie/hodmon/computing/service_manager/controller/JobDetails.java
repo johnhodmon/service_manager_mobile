@@ -11,7 +11,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.model.Job;
-import ie.hodmon.computing.service_manager.model.Report;
 
 
 public class JobDetails extends ClassForCommonAttributes {
@@ -73,7 +72,7 @@ public class JobDetails extends ClassForCommonAttributes {
 
     public void openReport(View view)
     {
-        startActivity(new Intent(this, Report.class));
+        startActivity(new Intent(this, ReportScreen.class));
 
     }
 

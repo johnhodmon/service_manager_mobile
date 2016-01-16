@@ -5,15 +5,16 @@ package ie.hodmon.computing.service_manager.model;
  */
 public class PartsList
 {
-    private int id;
-    private String partNumber;
-    private String pumpNumber;
-    private int quantity;
+   private int id;
+   private int part_id;
+   private int product_id;
+   private int quantity;
 
-    public PartsList(String partNumber,String pumpNumber,int quantity)
+    public PartsList(int id,int part_id,int product_id, int quantity)
     {
-        this.partNumber=partNumber;
-        this.pumpNumber=pumpNumber;
+        this.id=id;
+        this.part_id=part_id;
+        this.product_id=product_id;
         this.quantity=quantity;
     }
 
@@ -26,20 +27,20 @@ public class PartsList
         this.id = id;
     }
 
-    public String getPartNumber() {
-        return partNumber;
+    public int getPart_id() {
+        return part_id;
     }
 
-    public void setPartNumber(String partNumber) {
-        this.partNumber = partNumber;
+    public void setPart_id(int part_id) {
+        this.part_id = part_id;
     }
 
-    public String getPumpNumber() {
-        return pumpNumber;
+    public int getProduct_id() {
+        return product_id;
     }
 
-    public void setPumpNumber(String pumpNumber) {
-        this.pumpNumber = pumpNumber;
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
     }
 
     public int getQuantity() {
