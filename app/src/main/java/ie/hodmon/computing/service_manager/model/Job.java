@@ -14,6 +14,7 @@ public class Job
 
 
 
+
     public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status)
     {
         this.id=id;
@@ -23,6 +24,7 @@ public class Job
         this.engineer_id=engineer_id;
         this.customer_product_id=customer_product_id;
         this.status=status;
+
     }
     public Job()
     {

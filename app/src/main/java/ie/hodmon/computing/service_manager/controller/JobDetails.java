@@ -17,32 +17,32 @@ public class JobDetails extends ClassForCommonAttributes {
 
 
 
-    private TextView calloutDetailsName;
-    private TextView calloutDetailsStreet;
-    private TextView calloutDetailsTown;
-    private TextView calloutDetailsPhone;
-    private TextView calloutDetailsPump;
-    private TextView calloutDetailsReportedFault;
+  /*  private TextView jobDetailsName;
+    private TextView jobDetailsStreet;
+    private TextView jobDetailsTown;
+    private TextView jobDetailsPhone;
+    private TextView jobDetailsPump;
+    private TextView jobDetailsReportedFault;
     private Job jobToDisplayInDetail;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_callout_details);
-        calloutDetailsName=(TextView)findViewById(R.id.job_details_customer_name);
-        calloutDetailsStreet=(TextView)findViewById(R.id.job_details_street);
-        calloutDetailsTown=(TextView)findViewById(R.id.job_details_town);
-        calloutDetailsPump=(TextView)findViewById(R.id.job_details_product_name);
-        calloutDetailsReportedFault=(TextView)findViewById(R.id.job_details_fault);
-        jobToDisplayInDetail =dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
-        calloutDetailsPhone=(TextView)findViewById(R.id.job_details_phone_number);
-        calloutDetailsName.setText(jobToDisplayInDetail.getCustomerName());
-        calloutDetailsStreet.setText(jobToDisplayInDetail.getStreet());
-        calloutDetailsTown.setText(jobToDisplayInDetail.getTown());
-        calloutDetailsPump.setText(jobToDisplayInDetail.getPumpNumber());
-        calloutDetailsReportedFault.setText(jobToDisplayInDetail.getReportedFault());
-        calloutDetailsPhone.setText(jobToDisplayInDetail.getPhoneNumber());
+        setContentView(R.layout.activity_job_details);
+        jobDetailsName =(TextView)findViewById(R.id.job_details_customer_name);
+        jobDetailsStreet=(TextView)findViewById(R.id.job_details_street);
+        jobDetailsTown=(TextView)findViewById(R.id.job_details_town);
+        jobDetailsPump=(TextView)findViewById(R.id.job_details_product_name);
+        jobDetailsReportedFault=(TextView)findViewById(R.id.job_details_fault);
+        jobToDisplayInDetail =dbManager.getSinglejob(idOfJobToDisplayInDetail);
+        jobDetailsPhone=(TextView)findViewById(R.id.job_details_phone_number);
+        jobDetailsName.setText(jobToDisplayInDetail.getCustomerName());
+        jobDetailsStreet.setText(jobToDisplayInDetail.getStreet());
+        jobDetailsTown.setText(jobToDisplayInDetail.getTown());
+        jobDetailsPump.setText(jobToDisplayInDetail.getPumpNumber());
+        jobDetailsReportedFault.setText(jobToDisplayInDetail.getReportedFault());
+        jobDetailsPhone.setText(jobToDisplayInDetail.getPhoneNumber());
 
     }
 
@@ -50,7 +50,7 @@ public class JobDetails extends ClassForCommonAttributes {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_callout_details, menu);
+        getMenuInflater().inflate(R.menu.menu_job_details, menu);
         return true;
     }
 
@@ -58,7 +58,7 @@ public class JobDetails extends ClassForCommonAttributes {
 
     public void dialNumber(View view)
     {
-        Uri number = Uri.parse("tel:" + calloutDetailsPhone.getText().toString());
+        Uri number = Uri.parse("tel:" + jobDetailsPhone.getText().toString());
         Intent dial = new Intent(Intent.ACTION_CALL, number);
         startActivity(dial);
     }
@@ -78,7 +78,7 @@ public class JobDetails extends ClassForCommonAttributes {
 
     public void map(View view)
     {
-        Job c=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
+        Job c=dbManager.getSinglejob(idOfJobToDisplayInDetail);
 
         LatLng jobLoc=c.getLatLng();
         Bundle args = new Bundle();
@@ -87,6 +87,6 @@ public class JobDetails extends ClassForCommonAttributes {
         args.putInt("zoom",13);
        intent.putExtra("bundle",args);
         startActivity(intent);
-    }
+    }*/
 
 }

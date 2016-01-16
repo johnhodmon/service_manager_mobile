@@ -24,7 +24,7 @@ import ie.hodmon.computing.service_manager.R;
 
 public class ReportPhotos extends ClassForCommonAttributes {
 
-    private List<ReportPhoto>listOfPhotos;
+  /*  private List<ReportPhoto>listOfPhotos;
     private ListView reportPictureListView;
 
 
@@ -36,7 +36,7 @@ public class ReportPhotos extends ClassForCommonAttributes {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_photos);
         reportPictureListView=(ListView)findViewById(R.id.report_picture_list_view);
-        listOfPhotos= dbManager.getReportImages(idOfCalloutToDisplayInDetail);
+        listOfPhotos= dbManager.getReportImages(idOfJobToDisplayInDetail);
         Log.v("check picture list", "" + listOfPhotos.size());
         ReportImagesAdapter ria=new ReportImagesAdapter(this,listOfPhotos);
         reportPictureListView.setAdapter(ria);
@@ -95,7 +95,7 @@ public class ReportPhotos extends ClassForCommonAttributes {
                 Bundle extras = data.getExtras();
                 Bitmap unscaledBitmap = (Bitmap) extras.get("data");
 
-                ReportPhoto r=new ReportPhoto(idOfCalloutToDisplayInDetail+"_"+listOfPhotos.size(),idOfCalloutToDisplayInDetail,
+                ReportPhoto r=new ReportPhoto(idOfJobToDisplayInDetail +"_"+listOfPhotos.size(), idOfJobToDisplayInDetail,
                         prepareImageForDatabase(unscaledBitmap));
                 dbManager.saveReportPhoto(r.getPhotoId(),r.getJobId(),r.getBlob());
                 finish();
@@ -174,7 +174,7 @@ public class ReportPhotos extends ClassForCommonAttributes {
 
 
     }
-
+*/
 
 
 }

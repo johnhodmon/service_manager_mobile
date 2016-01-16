@@ -19,7 +19,7 @@ public class ConnectionAPI
         //////////////////////////////////////////////////////////////////////////////////
         public static List<Job> getAll(String partUrl) {
             String json = REST.get(partUrl);
-            Log.v("donate", "JSON RESULT : " + json);
+            Log.v("REST", "JSON RESULT : " + json);
             Type collectionType = new TypeToken<List<Job>>() {
             }.getType();
 

@@ -22,14 +22,14 @@ import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
 
 
-public class ReportScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class ReportScreen extends ClassForCommonAttributes /*implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener*/ {
 
 
 
 
 
 
-    private TextView reportText;
+   /* private TextView reportText;
     private TextView engineerName;
     private TextView productName;
     private TextView fault;
@@ -70,12 +70,12 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         setContentView(R.layout.activity_report);
         addSpare=(ImageView)findViewById(R.id.report_add_part);
         addPartSave=(ImageView)findViewById(R.id.report_add_part_save);
-        jobToWhichReportBelongs =dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
+        jobToWhichReportBelongs =dbManager.getSingleCallout(idOfJobToDisplayInDetail);
         listOfSparesOrdersView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
         reportText.setText(jobToWhichReportBelongs.getReportText());
-        List<JobPart>listOfSparesOrderItemsToBeUsedForAdapter=dbManager.getSparesOrderForReport(idOfCalloutToDisplayInDetail);
-        listOfPartsThisPump=dbManager.getListOfPartsThisPump(dbManager.getSingleCallout(idOfCalloutToDisplayInDetail).getPumpNumber().substring(0,8));
+        List<JobPart>listOfSparesOrderItemsToBeUsedForAdapter=dbManager.getSparesOrderForReport(idOfJobToDisplayInDetail);
+        listOfPartsThisPump=dbManager.getListOfPartsThisPump(dbManager.getSingleCallout(idOfJobToDisplayInDetail).getPumpNumber().substring(0,8));
         String toRemove="";
         List <String> listToRemove=new ArrayList<String>();
         for (JobPart soi:listOfSparesOrderItemsToBeUsedForAdapter)
@@ -200,7 +200,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         addSpare.setVisibility(View.VISIBLE);
         String description=(String)partDescriptionSpinner.getSelectedItem();
         int qty=Integer.parseInt((String)orderPartQuantitySpinner.getSelectedItem());
-        dbManager.addSparesOrderItem(new JobPart(idOfCalloutToDisplayInDetail,
+        dbManager.addSparesOrderItem(new JobPart(idOfJobToDisplayInDetail,
                 dbManager.getPartNumber(description), description, qty));
         finish();
 
@@ -288,7 +288,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         if(parent==quantitySpinner)
         {
             updateQuantity=(String)parent.getSelectedItem();
-            dbManager.editSparePartsItem(idOfCalloutToDisplayInDetail,Integer.parseInt(updateQuantity),description);
+            dbManager.editSparePartsItem(idOfJobToDisplayInDetail,Integer.parseInt(updateQuantity),description);
             finish();
             startActivity(new Intent(this,ReportScreen.class));
 
@@ -305,5 +305,5 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
 
     }
 
-
+*/
 }

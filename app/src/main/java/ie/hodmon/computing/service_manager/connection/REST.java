@@ -16,7 +16,7 @@ public class REST
     private static URL url;
 
 
-    private static final String URL = "http://192.168.1.101:3000";
+    private static final String URL = "http://192.168.1.101";
 
 
     public static void establishConnection(String request) {
@@ -25,8 +25,9 @@ public class REST
             httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setUseCaches(false);
             httpCon.setReadTimeout(15 * 1000); // 15 seconds to timeout
-            httpCon.setRequestProperty( "Content-Type", "application/json" );
+            httpCon.setRequestProperty("Content-Type", "application/json");
             httpCon.setRequestProperty("Accept", "application/json");
+            Log.v("REST", "Http con configured for " +url);
         }
         catch (Exception e)
         {
@@ -58,11 +59,12 @@ public class REST
                 stringBuilder.append(line);
 
             reader.close();
-            Log.v("donate", "JSON GET REQUEST : " + stringBuilder.toString());
+            Log.v("", "JSON GET REQUEST : " + stringBuilder.toString());
         }
 
         catch (Exception e) {
-            Log.v("donate","GET REQUEST ERROR" + e.getMessage());
+            Log.v("REST","GET REQUEST ERROR" + e.getMessage());
+            e.printStackTrace();
         }
 
         return stringBuilder.toString();

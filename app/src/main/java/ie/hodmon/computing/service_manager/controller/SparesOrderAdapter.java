@@ -20,7 +20,7 @@ import ie.hodmon.computing.service_manager.model.JobPart;
 public class SparesOrderAdapter extends ArrayAdapter<JobPart>
 
 {
-    private Context sparesOrderItemAdapterContext;
+   private Context sparesOrderItemAdapterContext;
     public List<JobPart> jobPartList;
 
     public SparesOrderAdapter(Context sparesOrderItemAdapterContext,List<JobPart> jobPartList)
@@ -29,7 +29,7 @@ public class SparesOrderAdapter extends ArrayAdapter<JobPart>
         this.sparesOrderItemAdapterContext=sparesOrderItemAdapterContext;
         this.jobPartList = jobPartList;
     }
-
+ /*
     @Override
     public View getView(int position,View convertView,ViewGroup parent) {
         LayoutInflater inflaterForReport =
@@ -61,5 +61,5 @@ public class SparesOrderAdapter extends ArrayAdapter<JobPart>
 
         return viewOfRow;
 
-    }
+    }*/
 }

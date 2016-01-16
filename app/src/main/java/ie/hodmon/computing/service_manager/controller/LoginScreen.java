@@ -19,7 +19,7 @@ import ie.hodmon.computing.service_manager.model.Engineer;
 
 public class LoginScreen extends ClassForCommonAttributes {
 
-    private EditText emailAddress;
+    /*private EditText emailAddress;
     private EditText password;
 
 
@@ -83,7 +83,7 @@ public class LoginScreen extends ClassForCommonAttributes {
         {
             e.printStackTrace();
         }
-    }
+    }*/
 }
 
 

@@ -7,11 +7,13 @@ public class Report
 {
     private int id;
     private String engineer_report;
+    private int job_id;
 
-    public Report(int id,String engineer_report)
+    public Report(int id,String engineer_report, int job_id)
     {
         this.id=id;
         this.engineer_report=engineer_report;
+        this.job_id=job_id;
     }
 
     public int getId() {

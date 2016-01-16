@@ -1,7 +1,10 @@
 package ie.hodmon.computing.service_manager.controller;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +20,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
 import ie.hodmon.computing.service_manager.model.Job;
 
 
@@ -59,13 +63,8 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         {
             formattedDate = df.format(c.getTime());
         }
-        jobs =dbManager.getCallouts(engineerEmail,formattedDate);
-        if (jobs.isEmpty())
-        {
-            mapButton.setVisibility(View.INVISIBLE);
-        }
-        JobsAdapter adapterForCalloutListView =new JobsAdapter(this, jobs);
-        calloutListView.setAdapter(adapterForCalloutListView);
+       new GetAllTask(this).execute("/jobs.json");
+
 
     }
 
@@ -88,7 +87,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         Job c=(Job)parent.getItemAtPosition(position);
-        idOfCalloutToDisplayInDetail=c.getId();
+        idOfJobToDisplayInDetail =c.getId();
         startActivity(new Intent(this,JobDetails.class));
     }
 
@@ -123,15 +122,67 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         Bundle args = new Bundle();
         Intent intent=new Intent(this,MapsActivity.class);
 
-        for(Job c: jobs)
+        /*for(Job c: jobs)
         {
             args.putParcelable(c.getCustomerName(),c.getLatLng());
-        }
+        }*/
         args.putInt("zoom",10);
 
 
         intent.putExtra("bundle",args);
         startActivity(intent);
+    }
+
+
+    private class GetAllTask extends AsyncTask<String, Void, List<Job>> {
+
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public GetAllTask(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.dialog = new ProgressDialog(context, 1);
+            this.dialog.setMessage("Retrieving Jobs");
+            this.dialog.show();
+        }
+
+        @Override
+        protected List<Job> doInBackground(String... params) {
+            try {
+                Log.v("REST", "Getting Jobs");
+                return (List<Job>) ConnectionAPI.getAll((String) params[0]);
+            }
+            catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Job> result) {
+            super.onPostExecute(result);
+
+           jobs=result;
+            if (jobs.isEmpty())
+            {
+                mapButton.setVisibility(View.INVISIBLE);
+            }
+            JobsAdapter adapterForCalloutListView =new JobsAdapter(JobScreen.this, jobs);
+            calloutListView.setAdapter(adapterForCalloutListView);
+
+            if (dialog.isShowing())
+            {
+               dialog.dismiss();
+            }
+
+        }
     }
 }
 
