@@ -1,17 +1,18 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
+
+import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.model.SparesOrderItem;
 
 /**
  * Created by John on 22/02/2015.
@@ -24,7 +25,7 @@ public class SparesOrderAdapter extends ArrayAdapter<SparesOrderItem>
 
     public SparesOrderAdapter(Context sparesOrderItemAdapterContext,List<SparesOrderItem>sparesOrderItemList)
     {
-        super(sparesOrderItemAdapterContext,R.layout.row_spares_order,sparesOrderItemList);
+        super(sparesOrderItemAdapterContext, R.layout.row_spares_order,sparesOrderItemList);
         this.sparesOrderItemAdapterContext=sparesOrderItemAdapterContext;
         this.sparesOrderItemList =sparesOrderItemList;
     }

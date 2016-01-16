@@ -1,11 +1,10 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,6 +12,9 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.model.User;
 
 
 public class LoginScreen extends ClassForCommonAttributes {
@@ -61,10 +63,9 @@ public class LoginScreen extends ClassForCommonAttributes {
 
                     @Override
                     public void done(ParseUser user, ParseException e) {
-                        if (user != null)
-                        {
-                            engineerEmail=emailAddress.getText().toString();
-                            startActivity(new Intent(LoginScreen.this, CalloutScreen.class));
+                        if (user != null) {
+                            engineerEmail = emailAddress.getText().toString();
+                            startActivity(new Intent(LoginScreen.this, JobScreen.class));
 
                         } else {
 

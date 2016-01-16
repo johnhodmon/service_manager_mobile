@@ -1,4 +1,4 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.model;
 
 /**
  * Created by John on 22/02/2015.

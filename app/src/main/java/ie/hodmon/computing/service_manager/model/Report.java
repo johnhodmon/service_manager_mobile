@@ -1,37 +1,26 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.model;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import ie.hodmon.computing.service_manager.controller.ClassForCommonAttributes;
+import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.controller.ReportPhotos;
+import ie.hodmon.computing.service_manager.controller.SparesOrderAdapter;
 
 
 public class Report extends ClassForCommonAttributes implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
@@ -46,7 +35,7 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
     private TextView productName;
     private TextView fault;
     private ListView listOfSparesOrdersView;
-    private Callout calloutToWhichReportBelongs;
+    private Job jobToWhichReportBelongs;
     private ImageView editReport;
     private ImageView addSpare;
     private Spinner quantitySpinner;
@@ -82,10 +71,10 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         setContentView(R.layout.activity_report);
         addSpare=(ImageView)findViewById(R.id.report_add_part);
         addPartSave=(ImageView)findViewById(R.id.report_add_part_save);
-        calloutToWhichReportBelongs=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
+        jobToWhichReportBelongs =dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
         listOfSparesOrdersView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
-        reportText.setText(calloutToWhichReportBelongs.getReportText());
+        reportText.setText(jobToWhichReportBelongs.getReportText());
         List<SparesOrderItem>listOfSparesOrderItemsToBeUsedForAdapter=dbManager.getSparesOrderForReport(idOfCalloutToDisplayInDetail);
         listOfPartsThisPump=dbManager.getListOfPartsThisPump(dbManager.getSingleCallout(idOfCalloutToDisplayInDetail).getPumpNumber().substring(0,8));
         String toRemove="";
@@ -129,9 +118,9 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
 
         productName=(TextView)findViewById(R.id.report_product_name);
         fault=(TextView)findViewById(R.id.report_fault);
-        fault.setText(calloutToWhichReportBelongs.getReportedFault());
-        productName.setText(calloutToWhichReportBelongs.getPumpNumber());
-        System.out.println("id:" + calloutToWhichReportBelongs.getId());
+        fault.setText(jobToWhichReportBelongs.getReportedFault());
+        productName.setText(jobToWhichReportBelongs.getPumpNumber());
+        System.out.println("id:" + jobToWhichReportBelongs.getId());
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);
 
@@ -187,9 +176,9 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         saveSymbol.setVisibility(View.INVISIBLE);
         editText.setVisibility(View.INVISIBLE);
         reportText.setVisibility(View.VISIBLE);
-        calloutToWhichReportBelongs.setReportText(editText.getText().toString());
+        jobToWhichReportBelongs.setReportText(editText.getText().toString());
         reportText.setText(editText.getText().toString());
-        dbManager.editCallout(calloutToWhichReportBelongs);
+        dbManager.editCallout(jobToWhichReportBelongs);
     }
 
     public void addSpare(View view)

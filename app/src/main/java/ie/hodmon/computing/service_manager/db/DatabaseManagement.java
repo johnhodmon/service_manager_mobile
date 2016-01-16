@@ -1,17 +1,23 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import ie.hodmon.computing.service_manager.model.PartsList;
+import ie.hodmon.computing.service_manager.controller.ReportPhoto;
+import ie.hodmon.computing.service_manager.model.SparesOrderItem;
+import ie.hodmon.computing.service_manager.model.Job;
+import ie.hodmon.computing.service_manager.model.Part;
+import ie.hodmon.computing.service_manager.model.Product;
 
 /**
  * Created by John on 19/02/2015.
@@ -53,17 +59,17 @@ public class DatabaseManagement
         pumpServicesDatabase.close();
     }
 
-    public Callout getSingleCallout(int id)
+    public Job getSingleCallout(int id)
     {
-        Callout calloutToReturn=new Callout();
+        Job jobToReturn =new Job();
         Cursor cursor=pumpServicesDatabase.rawQuery("SELECT * FROM " + DatabaseCreator.TABLE_CALLOUT+" WHERE "+DatabaseCreator.CALLOUT_COLUMN_ID+" ="+id, null);
         cursor.moveToFirst();
         if(!cursor.isAfterLast()) {
-            calloutToReturn = convertCursorToCallout(cursor);
+            jobToReturn = convertCursorToCallout(cursor);
         }
 
         cursor.close();
-        return calloutToReturn;
+        return jobToReturn;
     }
 
 
@@ -110,7 +116,7 @@ public class DatabaseManagement
         return photoList;
     }
 
-    public void editCallout(Callout c)
+    public void editCallout(Job c)
 {
 
     ContentValues values=new ContentValues();
@@ -149,9 +155,9 @@ public class DatabaseManagement
 
 
 
-    public List<Callout>getCallouts(String engineerEmail, String date)
+    public List<Job>getCallouts(String engineerEmail, String date)
     {
-        List<Callout> calloutList=new ArrayList<Callout>();
+        List<Job> jobList =new ArrayList<Job>();
 
 
 
@@ -164,17 +170,17 @@ public class DatabaseManagement
 
         while (!cursor.isAfterLast())
         {
-            calloutList.add(convertCursorToCallout(cursor));
+            jobList.add(convertCursorToCallout(cursor));
             cursor.moveToNext();
 
         }
         cursor.close();
-        return calloutList;
+        return jobList;
 
     }
 
 
-    public void addCallout(Callout c)
+    public void addCallout(Job c)
     {
         ContentValues values=new ContentValues();
         values.put(DatabaseCreator.CALLOUT_COLUMN_ENGINEER_EMAIL,c.getEngineerEmail());
@@ -259,29 +265,29 @@ public class DatabaseManagement
 
 
 
-    private Callout convertCursorToCallout(Cursor cursor)
+    private Job convertCursorToCallout(Cursor cursor)
 {
-    Callout calloutToReturn=new Callout();
-    calloutToReturn.setId(cursor.getInt(0));
-    calloutToReturn.setEngineerEmail(cursor.getString(1));
-    calloutToReturn.setDate(cursor.getString(2));
-    calloutToReturn.setCustomerName(cursor.getString(3));
-    calloutToReturn.setStreet(cursor.getString(4));
-    calloutToReturn.setTown(cursor.getString(5));
-    calloutToReturn.setCounty(cursor.getString(6));
-    calloutToReturn.setPhoneNumber(cursor.getString(7));
-    calloutToReturn.setPumpNumber(cursor.getString(10));
-    calloutToReturn.setReportedFault(cursor.getString(8));
-    calloutToReturn.setReportText(cursor.getString(9));
+    Job jobToReturn =new Job();
+    jobToReturn.setId(cursor.getInt(0));
+    jobToReturn.setEngineerEmail(cursor.getString(1));
+    jobToReturn.setDate(cursor.getString(2));
+    jobToReturn.setCustomerName(cursor.getString(3));
+    jobToReturn.setStreet(cursor.getString(4));
+    jobToReturn.setTown(cursor.getString(5));
+    jobToReturn.setCounty(cursor.getString(6));
+    jobToReturn.setPhoneNumber(cursor.getString(7));
+    jobToReturn.setPumpNumber(cursor.getString(10));
+    jobToReturn.setReportedFault(cursor.getString(8));
+    jobToReturn.setReportText(cursor.getString(9));
     String[] latlongArray = (cursor.getString(11).split(","));
     double latitude = Double.parseDouble(latlongArray[0]);
     double longitude = Double.parseDouble(latlongArray[1]);
     LatLng latLng=new LatLng(latitude,longitude);
-    calloutToReturn.setLatLng(latLng);
+    jobToReturn.setLatLng(latLng);
 
 
 
-    return calloutToReturn;
+    return jobToReturn;
 }
 
 
@@ -318,7 +324,7 @@ public class DatabaseManagement
 
     }
 
-    public void addPump(Pump p)
+    public void addPump(Product p)
     {        ContentValues values=new ContentValues();
         values.put(DatabaseCreator.PUMP_COLUMN_PUMP_NR,p.getPumpNr());
         values.put(DatabaseCreator.PART_COLUMN_DESCRIPTION, p.getPumpDescription());
@@ -327,12 +333,12 @@ public class DatabaseManagement
         pumpServicesDatabase.insert(DatabaseCreator.TABLE_PUMP, null, values);
     }
 
-    private Pump convertCursorToPump(Cursor cursor)
+    private Product convertCursorToPump(Cursor cursor)
     {
-        Pump pumpToReturn=new Pump();
-        pumpToReturn.setPumpNr(cursor.getString(0));
-        pumpToReturn.setPumpDescription(cursor.getString(1));
-        return pumpToReturn;
+        Product productToReturn =new Product();
+        productToReturn.setPumpNr(cursor.getString(0));
+        productToReturn.setPumpDescription(cursor.getString(1));
+        return productToReturn;
     }
 
 

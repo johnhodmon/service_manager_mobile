@@ -1,21 +1,18 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.util.Date;
 import java.util.Map;
+
+import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.controller.ClassForCommonAttributes;
+import ie.hodmon.computing.service_manager.controller.JobScreen;
 
 
 public class PickDate extends ClassForCommonAttributes implements CalendarView.OnDateChangeListener {
@@ -84,7 +81,7 @@ public class PickDate extends ClassForCommonAttributes implements CalendarView.O
         notToday=true;
         dateToShow = (day + "/" +month + "/"+year);
         finish();
-        startActivity(new Intent(this,CalloutScreen.class));
+        startActivity(new Intent(this,JobScreen.class));
         dateSelected=calendarView.getDate();
     }
 }

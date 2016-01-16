@@ -1,19 +1,19 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.model;
 
 /**
  * Created by John on 21/02/2015.
  */
-public class Pump
+public class Product
 {
     private String pumpNr;
     private String pumpDescription;
 
-    public Pump()
+    public Product()
     {
 
     }
 
-    public Pump(String pumpNr,String pumpDescription)
+    public Product(String pumpNr, String pumpDescription)
     {
         this.pumpNr=pumpNr;
         this.pumpDescription=pumpDescription;

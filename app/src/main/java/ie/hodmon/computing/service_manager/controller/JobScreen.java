@@ -1,34 +1,29 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.model.Job;
 
-public class CalloutScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener {
+
+public class JobScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener {
 
     private ListView calloutListView;
-    private List<Callout> callouts;
+    private List<Job> jobs;
     private ImageView mapButton;
 
 
@@ -64,12 +59,12 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
         {
             formattedDate = df.format(c.getTime());
         }
-        callouts=dbManager.getCallouts(engineerEmail,formattedDate);
-        if (callouts.isEmpty())
+        jobs =dbManager.getCallouts(engineerEmail,formattedDate);
+        if (jobs.isEmpty())
         {
             mapButton.setVisibility(View.INVISIBLE);
         }
-        CalloutsAdapter adapterForCalloutListView =new CalloutsAdapter(this,callouts);
+        JobsAdapter adapterForCalloutListView =new JobsAdapter(this, jobs);
         calloutListView.setAdapter(adapterForCalloutListView);
 
     }
@@ -92,9 +87,9 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Callout c=(Callout)parent.getItemAtPosition(position);
+        Job c=(Job)parent.getItemAtPosition(position);
         idOfCalloutToDisplayInDetail=c.getId();
-        startActivity(new Intent(this,CalloutDetails.class));
+        startActivity(new Intent(this,JobDetails.class));
     }
 
     public void changeDate(View view)
@@ -128,7 +123,7 @@ public class CalloutScreen extends ClassForCommonAttributes implements AdapterVi
         Bundle args = new Bundle();
         Intent intent=new Intent(this,MapsActivity.class);
 
-        for(Callout c: callouts)
+        for(Job c: jobs)
         {
             args.putParcelable(c.getCustomerName(),c.getLatLng());
         }

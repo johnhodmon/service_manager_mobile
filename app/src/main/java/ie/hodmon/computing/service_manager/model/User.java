@@ -1,4 +1,4 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.model;
 
 import com.parse.ParseUser;
 

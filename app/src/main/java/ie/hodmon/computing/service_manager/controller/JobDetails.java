@@ -1,25 +1,20 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.w3c.dom.Text;
+import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.model.Job;
+import ie.hodmon.computing.service_manager.model.Report;
 
 
-public class CalloutDetails extends ClassForCommonAttributes {
+public class JobDetails extends ClassForCommonAttributes {
 
 
 
@@ -29,7 +24,7 @@ public class CalloutDetails extends ClassForCommonAttributes {
     private TextView calloutDetailsPhone;
     private TextView calloutDetailsPump;
     private TextView calloutDetailsReportedFault;
-    private Callout calloutToDisplayInDetail;
+    private Job jobToDisplayInDetail;
 
 
     @Override
@@ -41,14 +36,14 @@ public class CalloutDetails extends ClassForCommonAttributes {
         calloutDetailsTown=(TextView)findViewById(R.id.job_details_town);
         calloutDetailsPump=(TextView)findViewById(R.id.job_details_product_name);
         calloutDetailsReportedFault=(TextView)findViewById(R.id.job_details_fault);
-        calloutToDisplayInDetail=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
+        jobToDisplayInDetail =dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
         calloutDetailsPhone=(TextView)findViewById(R.id.job_details_phone_number);
-        calloutDetailsName.setText(calloutToDisplayInDetail.getCustomerName());
-        calloutDetailsStreet.setText(calloutToDisplayInDetail.getStreet());
-        calloutDetailsTown.setText(calloutToDisplayInDetail.getTown());
-        calloutDetailsPump.setText(calloutToDisplayInDetail.getPumpNumber());
-        calloutDetailsReportedFault.setText(calloutToDisplayInDetail.getReportedFault());
-        calloutDetailsPhone.setText(calloutToDisplayInDetail.getPhoneNumber());
+        calloutDetailsName.setText(jobToDisplayInDetail.getCustomerName());
+        calloutDetailsStreet.setText(jobToDisplayInDetail.getStreet());
+        calloutDetailsTown.setText(jobToDisplayInDetail.getTown());
+        calloutDetailsPump.setText(jobToDisplayInDetail.getPumpNumber());
+        calloutDetailsReportedFault.setText(jobToDisplayInDetail.getReportedFault());
+        calloutDetailsPhone.setText(jobToDisplayInDetail.getPhoneNumber());
 
     }
 
@@ -84,7 +79,7 @@ public class CalloutDetails extends ClassForCommonAttributes {
 
     public void map(View view)
     {
-        Callout c=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
+        Job c=dbManager.getSingleCallout(idOfCalloutToDisplayInDetail);
 
         LatLng jobLoc=c.getLatLng();
         Bundle args = new Bundle();

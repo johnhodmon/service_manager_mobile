@@ -1,4 +1,4 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,20 +9,23 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.model.Job;
+
 /**
  * Created by John on 19/02/2015.
  */
-public class CalloutsAdapter extends ArrayAdapter<Callout>
+public class JobsAdapter extends ArrayAdapter<Job>
 {
 
     private Context calloutAdapterContext;
-    public List<Callout> calloutList;
+    public List<Job> jobList;
 
-    public CalloutsAdapter(Context calloutAdapterContext,List<Callout>calloutList)
+    public JobsAdapter(Context calloutAdapterContext, List<Job> jobList)
     {
-        super(calloutAdapterContext,R.layout.row_callout,calloutList);
+        super(calloutAdapterContext, R.layout.row_callout, jobList);
         this.calloutAdapterContext=calloutAdapterContext;
-        this.calloutList=calloutList;
+        this.jobList = jobList;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class CalloutsAdapter extends ArrayAdapter<Callout>
                 (LayoutInflater) calloutAdapterContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View viewOfRow=inflaterForReport.inflate(R.layout.row_callout,parent,false);
-        Callout calloutToShow=calloutList.get(position);
+        Job jobToShow = jobList.get(position);
         TextView productNameInThisRow=(TextView)viewOfRow.findViewById(R.id.job_row_product_name);
         TextView calloutTownInThisRow=(TextView)viewOfRow.findViewById(R.id.calloutTown);
         TextView calloutPhoneInThisRow=(TextView)viewOfRow.findViewById(R.id.job_row_phone);
@@ -39,10 +42,10 @@ public class CalloutsAdapter extends ArrayAdapter<Callout>
 
 
 
-        if (!calloutList.isEmpty()) {
-            productNameInThisRow.setText("" + calloutToShow.getPumpNumber());
-            calloutTownInThisRow.setText("" + calloutToShow.getTown());
-            calloutPhoneInThisRow.setText(""+calloutToShow.getPhoneNumber());
+        if (!jobList.isEmpty()) {
+            productNameInThisRow.setText("" + jobToShow.getPumpNumber());
+            calloutTownInThisRow.setText("" + jobToShow.getTown());
+            calloutPhoneInThisRow.setText(""+ jobToShow.getPhoneNumber());
 
         }
 

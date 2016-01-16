@@ -1,4 +1,4 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.List;
+
+import ie.hodmon.computing.service_manager.R;
 
 /**
  * Created by John on 2015-12-03.
@@ -23,7 +24,7 @@ public class ReportImagesAdapter extends ArrayAdapter<ReportPhoto>
     private List<ReportPhoto> imageList;
     public ReportImagesAdapter(Context context,List<ReportPhoto> imageList)
     {
-        super(context,R.layout.row_report_pictures,imageList);
+        super(context, R.layout.row_report_pictures,imageList);
        this.context=context;
         this.imageList=imageList;
     }

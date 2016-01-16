@@ -5,7 +5,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
-    tools:context="ie.hodmon.computing.hodmonpumpservices.ReportPhotos">
+    tools:context="ie.hodmon.computing.service_manager.controller.ReportPhotos">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

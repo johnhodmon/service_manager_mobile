@@ -1,8 +1,8 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Callout
+public class Job
 {
     private int id;
 
@@ -20,8 +20,8 @@ public class Callout
     private LatLng latLng;
 
 
-    public Callout(String engineerEmail,String date, String customerName,String street,String town,String county,String phoneNumber,
-                   String pumpNumber, String reportedFault,String reportText, LatLng latLng)
+    public Job(String engineerEmail, String date, String customerName, String street, String town, String county, String phoneNumber,
+               String pumpNumber, String reportedFault, String reportText, LatLng latLng)
     {
         this.engineerEmail=engineerEmail;
         this.date=date;
@@ -64,7 +64,7 @@ public class Callout
         this.pumpNumber = pumpNumber;
     }
 
-    public Callout()
+    public Job()
     {
 
     }

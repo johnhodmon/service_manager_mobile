@@ -1,16 +1,17 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.Parse;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import ie.hodmon.computing.service_manager.db.DatabaseManagement;
+import ie.hodmon.computing.service_manager.model.PartsList;
+import ie.hodmon.computing.service_manager.model.Job;
+import ie.hodmon.computing.service_manager.model.Part;
+import ie.hodmon.computing.service_manager.model.Product;
 
 /**
  * Created by John on 19/02/2015.
@@ -67,27 +68,27 @@ public class ClassForCommonAttributes extends ActionBarActivity
 
     public void addData()
     {
-        dbManager.addPump(new Pump("05015000","Piranha S17"));
-        dbManager.addPump(new Pump("01135002", "Robusta 202"));
-        dbManager.addPump(new Pump("05065001", "MF 254"));
-        dbManager.addPump(new Pump("06085002", "AS16"));
+        dbManager.addPump(new Product("05015000","Piranha S17"));
+        dbManager.addPump(new Product("01135002", "Robusta 202"));
+        dbManager.addPump(new Product("05065001", "MF 254"));
+        dbManager.addPump(new Product("06085002", "AS16"));
 
-        dbManager.addCallout(new Callout("johnhodmon@gmail.com", "01/12/2015", "Noel Kinsella", "6, High Street", "Arthurstown", "Wexford", "051389571", "05015000: Piranha S17",
+        dbManager.addCallout(new Job("johnhodmon@gmail.com", "01/12/2015", "Noel Kinsella", "6, High Street", "Arthurstown", "Wexford", "051389571", "05015000: Piranha S17",
                 "Only one pump working on unit", "", new LatLng(52.2420291, -6.9601263)));
-        dbManager.addCallout(new Callout("johnhodmon@gmail.com", "01/12/2015", "Bernard Grant", "5, The Heights", "Rosslare", "Wexford", "0872565871", "06085002: AS16",
-                "Pump not running, sump overflowing", "", new LatLng(52.2720398, -6.3979802)));
-        dbManager.addCallout(new Callout("johnhodmon@gmail.com", "01/12/2015", "John Hodmon", "Ballyhack", "New Ross", "Wexford", "0852828731", "05015000: Piranha S17",
+        dbManager.addCallout(new Job("johnhodmon@gmail.com", "01/12/2015", "Bernard Grant", "5, The Heights", "Rosslare", "Wexford", "0872565871", "06085002: AS16",
+                "Product not running, sump overflowing", "", new LatLng(52.2720398, -6.3979802)));
+        dbManager.addCallout(new Job("johnhodmon@gmail.com", "01/12/2015", "John Hodmon", "Ballyhack", "New Ross", "Wexford", "0852828731", "05015000: Piranha S17",
                 "MCB in fuse board tripping and won't reset", "", new LatLng(52.2484872, -6.9729468)));
-        dbManager.addCallout(new Callout("johnhodmon@gmail.com","01/12/2015","Seamus Cooney","11, Knackers Row","New Ross","Wexford","08798765432","05065001: MF254",
-                "Pump making loud grinding noise","",new LatLng(52.3946149,-6.9615096)));
-        dbManager.addCallout(new Callout("johnhodmon@gmail.com","01/12/2015","Peter Dempsey","11,Ballybeg","Waterford","","08612345678","01135002: Robusta 202",
+        dbManager.addCallout(new Job("johnhodmon@gmail.com","01/12/2015","Seamus Cooney","11, Knackers Row","New Ross","Wexford","08798765432","05065001: MF254",
+                "Product making loud grinding noise","",new LatLng(52.3946149,-6.9615096)));
+        dbManager.addCallout(new Job("johnhodmon@gmail.com","01/12/2015","Peter Dempsey","11,Ballybeg","Waterford","","08612345678","01135002: Robusta 202",
                 "Won't switch off, feels very hot","",new LatLng(52.2420643,-7.1509622)));
 
-        dbManager.addCallout(new Callout("johnhodmon@gmail.com","02/12/2015","Ciaran Quirke","11, Main Street","Gorey","Wexford","0539236589","01135002: Robusta 202",
-                "Pump running but not pumping","",new LatLng(52.6757387,-6.2964909)));
-        dbManager.addCallout(new Callout("johnhodmon@gmail.com","02/12/2015","Ben Breen","","Ballycanew","Wexford","0852829713","06085002: AS16",
+        dbManager.addCallout(new Job("johnhodmon@gmail.com","02/12/2015","Ciaran Quirke","11, Main Street","Gorey","Wexford","0539236589","01135002: Robusta 202",
+                "Product running but not pumping","",new LatLng(52.6757387,-6.2964909)));
+        dbManager.addCallout(new Job("johnhodmon@gmail.com","02/12/2015","Ben Breen","","Ballycanew","Wexford","0852829713","06085002: AS16",
                 "Explosion from control panel","",new LatLng(52.6118702,-6.3211213)));
-        dbManager.addCallout(new Callout("johnhodmon@gmail.com","02/12/2015", "Johnny O'Grady", "", "Castlebridge", "Wexford", "0539125471", "05065001: MF254",
+        dbManager.addCallout(new Job("johnhodmon@gmail.com","02/12/2015", "Johnny O'Grady", "", "Castlebridge", "Wexford", "0539125471", "05065001: MF254",
                 "Grinding noise", "",new LatLng(52.3856753,-6.45683)));
 
 

@@ -10,7 +10,7 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     android:paddingBottom="0dp"
-    tools:context="ie.hodmon.computing.hodmonpumpservices.CalloutScreen">
+    tools:context="ie.hodmon.computing.service_manager.controller.JobScreen">
 
 
 

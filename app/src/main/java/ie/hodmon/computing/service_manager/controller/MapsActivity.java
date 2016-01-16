@@ -1,4 +1,4 @@
-package ie.hodmon.computing.hodmonpumpservices;
+package ie.hodmon.computing.service_manager.controller;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -10,6 +10,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ie.hodmon.computing.service_manager.R;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
