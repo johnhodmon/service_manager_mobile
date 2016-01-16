@@ -20,6 +20,7 @@ public class Customer
         this.street=street;
         this.town=town;
         this.county=county;
+        this.phone=phone;
         this.email=email;
         this.lat_lng=lat_lng;
     }
