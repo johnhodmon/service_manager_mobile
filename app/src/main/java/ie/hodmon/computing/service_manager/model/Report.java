@@ -42,7 +42,7 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
     private Spinner orderPartQuantitySpinner;
     private List<String> listOfPartsThisPump;
     private String partSelected;
-    private SparesOrderItem sparesOrderItemSelected;
+    private JobPart jobPartSelected;
     private int quantitySelected;
     private String updateQuantity;
     private ImageView deleteSpare;
@@ -75,11 +75,11 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         listOfSparesOrdersView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
         reportText.setText(jobToWhichReportBelongs.getReportText());
-        List<SparesOrderItem>listOfSparesOrderItemsToBeUsedForAdapter=dbManager.getSparesOrderForReport(idOfCalloutToDisplayInDetail);
+        List<JobPart>listOfSparesOrderItemsToBeUsedForAdapter=dbManager.getSparesOrderForReport(idOfCalloutToDisplayInDetail);
         listOfPartsThisPump=dbManager.getListOfPartsThisPump(dbManager.getSingleCallout(idOfCalloutToDisplayInDetail).getPumpNumber().substring(0,8));
         String toRemove="";
         List <String> listToRemove=new ArrayList<String>();
-        for (SparesOrderItem soi:listOfSparesOrderItemsToBeUsedForAdapter)
+        for (JobPart soi:listOfSparesOrderItemsToBeUsedForAdapter)
         {
 
             for(String s: listOfPartsThisPump)
@@ -150,7 +150,7 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        sparesOrderItemSelected=(SparesOrderItem)parent.getItemAtPosition(position);
+        jobPartSelected =(JobPart)parent.getItemAtPosition(position);
 
 
     }
@@ -201,7 +201,7 @@ public class Report extends ClassForCommonAttributes implements AdapterView.OnIt
         addSpare.setVisibility(View.VISIBLE);
         String description=(String)partDescriptionSpinner.getSelectedItem();
         int qty=Integer.parseInt((String)orderPartQuantitySpinner.getSelectedItem());
-        dbManager.addSparesOrderItem(new SparesOrderItem(idOfCalloutToDisplayInDetail,
+        dbManager.addSparesOrderItem(new JobPart(idOfCalloutToDisplayInDetail,
                 dbManager.getPartNumber(description), description, qty));
         finish();
 

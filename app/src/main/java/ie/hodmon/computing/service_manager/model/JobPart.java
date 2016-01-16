@@ -3,7 +3,7 @@ package ie.hodmon.computing.service_manager.model;
 /**
  * Created by John on 22/02/2015.
  */
-public class SparesOrderItem
+public class JobPart
 
 {
 
@@ -13,7 +13,7 @@ public class SparesOrderItem
     private String partDescription;
     private int quantity;
 
-    public SparesOrderItem( int calloutId,String partNumber,String partDescription,int quantity)
+    public JobPart(int calloutId, String partNumber, String partDescription, int quantity)
     {
         this.calloutId =calloutId;
         this.quantity=quantity;
@@ -21,7 +21,7 @@ public class SparesOrderItem
         this.partDescription=partDescription;
     }
 
-    public SparesOrderItem( )
+    public JobPart()
     {
 
     }

@@ -12,22 +12,22 @@ import android.widget.TextView;
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
-import ie.hodmon.computing.service_manager.model.SparesOrderItem;
+import ie.hodmon.computing.service_manager.model.JobPart;
 
 /**
  * Created by John on 22/02/2015.
  */
-public class SparesOrderAdapter extends ArrayAdapter<SparesOrderItem>
+public class SparesOrderAdapter extends ArrayAdapter<JobPart>
 
 {
     private Context sparesOrderItemAdapterContext;
-    public List<SparesOrderItem> sparesOrderItemList;
+    public List<JobPart> jobPartList;
 
-    public SparesOrderAdapter(Context sparesOrderItemAdapterContext,List<SparesOrderItem>sparesOrderItemList)
+    public SparesOrderAdapter(Context sparesOrderItemAdapterContext,List<JobPart> jobPartList)
     {
-        super(sparesOrderItemAdapterContext, R.layout.row_spares_order,sparesOrderItemList);
+        super(sparesOrderItemAdapterContext, R.layout.row_spares_order, jobPartList);
         this.sparesOrderItemAdapterContext=sparesOrderItemAdapterContext;
-        this.sparesOrderItemList =sparesOrderItemList;
+        this.jobPartList = jobPartList;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class SparesOrderAdapter extends ArrayAdapter<SparesOrderItem>
                 (LayoutInflater)sparesOrderItemAdapterContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View viewOfRow=inflaterForReport.inflate(R.layout.row_spares_order,parent,false);
-        SparesOrderItem sparesOrderItemToShow= sparesOrderItemList.get(position);
+        JobPart jobPartToShow = jobPartList.get(position);
 
         TextView descriptionInThisRow=(TextView)viewOfRow.findViewById(R.id.sparesOrderRowDescription);
         TextView quantityThisRow=(TextView)viewOfRow.findViewById(R.id.sparesOrderRowQuantity);
@@ -48,12 +48,12 @@ public class SparesOrderAdapter extends ArrayAdapter<SparesOrderItem>
 
 
 
-        if (!sparesOrderItemList.isEmpty()) {
+        if (!jobPartList.isEmpty()) {
 
 
 
-            descriptionInThisRow.setText("" + sparesOrderItemToShow.getPartDescription());
-            quantityThisRow.setText("" + sparesOrderItemToShow.getQuantity());
+            descriptionInThisRow.setText("" + jobPartToShow.getPartDescription());
+            quantityThisRow.setText("" + jobPartToShow.getQuantity());
         }
 
 

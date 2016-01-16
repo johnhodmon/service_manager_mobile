@@ -14,7 +14,7 @@ import java.util.List;
 
 import ie.hodmon.computing.service_manager.model.PartsList;
 import ie.hodmon.computing.service_manager.controller.ReportPhoto;
-import ie.hodmon.computing.service_manager.model.SparesOrderItem;
+import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.Product;
@@ -342,22 +342,22 @@ public class DatabaseManagement
     }
 
 
-    public List<SparesOrderItem>getSparesOrderForReport(int id) {
-        List<SparesOrderItem> listOfSparesOrderItems = new ArrayList<SparesOrderItem>();
+    public List<JobPart>getSparesOrderForReport(int id) {
+        List<JobPart> listOfJobParts = new ArrayList<JobPart>();
         Cursor cursor = pumpServicesDatabase.rawQuery("SELECT * FROM " + DatabaseCreator.TABLE_SPARES_ORDER_ITEM + " WHERE " + DatabaseCreator.CALLOUT_COLUMN_ID + " =" + id, null);
 
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
-            listOfSparesOrderItems.add(convertCursorToSparesOrderItem(cursor));
+            listOfJobParts.add(convertCursorToSparesOrderItem(cursor));
             cursor.moveToNext();
 
         }
         cursor.close();
-        return listOfSparesOrderItems;
+        return listOfJobParts;
     }
 
-    public void addSparesOrderItem(SparesOrderItem so)
+    public void addSparesOrderItem(JobPart so)
     {
         ContentValues values=new ContentValues();
         values.put(DatabaseCreator.CALLOUT_COLUMN_ID,so.getCalloutId());
@@ -373,14 +373,14 @@ public class DatabaseManagement
         pumpServicesDatabase.delete(DatabaseCreator.TABLE_SPARES_ORDER_ITEM,DatabaseCreator.SPARES_ORDER_ITEM_COLUMN_PART_DESCRIPTION+"='"+description+"'",null);
     }
 
-    private SparesOrderItem convertCursorToSparesOrderItem(Cursor cursor)
+    private JobPart convertCursorToSparesOrderItem(Cursor cursor)
     {
-        SparesOrderItem sparesOrderItemToReturn=new SparesOrderItem();
-        sparesOrderItemToReturn.setCalloutId(cursor.getInt(1));
-        sparesOrderItemToReturn.setPartNumber(cursor.getString(2));
-        sparesOrderItemToReturn.setPartDescription(cursor.getString(3));
-        sparesOrderItemToReturn.setQuantity(cursor.getInt(4));
-        return sparesOrderItemToReturn;
+        JobPart jobPartToReturn =new JobPart();
+        jobPartToReturn.setCalloutId(cursor.getInt(1));
+        jobPartToReturn.setPartNumber(cursor.getString(2));
+        jobPartToReturn.setPartDescription(cursor.getString(3));
+        jobPartToReturn.setQuantity(cursor.getInt(4));
+        return jobPartToReturn;
     }
 
 

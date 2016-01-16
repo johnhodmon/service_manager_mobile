@@ -14,7 +14,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import ie.hodmon.computing.service_manager.R;
-import ie.hodmon.computing.service_manager.model.User;
+import ie.hodmon.computing.service_manager.model.Engineer;
 
 
 public class LoginScreen extends ClassForCommonAttributes {
@@ -59,7 +59,7 @@ public class LoginScreen extends ClassForCommonAttributes {
             {
 
 
-                User.logInInBackground(emailAddress.getText().toString(), password.getText().toString(), new LogInCallback() {
+                Engineer.logInInBackground(emailAddress.getText().toString(), password.getText().toString(), new LogInCallback() {
 
                     @Override
                     public void done(ParseUser user, ParseException e) {
