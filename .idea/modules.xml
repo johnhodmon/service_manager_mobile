@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/HodmonPumpServices.iml" filepath="$PROJECT_DIR$/HodmonPumpServices.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service_manager_mobile.iml" filepath="$PROJECT_DIR$/service_manager_mobile.iml" />
     </modules>
   </component>
 </project>
