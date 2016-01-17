@@ -1,15 +1,22 @@
 package ie.hodmon.computing.service_manager.controller;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
 import ie.hodmon.computing.service_manager.model.Job;
 
 
@@ -17,11 +24,11 @@ public class JobDetails extends ClassForCommonAttributes {
 
 
 
-  /*  private TextView jobDetailsName;
+    private TextView jobDetailsName;
     private TextView jobDetailsStreet;
     private TextView jobDetailsTown;
     private TextView jobDetailsPhone;
-    private TextView jobDetailsPump;
+    private TextView jobDetailsProduct;
     private TextView jobDetailsReportedFault;
     private Job jobToDisplayInDetail;
 
@@ -30,19 +37,17 @@ public class JobDetails extends ClassForCommonAttributes {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_details);
+        Intent i=getIntent();
+        String jobId=i.getStringExtra("id");
         jobDetailsName =(TextView)findViewById(R.id.job_details_customer_name);
         jobDetailsStreet=(TextView)findViewById(R.id.job_details_street);
         jobDetailsTown=(TextView)findViewById(R.id.job_details_town);
-        jobDetailsPump=(TextView)findViewById(R.id.job_details_product_name);
+        jobDetailsProduct =(TextView)findViewById(R.id.job_details_product_name);
         jobDetailsReportedFault=(TextView)findViewById(R.id.job_details_fault);
-        jobToDisplayInDetail =dbManager.getSinglejob(idOfJobToDisplayInDetail);
         jobDetailsPhone=(TextView)findViewById(R.id.job_details_phone_number);
-        jobDetailsName.setText(jobToDisplayInDetail.getCustomerName());
-        jobDetailsStreet.setText(jobToDisplayInDetail.getStreet());
-        jobDetailsTown.setText(jobToDisplayInDetail.getTown());
-        jobDetailsPump.setText(jobToDisplayInDetail.getPumpNumber());
-        jobDetailsReportedFault.setText(jobToDisplayInDetail.getReportedFault());
-        jobDetailsPhone.setText(jobToDisplayInDetail.getPhoneNumber());
+        new GetJob(this).execute("/jobs/"+jobId+".json");
+
+
 
     }
 
@@ -78,15 +83,67 @@ public class JobDetails extends ClassForCommonAttributes {
 
     public void map(View view)
     {
-        Job c=dbManager.getSinglejob(idOfJobToDisplayInDetail);
 
-        LatLng jobLoc=c.getLatLng();
+
+        LatLng jobLoc=convertStringToLatLng(jobToDisplayInDetail.getCustomer().getLat_lng());
         Bundle args = new Bundle();
         Intent intent=new Intent(this,MapsActivity.class);
-        args.putParcelable(c.getCustomerName(),jobLoc);
+        args.putParcelable(jobToDisplayInDetail.getCustomer().getName(),jobLoc);
         args.putInt("zoom",13);
        intent.putExtra("bundle",args);
         startActivity(intent);
-    }*/
+    }
+
+    private class GetJob extends AsyncTask<String, Void,Job> {
+
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public GetJob(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.dialog = new ProgressDialog(context, 1);
+            this.dialog.setMessage("Retrieving Job");
+            this.dialog.show();
+        }
+
+        @Override
+        protected Job doInBackground(String... params) {
+            try {
+                Log.v("REST", "Getting Job");
+                return (Job) ConnectionAPI.getJob((String) params[0]);
+            }
+            catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Job result) {
+            super.onPostExecute(result);
+
+            jobToDisplayInDetail=result;
+            jobDetailsName.setText(jobToDisplayInDetail.getCustomer().getName());
+            jobDetailsStreet.setText(jobToDisplayInDetail.getCustomer().getStreet());
+            jobDetailsTown.setText(jobToDisplayInDetail.getCustomer().getTown());
+            jobDetailsProduct.setText(jobToDisplayInDetail.getManufacturer().getName()+" "+jobToDisplayInDetail.getProduct().getProduct_number());
+            jobDetailsReportedFault.setText(jobToDisplayInDetail.getReported_fault());
+            jobDetailsPhone.setText(jobToDisplayInDetail.getCustomer().getPhone());
+
+
+            if (dialog.isShowing())
+            {
+                dialog.dismiss();
+            }
+
+        }
+    }
 
 }

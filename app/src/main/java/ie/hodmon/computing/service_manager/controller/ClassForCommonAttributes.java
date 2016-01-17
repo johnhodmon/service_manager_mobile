@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.model.Job;
@@ -39,6 +41,14 @@ public class ClassForCommonAttributes extends AppCompatActivity
         super.onDestroy();
 
 
+    }
+
+    public LatLng convertStringToLatLng(String s)
+    {
+        String split[]=s.split(",");
+        double lat=Double.parseDouble(split[0]);
+        double lng=Double.parseDouble(split[1]);
+        return new LatLng(lat,lng);
     }
 }
 

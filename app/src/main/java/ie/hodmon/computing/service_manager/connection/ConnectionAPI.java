@@ -19,41 +19,25 @@ import ie.hodmon.computing.service_manager.model.Product;
 public class ConnectionAPI
 {
 
-        //////////////////////////////////////////////////////////////////////////////////
-        public static List<Job> getJobs(String partUrl) {
-            String json = REST.get(partUrl);
+
+        public static List<Job> getJobs(String uri) {
+            String json = REST.get(uri);
             Log.v("REST", "JSON RESULT : " + json);
             Type collectionType = new TypeToken<List<Job>>() {
             }.getType();
 
             return new Gson().fromJson(json, collectionType);
         }
-    public static List<Customer> getCustomers(String partUrl) {
-        String json = REST.get(partUrl);
+
+    public static Job getJob(String uri) {
+        String json = REST.get(uri);
         Log.v("REST", "JSON RESULT : " + json);
-        Type collectionType = new TypeToken<List<Customer>>() {
+        Type collectionType = new TypeToken<Job>() {
         }.getType();
 
         return new Gson().fromJson(json, collectionType);
     }
 
-    public static List<Product> getProducts(String partUrl) {
-        String json = REST.get(partUrl);
-        Log.v("REST", "JSON RESULT : " + json);
-        Type collectionType = new TypeToken<List<Product>>() {
-        }.getType();
-
-        return new Gson().fromJson(json, collectionType);
-    }
-
-    public static List<CustomerProduct> getCustomerProducts(String partUrl) {
-        String json = REST.get(partUrl);
-        Log.v("REST", "JSON RESULT : " + json);
-        Type collectionType = new TypeToken<List<Customer>>() {
-        }.getType();
-
-        return new Gson().fromJson(json, collectionType);
-    }
 
 
 }

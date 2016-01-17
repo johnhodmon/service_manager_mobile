@@ -98,8 +98,11 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         Job c=(Job)parent.getItemAtPosition(position);
-        idOfJobToDisplayInDetail =c.getId();
-        startActivity(new Intent(this,JobDetails.class));
+
+        Intent intent = new Intent(this, JobDetails.class);
+
+        intent.putExtra("id",""+c.getId());
+        startActivity(intent);
     }
 
     public void changeDate(View view)
@@ -135,13 +138,13 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
 
         for(Job j: jobs)
         {
-            String lat_lng=j.getCustomer().getLat_lng();
 
-            String split[]=lat_lng.split(",");
-            double lat=Double.parseDouble(split[0]);
-            double lng=Double.parseDouble(split[1]);
 
-            LatLng latLng=new LatLng(lat,lng);
+
+
+
+
+            LatLng latLng=  convertStringToLatLng(j.getCustomer().getLat_lng());
             args.putParcelable(j.getCustomer().getName(),latLng);
         }
         args.putInt("zoom",10);
