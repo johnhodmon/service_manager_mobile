@@ -4,20 +4,22 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Job
 {
-    private int id;
+
     private String reported_fault;
     private int miles;
     private int labour_time;
-    private int engineer_id;
-    private int customer_product_id;
     private String status;
+    private Product product;
+    private Customer customer;
 
 
 
 
 
 
-    public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status)
+
+
+    public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product, Customer customer)
     {
         this.id=id;
         this .reported_fault=reported_fault;
@@ -26,6 +28,8 @@ public class Job
         this.engineer_id=engineer_id;
         this.customer_product_id=customer_product_id;
         this.status=status;
+        this.customer=customer;
+        this.product=product;
 
     }
     public Job()

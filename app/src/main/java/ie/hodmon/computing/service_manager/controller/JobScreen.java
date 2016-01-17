@@ -44,6 +44,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
        new GetJobs(this).execute("/jobs.json");
         new GetProducts(this).execute("/products.json");
         new GetCustomers(this).execute("/customers.json");
-        new GetCustomerProducts(this).execute("/customerproducts.json");
+        new GetCustomerProducts(this).execute("/customer_products.json");
 
 
 
