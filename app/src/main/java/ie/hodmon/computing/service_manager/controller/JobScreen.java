@@ -21,7 +21,10 @@ import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
+import ie.hodmon.computing.service_manager.model.Customer;
+import ie.hodmon.computing.service_manager.model.CustomerProduct;
 import ie.hodmon.computing.service_manager.model.Job;
+import ie.hodmon.computing.service_manager.model.Product;
 
 
 public class JobScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener {
@@ -29,6 +32,9 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
     private ListView calloutListView;
     private List<Job> jobs;
     private ImageView mapButton;
+    private List<Customer>customers;
+    private List<CustomerProduct>customerproducts;
+    private List<Product>products;
 
 
 
@@ -63,7 +69,11 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         {
             formattedDate = df.format(c.getTime());
         }
-       new GetAllTask(this).execute("/jobs.json");
+       new GetJobs(this).execute("/jobs.json");
+        new GetProducts(this).execute("/products.json");
+        new GetCustomers(this).execute("/customers.json");
+        new GetCustomerProducts(this).execute("/customerproducts.json");
+
 
 
     }
@@ -134,12 +144,12 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
     }
 
 
-    private class GetAllTask extends AsyncTask<String, Void, List<Job>> {
+    private class GetJobs extends AsyncTask<String, Void, List<Job>> {
 
         protected ProgressDialog dialog;
         protected Context context;
 
-        public GetAllTask(Context context)
+        public GetJobs(Context context)
         {
             this.context = context;
         }
@@ -156,7 +166,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         protected List<Job> doInBackground(String... params) {
             try {
                 Log.v("REST", "Getting Jobs");
-                return (List<Job>) ConnectionAPI.getAll((String) params[0]);
+                return (List<Job>) ConnectionAPI.getJobs((String) params[0]);
             }
             catch (Exception e) {
                 Log.v("REST", "ERROR : " + e);
@@ -181,6 +191,125 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
             {
                dialog.dismiss();
             }
+
+        }
+    }
+
+
+    private class GetCustomers extends AsyncTask<String, Void, List<Customer>> {
+
+
+        protected Context context;
+
+        public GetCustomers(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected List<Customer> doInBackground(String... params) {
+            try {
+                Log.v("REST", "Getting Customers");
+                return (List<Customer>) ConnectionAPI.getCustomers((String) params[0]);
+            }
+            catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Customer> result) {
+            super.onPostExecute(result);
+
+            customers=result;
+
+
+        }
+    }
+
+
+    private class GetCustomerProducts extends AsyncTask<String, Void, List<CustomerProduct>> {
+
+
+        protected Context context;
+
+        public GetCustomerProducts(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected List<CustomerProduct> doInBackground(String... params) {
+            try {
+                Log.v("REST", "Getting Customer Products");
+                return (List<CustomerProduct>) ConnectionAPI.getCustomerProducts((String) params[0]);
+            }
+            catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<CustomerProduct> result) {
+            super.onPostExecute(result);
+
+            customerproducts=result;
+
+
+        }
+    }
+
+    private class GetProducts extends AsyncTask<String, Void, List<Product>> {
+
+
+        protected Context context;
+
+        public GetProducts(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected List<Product> doInBackground(String... params) {
+            try {
+                Log.v("REST", "Getting Customer Products");
+                return (List<Product>) ConnectionAPI.getProducts((String) params[0]);
+            }
+            catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Product> result) {
+            super.onPostExecute(result);
+
+            products=result;
+
 
         }
     }
