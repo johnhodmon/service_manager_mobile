@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -71,9 +73,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
             formattedDate = df.format(c.getTime());
         }
        new GetJobs(this).execute("/jobs.json");
-        new GetProducts(this).execute("/products.json");
-        new GetCustomers(this).execute("/customers.json");
-        new GetCustomerProducts(this).execute("/customer_products.json");
+
 
 
 
@@ -133,10 +133,17 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         Bundle args = new Bundle();
         Intent intent=new Intent(this,MapsActivity.class);
 
-        /*for(Job c: jobs)
+        for(Job j: jobs)
         {
-            args.putParcelable(c.getCustomerName(),c.getLatLng());
-        }*/
+            String lat_lng=j.getCustomer().getLat_lng();
+
+            String split[]=lat_lng.split(",");
+            double lat=Double.parseDouble(split[0]);
+            double lng=Double.parseDouble(split[1]);
+
+            LatLng latLng=new LatLng(lat,lng);
+            args.putParcelable(j.getCustomer().getName(),latLng);
+        }
         args.putInt("zoom",10);
 
 
@@ -197,122 +204,6 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
     }
 
 
-    private class GetCustomers extends AsyncTask<String, Void, List<Customer>> {
 
-
-        protected Context context;
-
-        public GetCustomers(Context context)
-        {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected List<Customer> doInBackground(String... params) {
-            try {
-                Log.v("REST", "Getting Customers");
-                return (List<Customer>) ConnectionAPI.getCustomers((String) params[0]);
-            }
-            catch (Exception e) {
-                Log.v("REST", "ERROR : " + e);
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<Customer> result) {
-            super.onPostExecute(result);
-
-            customers=result;
-
-
-        }
-    }
-
-
-    private class GetCustomerProducts extends AsyncTask<String, Void, List<CustomerProduct>> {
-
-
-        protected Context context;
-
-        public GetCustomerProducts(Context context)
-        {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected List<CustomerProduct> doInBackground(String... params) {
-            try {
-                Log.v("REST", "Getting Customer Products");
-                return (List<CustomerProduct>) ConnectionAPI.getCustomerProducts((String) params[0]);
-            }
-            catch (Exception e) {
-                Log.v("REST", "ERROR : " + e);
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<CustomerProduct> result) {
-            super.onPostExecute(result);
-
-            customerproducts=result;
-
-
-        }
-    }
-
-    private class GetProducts extends AsyncTask<String, Void, List<Product>> {
-
-
-        protected Context context;
-
-        public GetProducts(Context context)
-        {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected List<Product> doInBackground(String... params) {
-            try {
-                Log.v("REST", "Getting Customer Products");
-                return (List<Product>) ConnectionAPI.getProducts((String) params[0]);
-            }
-            catch (Exception e) {
-                Log.v("REST", "ERROR : " + e);
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<Product> result) {
-            super.onPostExecute(result);
-
-            products=result;
-
-
-        }
-    }
 }
 

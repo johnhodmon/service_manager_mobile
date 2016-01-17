@@ -43,9 +43,9 @@ public class JobsAdapter extends ArrayAdapter<Job>
 
 
         if (!jobList.isEmpty()) {
-            productNameInThisRow.setText("" + jobToShow.getCustomer_product_id());
-            calloutTownInThisRow.setText("" + jobToShow.getReported_fault());
-            calloutPhoneInThisRow.setText(""+ jobToShow.getStatus());
+            productNameInThisRow.setText("" + jobToShow.getManufacturer().getName()+" "+jobToShow.getProduct().getProduct_number());
+            calloutTownInThisRow.setText("" + jobToShow.getCustomer().getTown());
+            calloutPhoneInThisRow.setText(""+ jobToShow.getCustomer().getPhone());
 
         }
 
