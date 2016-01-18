@@ -21,7 +21,8 @@ public class ClassForCommonAttributes extends AppCompatActivity
 
 
 
-    public static int idOfJobToDisplayInDetail;
+
+    public static Job jobToDisplay;
     public static String dateToShow;
     public static boolean notToday;
     public static String engineerEmail;

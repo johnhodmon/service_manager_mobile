@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -65,6 +66,45 @@ public class REST
         catch (Exception e) {
             Log.v("REST","GET REQUEST ERROR" + e.getMessage());
             e.printStackTrace();
+        }
+
+        return stringBuilder.toString();
+    }
+
+
+    public static String put(String url, String json) {
+
+        OutputStreamWriter writer = null;
+        StringBuilder stringBuilder = null;
+
+        try {
+            establishConnection(url);
+            httpCon.setRequestMethod("PUT");
+            httpCon.setDoOutput(true);
+            httpCon.setDoInput(true);
+            httpCon.connect();
+
+            Log.v("REST", "PUT REQUEST is : " + httpCon.getRequestMethod() + " " + httpCon.getURL());
+
+            // read the output from the server
+            writer = new OutputStreamWriter(httpCon.getOutputStream());
+            writer.write(json);
+            writer.close();
+
+            stringBuilder = new StringBuilder();
+            int HttpResult = httpCon.getResponseCode();
+            if(HttpResult == HttpURLConnection.HTTP_OK) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                    stringBuilder.append(line + "\n");
+
+                Log.v("REST", "JSON POST RESPONSE : " + stringBuilder.toString());
+            }
+        }
+
+        catch (Exception e) {
+            Log.v("REST", "POST REQUEST ERROR" + e.getMessage());
         }
 
         return stringBuilder.toString();

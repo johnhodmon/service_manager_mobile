@@ -13,6 +13,7 @@ public class Job
     private Product product;
     private Customer customer;
     private Manufacturer manufacturer;
+    private Report report;
 
 
 
@@ -21,7 +22,7 @@ public class Job
 
 
 
-    public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product, Customer customer,Manufacturer manufacturer)
+    public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product, Customer customer,Manufacturer manufacturer, Report report)
     {
         this.id=id;
         this .reported_fault=reported_fault;
@@ -31,11 +32,20 @@ public class Job
         this.customer=customer;
         this.product=product;
         this.manufacturer=manufacturer;
+        this.report=report;
 
     }
     public Job()
     {
 
+    }
+
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
     }
 
     public Manufacturer getManufacturer() {

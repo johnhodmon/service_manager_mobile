@@ -38,6 +38,13 @@ public class ConnectionAPI
         return new Gson().fromJson(json, collectionType);
     }
 
+    public static String editJob(String call,Job job) {
+        Type objType = new TypeToken<Job>(){}.getType();
+        String json = new Gson().toJson(job, objType);
+
+        return REST.put(call, json);
+    }
+
 
 
 }

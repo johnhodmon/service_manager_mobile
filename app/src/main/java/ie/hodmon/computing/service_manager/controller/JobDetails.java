@@ -30,7 +30,7 @@ public class JobDetails extends ClassForCommonAttributes {
     private TextView jobDetailsPhone;
     private TextView jobDetailsProduct;
     private TextView jobDetailsReportedFault;
-    private Job jobToDisplayInDetail;
+   
 
 
     @Override
@@ -77,7 +77,10 @@ public class JobDetails extends ClassForCommonAttributes {
 
     public void openReport(View view)
     {
-        startActivity(new Intent(this, ReportScreen.class));
+        Intent intent = new Intent(this, ReportScreen.class);
+
+      
+        startActivity(intent);
 
     }
 
@@ -85,10 +88,10 @@ public class JobDetails extends ClassForCommonAttributes {
     {
 
 
-        LatLng jobLoc=convertStringToLatLng(jobToDisplayInDetail.getCustomer().getLat_lng());
+        LatLng jobLoc=convertStringToLatLng(jobToDisplay.getCustomer().getLat_lng());
         Bundle args = new Bundle();
         Intent intent=new Intent(this,MapsActivity.class);
-        args.putParcelable(jobToDisplayInDetail.getCustomer().getName(),jobLoc);
+        args.putParcelable(jobToDisplay.getCustomer().getName(),jobLoc);
         args.putInt("zoom",13);
        intent.putExtra("bundle",args);
         startActivity(intent);
@@ -129,13 +132,13 @@ public class JobDetails extends ClassForCommonAttributes {
         protected void onPostExecute(Job result) {
             super.onPostExecute(result);
 
-            jobToDisplayInDetail=result;
-            jobDetailsName.setText(jobToDisplayInDetail.getCustomer().getName());
-            jobDetailsStreet.setText(jobToDisplayInDetail.getCustomer().getStreet());
-            jobDetailsTown.setText(jobToDisplayInDetail.getCustomer().getTown());
-            jobDetailsProduct.setText(jobToDisplayInDetail.getManufacturer().getName()+" "+jobToDisplayInDetail.getProduct().getProduct_number());
-            jobDetailsReportedFault.setText(jobToDisplayInDetail.getReported_fault());
-            jobDetailsPhone.setText(jobToDisplayInDetail.getCustomer().getPhone());
+            jobToDisplay=result;
+            jobDetailsName.setText(jobToDisplay.getCustomer().getName());
+            jobDetailsStreet.setText(jobToDisplay.getCustomer().getStreet());
+            jobDetailsTown.setText(jobToDisplay.getCustomer().getTown());
+            jobDetailsProduct.setText(jobToDisplay.getManufacturer().getName()+" "+jobToDisplay.getProduct().getProduct_number());
+            jobDetailsReportedFault.setText(jobToDisplay.getReported_fault());
+            jobDetailsPhone.setText(jobToDisplay.getCustomer().getPhone());
 
 
             if (dialog.isShowing())
