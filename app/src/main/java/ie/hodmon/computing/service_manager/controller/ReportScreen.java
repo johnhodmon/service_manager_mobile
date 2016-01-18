@@ -1,25 +1,27 @@
 package ie.hodmon.computing.service_manager.controller;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
+import ie.hodmon.computing.service_manager.model.Report;
 
 
 public class ReportScreen extends ClassForCommonAttributes /*implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener*/ {
@@ -134,10 +136,60 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         saveSymbol.setVisibility(View.INVISIBLE);
         editText.setVisibility(View.INVISIBLE);
         reportText.setVisibility(View.VISIBLE);
+        reportText.setText(editText.getText().toString());
+        jobToDisplay.getReport().setEngineer_report(reportText.getText().toString());
+        new UpdateReport(this).execute("/reports/" + jobToDisplay.getReport().getId()+ ".json", jobToDisplay.getReport());
+
 
     }
 
 
+    private class UpdateReport extends AsyncTask<Object, Void, String> {
+
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public UpdateReport(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.dialog = new ProgressDialog(context, 1);
+            this.dialog.setMessage("Updating report....");
+            this.dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Object... params) {
+
+            String res = null;
+            try {
+                Log.v("REST", "Putting report");
+
+                ConnectionAPI.editReport((String) params[0], (Report) params[1]);
+
+            }
+
+            catch(Exception e)
+            {
+                Log.v("REST","ERROR : " + e);
+                e.printStackTrace();
+            }
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Toast.makeText(ReportScreen.this,"Report Updated", Toast.LENGTH_LONG).show();
+            if (dialog.isShowing())
+                dialog.dismiss();
+
+        }
+    }
 
 
 

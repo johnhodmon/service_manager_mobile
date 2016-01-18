@@ -93,18 +93,19 @@ public class REST
 
             stringBuilder = new StringBuilder();
             int HttpResult = httpCon.getResponseCode();
+            Log.v("REST", "JSON PUT RESPONSE CODE : " + HttpResult);
             if(HttpResult == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "utf-8"));
                 String line = null;
                 while ((line = br.readLine()) != null)
                     stringBuilder.append(line + "\n");
 
-                Log.v("REST", "JSON POST RESPONSE : " + stringBuilder.toString());
+                Log.v("REST", "JSON PUT RESPONSE : " + stringBuilder.toString());
             }
         }
 
         catch (Exception e) {
-            Log.v("REST", "POST REQUEST ERROR" + e.getMessage());
+            Log.v("REST", "PUT REQUEST ERROR" + e.getMessage());
         }
 
         return stringBuilder.toString();

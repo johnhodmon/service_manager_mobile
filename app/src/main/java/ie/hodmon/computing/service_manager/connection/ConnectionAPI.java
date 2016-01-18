@@ -12,6 +12,7 @@ import ie.hodmon.computing.service_manager.model.Customer;
 import ie.hodmon.computing.service_manager.model.CustomerProduct;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.Product;
+import ie.hodmon.computing.service_manager.model.Report;
 
 /**
  * Created by john on 16/01/16.
@@ -38,10 +39,10 @@ public class ConnectionAPI
         return new Gson().fromJson(json, collectionType);
     }
 
-    public static String editJob(String call,Job job) {
-        Type objType = new TypeToken<Job>(){}.getType();
-        String json = new Gson().toJson(job, objType);
-
+    public static String editReport(String call, Report report) {
+        Type objType = new TypeToken<Report>(){}.getType();
+        String json = new Gson().toJson(report, objType);
+        Log.v("REST","json for put is: "+json);
         return REST.put(call, json);
     }
 

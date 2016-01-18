@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -37,6 +38,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
     private List<Customer>customers;
     private List<CustomerProduct>customerproducts;
     private List<Product>products;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
 
@@ -52,12 +54,12 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_callout_screen);
 
-        Log.v("check email","email: "+engineerEmail);
+        Log.v("check email", "email: " + engineerEmail);
         mapButton = (ImageView)findViewById(R.id.directions_icon);
 
         calloutListView=(ListView)findViewById(R.id.calloutListView);
         calloutListView.setOnItemClickListener(this);
-
+        mSwipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.job_screen_swipe_refresh_layout);
 
         Calendar c = Calendar.getInstance();
 
@@ -74,7 +76,12 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         }
        new GetJobs(this).execute("/jobs.json");
 
-
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new GetJobs(JobScreen.this).execute("/jobs.json");
+            }
+        });
 
 
     }
@@ -197,7 +204,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
             }
             JobsAdapter adapterForCalloutListView =new JobsAdapter(JobScreen.this, jobs);
             calloutListView.setAdapter(adapterForCalloutListView);
-
+            mSwipeRefreshLayout.setRefreshing(false);
             if (dialog.isShowing())
             {
                dialog.dismiss();
