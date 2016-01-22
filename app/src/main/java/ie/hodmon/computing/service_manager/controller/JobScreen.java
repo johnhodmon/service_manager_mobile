@@ -45,10 +45,6 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
 
 
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
