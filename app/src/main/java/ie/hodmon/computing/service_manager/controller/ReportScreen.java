@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -52,8 +53,10 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private String description;
     private EditText editText;
     private ImageView addPartSave;
+    private ImageView recordReportIcon;
     private String galleryFilePath;
     private Spinner partDescriptionSpinner;
+    private static final int SPEECH_REQUEST_CODE = 1;
 
 
 
@@ -91,6 +94,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         System.out.println("id:" + jobToDisplay.getId());
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);
+        recordReportIcon=(ImageView)findViewById(R.id.record_report_icon);
 
 
     }
@@ -115,8 +119,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
 
 
 
-    public void openPhotographs(View view)
-    {
+    public void openPhotographs(View view) {
         startActivity(new Intent(this, ReportPhotos.class));
     }
 
@@ -138,9 +141,14 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         reportText.setVisibility(View.VISIBLE);
         reportText.setText(editText.getText().toString());
         jobToDisplay.getReport().setEngineer_report(reportText.getText().toString());
-        new UpdateReport(this).execute("/reports/" + jobToDisplay.getReport().getId()+ ".json", jobToDisplay.getReport());
+        new UpdateReport(this).execute("/reports/" + jobToDisplay.getReport().getId() + ".json", jobToDisplay.getReport());
 
 
+    }
+
+    public void recordReport(View view)
+    {
+            displaySpeechRecognizer();
     }
 
 
@@ -195,7 +203,29 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
 
 
 
+    // Create an intent that can start the Speech Recognizer activity
+    private void displaySpeechRecognizer() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+// Start the activity, the intent will be populated with the speech text
+        startActivityForResult(intent, SPEECH_REQUEST_CODE);
+    }
 
+    // This callback is invoked when the Speech Recognizer returns.
+// This is where you process the intent and extract the speech text from the intent.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<String> results = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            String spokenText = results.get(0);
+            reportText.setText(spokenText);
+            editReport(editReport);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
 
 

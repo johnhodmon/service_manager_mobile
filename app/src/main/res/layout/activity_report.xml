@@ -218,6 +218,16 @@
             android:visibility="invisible"
             android:src="@drawable/ic_done_black_36dp" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/record_report_icon"
+            android:src="@drawable/ic_mic_black_36dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignBottom="@+id/report_edit_report"
+            android:layout_toStartOf="@+id/report_pump_image"
+            android:onClick="recordReport" />
+
 
     </RelativeLayout>
 
