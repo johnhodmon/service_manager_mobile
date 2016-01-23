@@ -19,7 +19,7 @@ import ie.hodmon.computing.service_manager.model.Engineer;
 
 public class LoginScreen extends ClassForCommonAttributes {
 
-    /*private EditText emailAddress;
+    private EditText emailAddress;
     private EditText password;
 
 
@@ -47,43 +47,10 @@ public class LoginScreen extends ClassForCommonAttributes {
     }
 
 
-    public void login(View view) {
-        try {
+    public void login(View view)
+    {
 
-            if (connectedToInternet(this) == false)
-            {
-                Toast.makeText(this, "Check your internet connection and try again", Toast.LENGTH_LONG).show();
-            }
-
-            else
-            {
-
-
-                Engineer.logInInBackground(emailAddress.getText().toString(), password.getText().toString(), new LogInCallback() {
-
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                        if (user != null) {
-                            engineerEmail = emailAddress.getText().toString();
-                            startActivity(new Intent(LoginScreen.this, JobScreen.class));
-
-                        } else {
-
-                            Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                    }
-                });
-
-            }
-
-        } catch (Exception e)
-
-        {
-            e.printStackTrace();
-        }
-    }*/
+    }
 }
 
 
