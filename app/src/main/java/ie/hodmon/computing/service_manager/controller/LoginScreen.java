@@ -106,6 +106,26 @@ public class LoginScreen extends ClassForCommonAttributes {
 
          Log.v("REST","login result: "+result);
 
+            if (dialog.isShowing())
+            {
+                dialog.dismiss();
+            }
+
+
+
+            if(result.contains("error"))
+            {
+                errorMessage.setText("Incorrect log in details, try again");
+            }
+
+            else
+            {
+                startActivity(new Intent(LoginScreen.this,JobScreen.class));
+            }
+
+
+
+
         }
     }
 
