@@ -113,14 +113,15 @@ public class LoginScreen extends ClassForCommonAttributes {
 
 
 
-            if(result.contains("error"))
+            if(result.equals("login sucessful"))
             {
-                errorMessage.setText("Incorrect log in details, try again");
+                startActivity(new Intent(LoginScreen.this, JobScreen.class));
+
             }
 
             else
             {
-                startActivity(new Intent(LoginScreen.this,JobScreen.class));
+                errorMessage.setText("Incorrect log in details, try again");
             }
 
 

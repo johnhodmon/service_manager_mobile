@@ -1,12 +1,19 @@
 package ie.hodmon.computing.service_manager.connection;
 
+import android.preference.PreferenceActivity;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.CookieManager;
+import java.net.CookieStore;
+import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by john on 16/01/16.
@@ -15,6 +22,8 @@ public class REST
 {
     private static HttpURLConnection httpCon = null;
     private static URL url;
+    private static CookieManager cookieManager=new CookieManager();
+
 
 
     private static final String URL = "http://192.168.1.101";
@@ -28,6 +37,14 @@ public class REST
             httpCon.setReadTimeout(15 * 1000); // 15 seconds to timeout
             httpCon.setRequestProperty("Content-Type", "application/json");
             httpCon.setRequestProperty("Accept", "application/json");
+            if(cookieManager.getCookieStore().getCookies().size() > 0)
+            {
+                //While joining the Cookies, use ',' or ';' as needed. Most of the server are using ';'
+                httpCon.setRequestProperty("Cookie",
+                        TextUtils.join(";", cookieManager.getCookieStore().getCookies()));
+
+                Log.v("REST","Cookies being sent"+cookieManager.getCookieStore().getCookies());
+            }
             Log.v("REST", "Http con configured for " +url);
         }
         catch (Exception e)
@@ -94,6 +111,7 @@ public class REST
             stringBuilder = new StringBuilder();
             int HttpResult = httpCon.getResponseCode();
             Log.v("REST", "JSON PUT RESPONSE CODE : " + HttpResult);
+
             if(HttpResult == HttpURLConnection.HTTP_OK) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "utf-8"));
                 String line = null;
@@ -121,33 +139,43 @@ public class REST
         try {
             establishConnection(url);
             httpCon.setRequestMethod("POST");
+            httpCon.setInstanceFollowRedirects(false);
             httpCon.setDoOutput(true);
             httpCon.setDoInput(true);
-            httpCon.connect();
 
-            Log.v("REST", "POST REQUEST is : " + httpCon.getRequestMethod() + " " + httpCon.getURL());
+            httpCon.connect();
 
             // read the output from the server
             writer = new OutputStreamWriter(httpCon.getOutputStream());
             writer.write(json);
             writer.close();
 
-            stringBuilder = new StringBuilder();
-            int HttpResult = httpCon.getResponseCode();
-            if(HttpResult == HttpURLConnection.HTTP_OK) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "utf-8"));
-                String line = null;
-                while ((line = br.readLine()) != null)
-                    stringBuilder.append(line + "\n");
 
-                Log.v("REST", "JSON POST RESPONSE : " + stringBuilder.toString());
+
+            Map<String, List<String>> headerFields = httpCon.getHeaderFields();
+            List<String> cookiesHeader = headerFields.get("Set-Cookie");
+            Log.v("REST", "POST REQUEST is : " + httpCon.getRequestMethod() + " " + httpCon.getURL());
+            Log.v("REST", "HEADERS : " + headerFields.toString());
+            if(cookiesHeader != null)
+            {
+                for (String cookie : cookiesHeader)
+                {
+                    if(cookie.contains("remember_token")) {
+                        Log.v("REST", "INTO COOKIE STORE: " + cookie);
+                        return "login sucessful";
+                    }
+                    cookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+
+                }
             }
+
+
         }
 
         catch (Exception e) {
             Log.v("REST","POST REQUEST ERROR" + e.getMessage());
         }
 
-        return stringBuilder.toString();
+        return "login failed";
     }
 }

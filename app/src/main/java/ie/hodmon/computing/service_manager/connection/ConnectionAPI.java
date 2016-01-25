@@ -53,6 +53,8 @@ public class ConnectionAPI
     Type objType = new TypeToken<SessionWrapper>(){}.getType();
     String json = new Gson().toJson(sw, objType);
     Log.v("REST","json for post is: "+json);
+
+
     return REST.post(call, json);
 }
 
