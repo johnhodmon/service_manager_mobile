@@ -135,6 +135,7 @@ public class REST
 
         OutputStreamWriter writer = null;
         StringBuilder stringBuilder = null;
+        String result=null;
 
         try {
             establishConnection(url);
@@ -160,11 +161,15 @@ public class REST
             {
                 for (String cookie : cookiesHeader)
                 {
-                    if(cookie.contains("remember_token")) {
-                        Log.v("REST", "INTO COOKIE STORE: " + cookie);
-                        return "login sucessful";
-                    }
+
+                    Log.v("REST", "INTO COOKIE STORE: " + cookie);
                     cookieManager.getCookieStore().add(null, HttpCookie.parse(cookie).get(0));
+
+                    if(cookie.contains("remember_token"))
+                    {
+
+                        result= "login sucessful";
+                    }
 
                 }
             }
@@ -176,6 +181,6 @@ public class REST
             Log.v("REST","POST REQUEST ERROR" + e.getMessage());
         }
 
-        return "login failed";
+        return result;
     }
 }

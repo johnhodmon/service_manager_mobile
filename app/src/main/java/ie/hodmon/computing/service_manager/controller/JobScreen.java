@@ -75,7 +75,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new GetJobs(JobScreen.this).execute("/jobs.json");
+                new GetJobs(JobScreen.this).execute("/jobs");
             }
         });
 

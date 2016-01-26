@@ -45,7 +45,7 @@ public class JobDetails extends ClassForCommonAttributes {
         jobDetailsProduct =(TextView)findViewById(R.id.job_details_product_name);
         jobDetailsReportedFault=(TextView)findViewById(R.id.job_details_fault);
         jobDetailsPhone=(TextView)findViewById(R.id.job_details_phone_number);
-        new GetJob(this).execute("/jobs/"+jobId+".json");
+        new GetJob(this).execute("/jobs/"+jobId);
 
 
 
