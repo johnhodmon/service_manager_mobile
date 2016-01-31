@@ -183,4 +183,27 @@ public class REST
 
         return result;
     }
+
+
+    public static String delete(String url) {
+
+        String response = null;
+
+        try {
+            establishConnection(url);
+            httpCon.setRequestMethod("DELETE");
+            httpCon.connect();
+
+            Log.v("REST", "DELETE REQUEST is : " + httpCon.getRequestMethod() + " " + httpCon.getURL());
+
+            response = httpCon.getResponseMessage();
+            Log.v("REST", "JSON DELETE RESPONSE : " + response);
+        }
+
+        catch (Exception e) {
+            Log.v("donate","DELETE REQUEST ERROR" + e.getMessage());
+        }
+
+        return response;
+    }
 }

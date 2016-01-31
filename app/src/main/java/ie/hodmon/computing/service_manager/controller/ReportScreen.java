@@ -2,13 +2,16 @@ package ie.hodmon.computing.service_manager.controller;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,6 +24,7 @@ import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
+import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.Report;
@@ -39,7 +43,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private TextView fault;
     private ListView listOfJobPartsView;
     private ImageView editReport;
-    private ImageView addSpare;
+    private ImageView addJobPart;
     private Spinner quantitySpinner;
     private Spinner orderPartQuantitySpinner;
     private List<String> listOfPartsThisPump;
@@ -47,12 +51,12 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private JobPart jobPartSelected;
     private int quantitySelected;
     private String updateQuantity;
-    private ImageView deleteSpare;
-    private ImageView editSpare;
+    private ImageView deleteJobPart;
+    private ImageView editJobPart;
     private ImageView saveSymbol;
     private String description;
     private EditText editText;
-    private ImageView addPartSave;
+    private ImageView addJobPartSave;
     private ImageView recordReportIcon;
     private String galleryFilePath;
     private Spinner partDescriptionSpinner;
@@ -60,6 +64,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private int job_part_id;
     private int job_part_quantity;
     private int part_id;
+    private PartsUsedAdapter adapterJobParts;
     private static final int SPEECH_REQUEST_CODE = 1;
 
 
@@ -77,18 +82,18 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-        addSpare=(ImageView)findViewById(R.id.report_add_part);
-        addPartSave=(ImageView)findViewById(R.id.report_add_part_save);
+        addJobPart =(ImageView)findViewById(R.id.report_add_part);
+        addJobPartSave =(ImageView)findViewById(R.id.report_add_part_save);
         Intent i=getIntent();
         String jobId=i.getStringExtra("id");
         jobParts=new ArrayList<JobPart>();
-        Log.v("REST","job parts"+jobToDisplay.getJob_parts()[0]);
+      //  Log.v("REST","job parts"+jobToDisplay.getJob_parts()[0]);
 
         listOfJobPartsView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
         reportText.setText(jobToDisplay.getReport().getEngineer_report());
         editReport=(ImageView)findViewById(R.id.report_edit_report);
-        addSpare=(ImageView)findViewById(R.id.report_add_part);
+        addJobPart =(ImageView)findViewById(R.id.report_add_part);
 
 
         productName=(TextView)findViewById(R.id.report_product_name);
@@ -99,18 +104,9 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);
         recordReportIcon=(ImageView)findViewById(R.id.record_report_icon);
-        if(jobToDisplay.getJob_parts().length!=0)
-        {
-            for (JobPart jp:jobToDisplay.getJob_parts())
-            {
-                part_id=jp.getPart_id();
-                job_part_id=jp.getId();
-                job_part_quantity=jp.getQuantity();
-                new GetPart(this).execute("/parts/" + job_part_id);
-                PartsUsedAdapter adapterJobParts =new PartsUsedAdapter(this,jobParts);
-                listOfJobPartsView.setAdapter(adapterJobParts);
-            }
-        }
+        adapterJobParts =new PartsUsedAdapter(ReportScreen.this,jobParts);
+        listOfJobPartsView.setAdapter(adapterJobParts);
+        new GetJob(this).execute("/jobs/"+jobToDisplay.getId());
 
 
     }
@@ -123,6 +119,37 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         super.onDestroy();
 
 
+    }
+
+    public void deleteJobPart(View view)
+    {
+        View row=(View)view.getParent();
+        ListView lv=(ListView)row.getParent();
+        JobPart jp=jobParts.get(lv.getPositionForView(row));
+        onDeleteJobPart(jp);
+
+    }
+
+    public void onDeleteJobPart(final JobPart jp) {
+        final String jpId = ""+jp.getId();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete This Part from Parts Used?");
+        builder.setIcon(android.R.drawable.ic_delete);
+        builder.setMessage("Are you sure?");
+        builder.setCancelable(false);
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                new DeleteJobPart(ReportScreen.this).execute("/job_parts/"+jpId);
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 
@@ -245,7 +272,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
 
 
 
-    private class GetPart extends AsyncTask<String, Void,Part> {
+    private class GetPart extends AsyncTask<String,Void,Part> {
 
         protected ProgressDialog dialog;
         protected Context context;
@@ -264,7 +291,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         @Override
         protected Part doInBackground(String... params) {
             try {
-                Log.v("REST", "Getting Job");
+                Log.v("REST", "Getting Part");
                 return (Part) ConnectionAPI.getPart((String) params[0]);
             }
             catch (Exception e) {
@@ -278,8 +305,110 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         protected void onPostExecute(Part result) {
             super.onPostExecute(result);
             Part p=result;
-           jobParts.add(new JobPart(job_part_id,jobToDisplay.getId(),part_id,job_part_quantity,p.getPart_number(),p.getDescription()));
-            listOfJobPartsView.refreshDrawableState();
+
+           jobParts.add(new JobPart(job_part_id, jobToDisplay.getId(), part_id, job_part_quantity, p.getPart_number(), p.getDescription()));
+            adapterJobParts.notifyDataSetChanged();
+
+
+
+        }
+
+
+    }
+
+    private class DeleteJobPart extends AsyncTask<String, Void, String> {
+
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public DeleteJobPart(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.dialog = new ProgressDialog(context, 1);
+            this.dialog.setMessage("Deleting Part from Job");
+            this.dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                return (String) ConnectionAPI.deleteJobPart((String) params[0]);
+            } catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            super.onPostExecute(result);
+
+            String s = result;
+            Log.v("REST", "DELETE REQUEST : " + s);
+
+            new GetJob(ReportScreen.this).execute("/jobs/"+jobToDisplay.getId());
+
+            if (dialog.isShowing())
+                dialog.dismiss();
+        }
+    }
+
+
+    private class GetJob extends AsyncTask<String, Void,Job> {
+
+
+        protected Context context;
+
+        public GetJob(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Job doInBackground(String... params) {
+            try {
+                Log.v("REST", "Getting Job");
+                return (Job) ConnectionAPI.getJob((String) params[0]);
+            }
+            catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Job result) {
+            super.onPostExecute(result);
+            jobParts.clear();
+            adapterJobParts.notifyDataSetChanged();
+            jobToDisplay=result;
+
+            if(jobToDisplay.getJob_parts().length!=0)
+            {
+                for (JobPart jp:jobToDisplay.getJob_parts())
+                {
+
+                    part_id=jp.getPart_id();
+                    job_part_id=jp.getId();
+                    job_part_quantity=jp.getQuantity();
+                    new GetPart(ReportScreen.this).execute("/parts/" + part_id);
+
+                }
+            }
 
 
 

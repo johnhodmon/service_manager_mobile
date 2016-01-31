@@ -17,7 +17,7 @@ public class JobPart
 
     public JobPart(int id,int job_id,int part_id,int quantity,String part_number, String description)
     {
-       this.id=id;
+        this.id=id;
         this.job_id=job_id;
         this.part_id=part_id;
         this.quantity=quantity;

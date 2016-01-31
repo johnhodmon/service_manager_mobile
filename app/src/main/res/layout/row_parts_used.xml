@@ -43,7 +43,7 @@
         android:src="@drawable/ic_delete_black_36dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:onClick="deleteSpare" />
+        android:onClick="deleteJobPart" />
 
     <ImageView
         android:layout_width="wrap_content"

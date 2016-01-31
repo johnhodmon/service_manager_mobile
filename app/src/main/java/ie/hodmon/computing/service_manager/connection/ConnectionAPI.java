@@ -68,6 +68,9 @@ public class ConnectionAPI
     return REST.post(call, json);
 }
 
-
+    public static String deleteJobPart(String call)
+    {
+        return REST.delete(call);
+    }
 
 }
