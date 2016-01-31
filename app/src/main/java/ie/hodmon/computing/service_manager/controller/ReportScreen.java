@@ -16,12 +16,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
-import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
+import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.Report;
 
 
@@ -36,7 +37,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private TextView engineerName;
     private TextView productName;
     private TextView fault;
-    private ListView listOfSparesOrdersView;
+    private ListView listOfJobPartsView;
     private ImageView editReport;
     private ImageView addSpare;
     private Spinner quantitySpinner;
@@ -55,6 +56,10 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private ImageView recordReportIcon;
     private String galleryFilePath;
     private Spinner partDescriptionSpinner;
+    private List<JobPart>jobParts;
+    private int job_part_id;
+    private int job_part_quantity;
+    private int part_id;
     private static final int SPEECH_REQUEST_CODE = 1;
 
 
@@ -76,10 +81,10 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         addPartSave=(ImageView)findViewById(R.id.report_add_part_save);
         Intent i=getIntent();
         String jobId=i.getStringExtra("id");
+        jobParts=new ArrayList<JobPart>();
+        Log.v("REST","job parts"+jobToDisplay.getJob_parts()[0]);
 
-     
-
-        listOfSparesOrdersView =(ListView)findViewById(R.id.listOfSparesOrders);
+        listOfJobPartsView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
         reportText.setText(jobToDisplay.getReport().getEngineer_report());
         editReport=(ImageView)findViewById(R.id.report_edit_report);
@@ -94,6 +99,18 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);
         recordReportIcon=(ImageView)findViewById(R.id.record_report_icon);
+        if(jobToDisplay.getJob_parts().length!=0)
+        {
+            for (JobPart jp:jobToDisplay.getJob_parts())
+            {
+                part_id=jp.getPart_id();
+                job_part_id=jp.getId();
+                job_part_quantity=jp.getQuantity();
+                new GetPart(this).execute("/parts/" + job_part_id);
+                PartsUsedAdapter adapterJobParts =new PartsUsedAdapter(this,jobParts);
+                listOfJobPartsView.setAdapter(adapterJobParts);
+            }
+        }
 
 
     }
@@ -228,7 +245,46 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
 
 
 
+    private class GetPart extends AsyncTask<String, Void,Part> {
 
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public GetPart(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Part doInBackground(String... params) {
+            try {
+                Log.v("REST", "Getting Job");
+                return (Part) ConnectionAPI.getPart((String) params[0]);
+            }
+            catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Part result) {
+            super.onPostExecute(result);
+            Part p=result;
+           jobParts.add(new JobPart(job_part_id,jobToDisplay.getId(),part_id,job_part_quantity,p.getPart_number(),p.getDescription()));
+            listOfJobPartsView.refreshDrawableState();
+
+
+
+        }
+    }
 
 
 

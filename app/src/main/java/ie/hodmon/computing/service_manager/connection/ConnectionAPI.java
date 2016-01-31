@@ -11,6 +11,7 @@ import java.util.List;
 import ie.hodmon.computing.service_manager.model.Customer;
 import ie.hodmon.computing.service_manager.model.CustomerProduct;
 import ie.hodmon.computing.service_manager.model.Job;
+import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.Product;
 import ie.hodmon.computing.service_manager.model.Report;
 import ie.hodmon.computing.service_manager.model.Session;
@@ -36,6 +37,15 @@ public class ConnectionAPI
         String json = REST.get(uri);
         Log.v("REST", "JSON RESULT : " + json);
         Type collectionType = new TypeToken<Job>() {
+        }.getType();
+
+        return new Gson().fromJson(json, collectionType);
+    }
+
+    public static Part getPart(String uri) {
+        String json = REST.get(uri);
+        Log.v("REST", "JSON RESULT : " + json);
+        Type collectionType = new TypeToken<Part>() {
         }.getType();
 
         return new Gson().fromJson(json, collectionType);

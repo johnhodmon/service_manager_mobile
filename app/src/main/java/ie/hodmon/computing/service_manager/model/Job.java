@@ -2,6 +2,8 @@ package ie.hodmon.computing.service_manager.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 public class Job
 {
 
@@ -14,10 +16,12 @@ public class Job
     private Customer customer;
     private Manufacturer manufacturer;
     private Report report;
+    private JobPart[] job_parts;
 
 
 
-    public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product, Customer customer,Manufacturer manufacturer, Report report)
+    public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product,
+               Customer customer,Manufacturer manufacturer, Report report,JobPart[]job_parts)
     {
         this.id=id;
         this .reported_fault=reported_fault;
@@ -28,6 +32,7 @@ public class Job
         this.product=product;
         this.manufacturer=manufacturer;
         this.report=report;
+        this.job_parts=job_parts;
 
     }
     public Job()
@@ -113,17 +118,17 @@ public class Job
 
 
 
-    public String[] getJob_parts()
+    public JobPart[] getJob_parts()
     {
         return job_parts;
     }
 
-    public void setJob_parts(String[] job_parts)
+    public void setJob_parts(JobPart[]job_parts)
     {
         this.job_parts = job_parts;
     }
 
-    private String job_parts[];
+
 
 }
 
