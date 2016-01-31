@@ -9,6 +9,7 @@ public class Report
     private String engineer_report;
     private int job_id;
 
+
     public Report(int id,String engineer_report, int job_id)
     {
         this.id=id;

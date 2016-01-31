@@ -37,7 +37,6 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private TextView productName;
     private TextView fault;
     private ListView listOfSparesOrdersView;
-  
     private ImageView editReport;
     private ImageView addSpare;
     private Spinner quantitySpinner;

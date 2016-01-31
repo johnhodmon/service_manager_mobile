@@ -17,11 +17,6 @@ public class Job
 
 
 
-
-
-
-
-
     public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product, Customer customer,Manufacturer manufacturer, Report report)
     {
         this.id=id;
@@ -115,6 +110,21 @@ public class Job
     public void setStatus(String status) {
         this.status = status;
     }
+
+
+
+    public String[] getJob_parts()
+    {
+        return job_parts;
+    }
+
+    public void setJob_parts(String[] job_parts)
+    {
+        this.job_parts = job_parts;
+    }
+
+    private String job_parts[];
+
 }
 
 

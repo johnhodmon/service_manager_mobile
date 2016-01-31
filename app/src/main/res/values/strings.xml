@@ -56,7 +56,7 @@
     <string name="editCalloutButtonLabel">Save</string>
     <string name="title_activity_report">Report</string>
     <string name="reportHeader">Report</string>
-    <string name="sparesHeader">Parts Ordered</string>
+    <string name="sparesHeader">Parts Used</string>
     <string name="reportText">report text here</string>
     <string name="action_report">Report</string>
     <string name="sparesOrderRowDateDefault">Date</string>
