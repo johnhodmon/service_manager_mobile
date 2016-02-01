@@ -202,7 +202,8 @@ public void addJobPart (View view)
 
     public void editJobPart(View view) {
         RelativeLayout rowContainingButton = (RelativeLayout) view.getParent();
-
+        ListView lv=(ListView)rowContainingButton.getParent();
+        JobPart jp=jobParts.get(lv.getPositionForView(rowContainingButton));
         editJobPartQuantitySpinner = (Spinner) rowContainingButton.getChildAt(2);
         editJobPartQuantitySpinner.setOnItemSelectedListener(this);
         TextView quantityTextView = (TextView) rowContainingButton.getChildAt(1);
@@ -230,6 +231,9 @@ public void addJobPart (View view)
             deleteJobPart.setVisibility(View.VISIBLE);
             editJobPart.setVisibility(View.VISIBLE);
             saveJobPartEdit.setVisibility(View.INVISIBLE);
+            jp.setQuantity(Integer.parseInt(updatedQuantity));
+            new editJobPartQuanity(this).execute("/job_parts",jp);
+
         }
     }
 
@@ -313,6 +317,55 @@ public void addJobPart (View view)
             Toast.makeText(ReportScreen.this,"Report Updated", Toast.LENGTH_LONG).show();
             if (dialog.isShowing())
                 dialog.dismiss();
+
+        }
+    }
+
+    private class editJobPartQuanity extends AsyncTask<Object, Void, String> {
+
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public editJobPartQuanity(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.dialog = new ProgressDialog(context, 1);
+            this.dialog.setMessage("Updating job part....");
+            this.dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Object... params) {
+
+            String res = null;
+            try {
+                Log.v("REST", "Putting jobpart");
+
+                ConnectionAPI.editJobPartQuantity((String) params[0], (JobPart) params[1]);
+
+            }
+
+            catch(Exception e)
+            {
+                Log.v("REST","ERROR : " + e);
+                e.printStackTrace();
+            }
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Toast.makeText(ReportScreen.this,"Job Parts Updated", Toast.LENGTH_LONG).show();
+            if (dialog.isShowing())
+                dialog.dismiss();
+
+            new GetJob(ReportScreen.this).execute("/jobs/"+jobToDisplay.getId());
 
         }
     }
@@ -666,8 +719,8 @@ public void addJobPart (View view)
 
         else if((parent==editJobPartQuantitySpinner))
         {
-            Log.v("spinner","updated quantity: "+(String)parent.getItemAtPosition(position));
-            editJobPartQuantitySpinner.setPrompt((String)parent.getItemAtPosition(position));
+            Log.v("spinner", "updated quantity: " + (String) parent.getItemAtPosition(position));
+            updatedQuantity=(String) parent.getItemAtPosition(position);
             //new GetJob(this).execute("jobs/"+jobToDisplay.getId());
 
         }

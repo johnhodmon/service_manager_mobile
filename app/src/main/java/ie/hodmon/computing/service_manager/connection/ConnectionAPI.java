@@ -55,6 +55,15 @@ public class ConnectionAPI
         return REST.put(call, json);
     }
 
+    public static String editJobPartQuantity(String call, JobPart jobPart) {
+        Type objType = new TypeToken<JobPart>(){}.getType();
+        String json = new Gson().toJson(jobPart, objType);
+        Log.v("REST","json for put is: "+json);
+        return REST.put(call, json);
+    }
+
+
+
     public static String addJobPart(String call, JobPart jobPart) {
         Type objType = new TypeToken<JobPart>(){}.getType();
         String json = new Gson().toJson(jobPart, objType);
