@@ -52,7 +52,7 @@ public class PartsUsedAdapter extends ArrayAdapter<JobPart>
 
 
 
-            descriptionInThisRow.setText("" + jobPartToShow.getDecsription());
+            descriptionInThisRow.setText("" + jobPartToShow.getDescription());
             quantityThisRow.setText("" + jobPartToShow.getQuantity());
         }
 

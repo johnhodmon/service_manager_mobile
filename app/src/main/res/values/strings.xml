@@ -105,6 +105,8 @@
     <string name="title_activity_report_photos">Report Photos</string>
     <string name="title_activity_maps">Map</string>
     <string name="login_header">Log In</string>
+    <string name="part_list_spinner_description">description</string>
+    <string name="part_list_spinner_id">id</string>
 
 
 </resources>

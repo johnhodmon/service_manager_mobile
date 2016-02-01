@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +29,12 @@ import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.Part;
+import ie.hodmon.computing.service_manager.model.PartList;
 import ie.hodmon.computing.service_manager.model.Report;
 
 
-public class ReportScreen extends ClassForCommonAttributes /*implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener*/ {
+public class ReportScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener
+{
 
 
 
@@ -46,7 +50,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private ImageView addJobPart;
     private Spinner quantitySpinner;
     private Spinner orderPartQuantitySpinner;
-    private List<String> listOfPartsThisPump;
+    private List<String> listOfPartsThisProduct;
     private String partSelected;
     private JobPart jobPartSelected;
     private int quantitySelected;
@@ -63,9 +67,19 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     private List<JobPart>jobParts;
     private int job_part_id;
     private int job_part_quantity;
-    private int part_id;
+    private int job_part_part_id;
+    private int part_list_part_id;
+    private int part_list_quantity;
+    private int part_list_product_id;
+    private int part_list_id;
     private PartsUsedAdapter adapterJobParts;
     private static final int SPEECH_REQUEST_CODE = 1;
+    private List<PartList>partList;
+    private PartListSpinnerAdapter  partDescriptionAdapter;
+    private JobPart jobPartToPost;
+
+
+
 
 
 
@@ -87,6 +101,9 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         Intent i=getIntent();
         String jobId=i.getStringExtra("id");
         jobParts=new ArrayList<JobPart>();
+        partList=new ArrayList<PartList>();
+        jobPartToPost=new JobPart();
+
       //  Log.v("REST","job parts"+jobToDisplay.getJob_parts()[0]);
 
         listOfJobPartsView =(ListView)findViewById(R.id.listOfSparesOrders);
@@ -94,12 +111,19 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         reportText.setText(jobToDisplay.getReport().getEngineer_report());
         editReport=(ImageView)findViewById(R.id.report_edit_report);
         addJobPart =(ImageView)findViewById(R.id.report_add_part);
-
-
+        partDescriptionSpinner=(Spinner)findViewById(R.id.report_part_spinner);
+        orderPartQuantitySpinner=(Spinner)findViewById(R.id.report_order_part_quantity);
+        Integer[]quantity={1,2,3,4,5,6,7,8,9,10};
+        ArrayAdapter<Integer> quantityArrayAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,quantity);
+        orderPartQuantitySpinner.setAdapter(quantityArrayAdapter);
+        partDescriptionAdapter=new PartListSpinnerAdapter(this,partList);
+        partDescriptionSpinner.setAdapter(partDescriptionAdapter);
+        partDescriptionSpinner.setOnItemSelectedListener(this);
+        orderPartQuantitySpinner.setOnItemSelectedListener(this);
         productName=(TextView)findViewById(R.id.report_product_name);
         fault=(TextView)findViewById(R.id.report_fault);
         fault.setText(jobToDisplay.getReported_fault());
-        productName.setText(jobToDisplay.getManufacturer().getName()+" "+jobToDisplay.getProduct().getProduct_number());
+        productName.setText(jobToDisplay.getManufacturer().getName() + " " + jobToDisplay.getProduct().getProduct_number());
         System.out.println("id:" + jobToDisplay.getId());
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);
@@ -160,7 +184,28 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         return true;
     }
 
+public void addJobPart (View view)
+{
+    addJobPart.setVisibility(View.INVISIBLE);
+    addJobPartSave.setVisibility(View.VISIBLE);
+    partDescriptionSpinner.setVisibility(View.VISIBLE);
+    orderPartQuantitySpinner.setVisibility(View.VISIBLE);
+    listOfJobPartsView.setVisibility(View.INVISIBLE);
+    partDescriptionSpinner.performClick();
 
+
+}
+
+    public void saveJobPart(View view)
+    {
+        addJobPart.setVisibility(View.VISIBLE);
+        addJobPartSave.setVisibility(View.INVISIBLE);
+        partDescriptionSpinner.setVisibility(View.INVISIBLE);
+        orderPartQuantitySpinner.setVisibility(View.INVISIBLE);
+        listOfJobPartsView.setVisibility(View.VISIBLE);
+        new addJobPart(this).execute("/jobs/" + jobToDisplay.getId(), jobPartToPost);
+
+    }
 
     public void openPhotographs(View view) {
         startActivity(new Intent(this, ReportPhotos.class));
@@ -184,7 +229,7 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         reportText.setVisibility(View.VISIBLE);
         reportText.setText(editText.getText().toString());
         jobToDisplay.getReport().setEngineer_report(reportText.getText().toString());
-        new UpdateReport(this).execute("/reports/" + jobToDisplay.getReport().getId() + ".json", jobToDisplay.getReport());
+        new UpdateReport(this).execute("/reports/" + jobToDisplay.getReport().getId(), jobToDisplay.getReport());
 
 
     }
@@ -193,6 +238,8 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     {
             displaySpeechRecognizer();
     }
+
+
 
 
     private class UpdateReport extends AsyncTask<Object, Void, String> {
@@ -242,6 +289,57 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         }
     }
 
+    private class addJobPart extends AsyncTask<Object, Void, String> {
+
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public addJobPart(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.dialog = new ProgressDialog(context, 1);
+            this.dialog.setMessage("Adding Job Part....");
+            this.dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Object... params) {
+
+            String res = null;
+            try {
+                Log.v("REST", "Posting job part");
+
+                ConnectionAPI.addJobPart((String) params[0], (JobPart) params[1]);
+
+            }
+
+            catch(Exception e)
+            {
+                Log.v("REST","ERROR : " + e);
+                e.printStackTrace();
+            }
+            return res;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if(result!=null) {
+                Log.v("REST", "Post JobPart result: "+result);
+            }
+            Toast.makeText(ReportScreen.this,"Job Part Added", Toast.LENGTH_LONG).show();
+            new GetJob(ReportScreen.this).execute("/jobs/"+jobToDisplay.getId());
+            if (dialog.isShowing())
+                dialog.dismiss();
+
+        }
+    }
+
 
 
 
@@ -272,12 +370,12 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
 
 
 
-    private class GetPart extends AsyncTask<String,Void,Part> {
+    private class FillJobPartList extends AsyncTask<String,Void,Part> {
 
         protected ProgressDialog dialog;
         protected Context context;
 
-        public GetPart(Context context)
+        public FillJobPartList(Context context)
         {
             this.context = context;
         }
@@ -305,9 +403,82 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
         protected void onPostExecute(Part result) {
             super.onPostExecute(result);
             Part p=result;
+            JobPart jpToModify=null;
+            for(JobPart jp:jobParts)
+            {
+                if(jp.getPart_id()==p.getId())
+                {
+                    jpToModify=jp;
+                }
+            }
+            if(jpToModify!=null)
+            {
+                jpToModify.setDescription(p.getDescription());
+                jpToModify.setPart_number(p.getPart_number());
+            }
 
-           jobParts.add(new JobPart(job_part_id, jobToDisplay.getId(), part_id, job_part_quantity, p.getPart_number(), p.getDescription()));
             adapterJobParts.notifyDataSetChanged();
+
+
+
+
+
+        }
+
+
+    }
+
+
+
+    private class FillPartList extends AsyncTask<String,Void,Part> {
+
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public FillPartList(Context context)
+        {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Part doInBackground(String... params) {
+            try {
+                Log.v("REST", "Getting Part");
+                return (Part) ConnectionAPI.getPart((String) params[0]);
+            }
+            catch (Exception e) {
+                Log.v("REST", "ERROR : " + e);
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Part result) {
+            super.onPostExecute(result);
+            Part p=result;
+            PartList plToModify=null;
+            for(PartList pl:partList)
+            {
+                if(pl.getPart_id()==p.getId())
+                {
+                    plToModify=pl;
+                }
+            }
+            if(plToModify!=null)
+            {
+                plToModify.setDescription(p.getDescription());
+                plToModify.setPartNumber(p.getPart_number());
+            }
+
+            partDescriptionAdapter.notifyDataSetChanged();
+
 
 
 
@@ -402,13 +573,29 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
                 for (JobPart jp:jobToDisplay.getJob_parts())
                 {
 
-                    part_id=jp.getPart_id();
-                    job_part_id=jp.getId();
-                    job_part_quantity=jp.getQuantity();
-                    new GetPart(ReportScreen.this).execute("/parts/" + part_id);
+                   jobParts.add(jp);
+
+                    new FillJobPartList(ReportScreen.this).execute("/parts/" + jp.getPart_id());
+                    adapterJobParts.notifyDataSetChanged();
 
                 }
             }
+
+            if(jobToDisplay.getPart_lists().length!=0)
+            {
+                for (PartList pl:jobToDisplay.getPart_lists())
+                {
+
+                    partList.add(pl);
+                    partDescriptionAdapter.notifyDataSetChanged();
+                    new FillPartList(ReportScreen.this).execute("/parts/" + pl.getPart_id());
+
+                }
+            }
+
+
+
+
 
 
 
@@ -416,5 +603,46 @@ public class ReportScreen extends ClassForCommonAttributes /*implements AdapterV
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
 
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+    {
+        Log.v("spinner", "partlist size" + partList.size());
+
+        if(parent==orderPartQuantitySpinner)
+        {
+            jobPartToPost.setQuantity((int) parent.getItemAtPosition(position));
+
+        }
+
+        else if((parent==partDescriptionSpinner))
+        {
+
+
+
+            PartList pl=(PartList)parent.getItemAtPosition(position);
+            Log.v("spinner","desc: "+pl.getDescription());
+            Log.v("spinner","partId: "+pl.getPart_id());
+            Log.v("spinner","id: "+pl.getId());
+            jobPartToPost.setPart_id(pl.getPart_id());
+
+
+        }
+
+        jobPartToPost.setJob_id(jobToDisplay.getId());
+
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent)
+    {
+
+    }
 }

@@ -150,7 +150,7 @@
             android:id="@+id/report_add_part"
             android:layout_alignBottom="@+id/sparesHeader"
             android:layout_marginTop="16dp"
-            android:onClick="addSpare"
+            android:onClick="addJobPart"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_add_black_36dp" />
 
@@ -163,7 +163,7 @@
             android:layout_alignBottom="@+id/sparesHeader"
             android:src="@drawable/ic_done_black_36dp"
             android:nestedScrollingEnabled="false"
-            android:onClick="saveAddedPart" />
+            android:onClick="saveJobPart" />
 
         <Spinner
             android:layout_width="wrap_content"

@@ -131,7 +131,7 @@ public class REST
 
 
 
-    public static String post(String url, String json) {
+    public static String login(String url, String json) {
 
         OutputStreamWriter writer = null;
         StringBuilder stringBuilder = null;
@@ -184,6 +184,45 @@ public class REST
         return result;
     }
 
+    public static String post(String url, String json) {
+
+        OutputStreamWriter writer = null;
+        StringBuilder stringBuilder = null;
+        String result=null;
+
+        try {
+            establishConnection(url);
+            httpCon.setRequestMethod("POST");
+            httpCon.setInstanceFollowRedirects(false);
+            httpCon.setDoOutput(true);
+            httpCon.setDoInput(true);
+
+            httpCon.connect();
+
+            // read the output from the server
+            writer = new OutputStreamWriter(httpCon.getOutputStream());
+            writer.write(json);
+            writer.close();
+            stringBuilder = new StringBuilder();
+            int HttpResult = httpCon.getResponseCode();
+            Log.v("REST", "JSON POST JOBPART RESPONSE CODE : " + HttpResult);
+
+            if(HttpResult == HttpURLConnection.HTTP_OK) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                    stringBuilder.append(line + "\n");
+
+                Log.v("REST", "JSON POST JOB RESPONSE : " + stringBuilder.toString());
+            }
+        }
+
+        catch (Exception e) {
+            Log.v("REST","POST REQUEST ERROR" + e.getMessage());
+        }
+
+        return result;
+    }
 
     public static String delete(String url) {
 

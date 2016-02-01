@@ -8,13 +8,10 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import ie.hodmon.computing.service_manager.model.Customer;
-import ie.hodmon.computing.service_manager.model.CustomerProduct;
 import ie.hodmon.computing.service_manager.model.Job;
+import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.Part;
-import ie.hodmon.computing.service_manager.model.Product;
 import ie.hodmon.computing.service_manager.model.Report;
-import ie.hodmon.computing.service_manager.model.Session;
 import ie.hodmon.computing.service_manager.model.SessionWrapper;
 
 /**
@@ -58,14 +55,21 @@ public class ConnectionAPI
         return REST.put(call, json);
     }
 
+    public static String addJobPart(String call, JobPart jobPart) {
+        Type objType = new TypeToken<JobPart>(){}.getType();
+        String json = new Gson().toJson(jobPart, objType);
+        Log.v("REST","json for post to jobparts is: "+json);
+        return REST.post(call, json);
+    }
+
     public static String login (String call,SessionWrapper sw)
 {
     Type objType = new TypeToken<SessionWrapper>(){}.getType();
     String json = new Gson().toJson(sw, objType);
-    Log.v("REST","json for post is: "+json);
+    Log.v("REST","json for login is: "+json);
 
 
-    return REST.post(call, json);
+    return REST.login(call, json);
 }
 
     public static String deleteJobPart(String call)

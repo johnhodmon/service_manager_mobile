@@ -10,19 +10,19 @@ public class JobPart
     private int job_id;
     private int part_id;
     private int quantity;
-    private String part_number;
-    private String decsription;
+    private transient String part_number;
+    private transient String description;
 
 
 
-    public JobPart(int id,int job_id,int part_id,int quantity,String part_number, String description)
+    public JobPart(int job_id,int part_id,int quantity)
     {
-        this.id=id;
+
         this.job_id=job_id;
         this.part_id=part_id;
         this.quantity=quantity;
-        this.part_number=part_number;
-        this.decsription=description;
+
+
     }
 
     public JobPart()
@@ -30,12 +30,12 @@ public class JobPart
 
     }
 
-    public String getDecsription() {
-        return decsription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecsription(String decsription) {
-        this.decsription = decsription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getId() {

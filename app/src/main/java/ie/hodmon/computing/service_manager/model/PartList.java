@@ -3,14 +3,16 @@ package ie.hodmon.computing.service_manager.model;
 /**
  * Created by John on 23/02/2015.
  */
-public class PartsList
+public class PartList
 {
    private int id;
    private int part_id;
    private int product_id;
    private int quantity;
+   private String description;
+    private String partNumber;
 
-    public PartsList(int id,int part_id,int product_id, int quantity)
+    public PartList(int id, int part_id, int product_id, int quantity)
     {
         this.id=id;
         this.part_id=part_id;
@@ -49,5 +51,21 @@ public class PartsList
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPartNumber() {
+        return partNumber;
+    }
+
+    public void setPartNumber(String partNumber) {
+        this.partNumber = partNumber;
     }
 }

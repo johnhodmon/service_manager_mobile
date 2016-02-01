@@ -17,6 +17,7 @@ public class Job
     private Manufacturer manufacturer;
     private Report report;
     private JobPart[] job_parts;
+    private PartList[] part_lists;
 
 
 
@@ -128,8 +129,13 @@ public class Job
         this.job_parts = job_parts;
     }
 
+    public PartList[] getPart_lists() {
+        return part_lists;
+    }
 
-
+    public void setPart_lists(PartList[] part_lists) {
+        this.part_lists = part_lists;
+    }
 }
 
 

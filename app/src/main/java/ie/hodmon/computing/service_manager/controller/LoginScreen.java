@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class LoginScreen extends ClassForCommonAttributes {
     private EditText emailAddress;
     private EditText password;
     private TextView errorMessage;
+    private Button loginButton;
 
 
     @Override
@@ -43,6 +45,8 @@ public class LoginScreen extends ClassForCommonAttributes {
         password = (EditText) findViewById(R.id.password);
         emailAddress = (EditText) findViewById(R.id.emailAddress);
         errorMessage = (TextView) findViewById(R.id.error_message);
+        loginButton=(Button)findViewById(R.id.button);
+        login(loginButton);
 
 
     }
@@ -64,7 +68,8 @@ public class LoginScreen extends ClassForCommonAttributes {
     {
 
         errorMessage.setText("");
-        SessionWrapper sw=new SessionWrapper(new Session(emailAddress.getText().toString(),password.getText().toString()));
+        SessionWrapper sw=new SessionWrapper(new Session("jhodmon@servicemanager.ie","secret"));
+        //SessionWrapper sw=new SessionWrapper(new Session(emailAddress.getText().toString(),password.getText().toString()));
         new Login(this).execute("/login",sw);
     }
 
