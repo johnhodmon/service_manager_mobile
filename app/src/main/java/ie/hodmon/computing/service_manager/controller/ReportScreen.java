@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -42,41 +43,29 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
 
 
     private TextView reportText;
-    private TextView engineerName;
     private TextView productName;
     private TextView fault;
     private ListView listOfJobPartsView;
     private ImageView editReport;
     private ImageView addJobPart;
-    private Spinner quantitySpinner;
     private Spinner orderPartQuantitySpinner;
-    private List<String> listOfPartsThisProduct;
-    private String partSelected;
-    private JobPart jobPartSelected;
-    private int quantitySelected;
-    private String updateQuantity;
-    private ImageView deleteJobPart;
     private ImageView editJobPart;
+    private ImageView saveJobPartEdit;
+    private ImageView deleteJobPart;
     private ImageView saveSymbol;
-    private String description;
     private EditText editText;
     private ImageView addJobPartSave;
-    private ImageView recordReportIcon;
-    private String galleryFilePath;
     private Spinner partDescriptionSpinner;
+    private Spinner editJobPartQuantitySpinner;
     private List<JobPart>jobParts;
-    private int job_part_id;
-    private int job_part_quantity;
-    private int job_part_part_id;
-    private int part_list_part_id;
-    private int part_list_quantity;
-    private int part_list_product_id;
-    private int part_list_id;
     private PartsUsedAdapter adapterJobParts;
     private static final int SPEECH_REQUEST_CODE = 1;
     private List<PartList>partList;
     private PartListSpinnerAdapter  partDescriptionAdapter;
     private JobPart jobPartToPost;
+    private String updatedQuantity;
+
+
 
 
 
@@ -96,6 +85,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
+        Integer[]quantity={1,2,3,4,5,6,7,8,9,10};
         addJobPart =(ImageView)findViewById(R.id.report_add_part);
         addJobPartSave =(ImageView)findViewById(R.id.report_add_part_save);
         Intent i=getIntent();
@@ -103,6 +93,10 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         jobParts=new ArrayList<JobPart>();
         partList=new ArrayList<PartList>();
         jobPartToPost=new JobPart();
+
+
+
+        ArrayAdapter<Integer> editQtyArrayAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,quantity);
 
       //  Log.v("REST","job parts"+jobToDisplay.getJob_parts()[0]);
 
@@ -113,7 +107,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         addJobPart =(ImageView)findViewById(R.id.report_add_part);
         partDescriptionSpinner=(Spinner)findViewById(R.id.report_part_spinner);
         orderPartQuantitySpinner=(Spinner)findViewById(R.id.report_order_part_quantity);
-        Integer[]quantity={1,2,3,4,5,6,7,8,9,10};
+
         ArrayAdapter<Integer> quantityArrayAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,quantity);
         orderPartQuantitySpinner.setAdapter(quantityArrayAdapter);
         partDescriptionAdapter=new PartListSpinnerAdapter(this,partList);
@@ -127,7 +121,6 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         System.out.println("id:" + jobToDisplay.getId());
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);
-        recordReportIcon=(ImageView)findViewById(R.id.record_report_icon);
         adapterJobParts =new PartsUsedAdapter(ReportScreen.this,jobParts);
         listOfJobPartsView.setAdapter(adapterJobParts);
         new GetJob(this).execute("/jobs/"+jobToDisplay.getId());
@@ -206,6 +199,41 @@ public void addJobPart (View view)
         new addJobPart(this).execute("/jobs/" + jobToDisplay.getId(), jobPartToPost);
 
     }
+
+    public void editJobPart(View view) {
+        RelativeLayout rowContainingButton = (RelativeLayout) view.getParent();
+
+        editJobPartQuantitySpinner = (Spinner) rowContainingButton.getChildAt(2);
+        editJobPartQuantitySpinner.setOnItemSelectedListener(this);
+        TextView quantityTextView = (TextView) rowContainingButton.getChildAt(1);
+        TextView descriptionTextView = (TextView) rowContainingButton.getChildAt(0);
+        saveJobPartEdit = (ImageView) rowContainingButton.getChildAt(5);
+
+        deleteJobPart = (ImageView) rowContainingButton.getChildAt(3);
+        editJobPart = (ImageView) rowContainingButton.getChildAt(4);
+
+
+        if (editJobPartQuantitySpinner.getVisibility() == View.INVISIBLE) {
+
+            editJobPartQuantitySpinner.setVisibility(View.VISIBLE);
+            editJobPartQuantitySpinner.performClick();
+            quantityTextView.setVisibility(View.INVISIBLE);
+            deleteJobPart.setVisibility(View.INVISIBLE);
+            editJobPart.setVisibility(View.INVISIBLE);
+            saveJobPartEdit.setVisibility(View.VISIBLE);
+
+        }
+        else
+        {
+            editJobPartQuantitySpinner.setVisibility(View.INVISIBLE);
+            quantityTextView.setVisibility(View.VISIBLE);
+            deleteJobPart.setVisibility(View.VISIBLE);
+            editJobPart.setVisibility(View.VISIBLE);
+            saveJobPartEdit.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
 
     public void openPhotographs(View view) {
         startActivity(new Intent(this, ReportPhotos.class));
@@ -565,7 +593,8 @@ public void addJobPart (View view)
         protected void onPostExecute(Job result) {
             super.onPostExecute(result);
             jobParts.clear();
-            adapterJobParts.notifyDataSetChanged();
+            partList.clear();
+
             jobToDisplay=result;
 
             if(jobToDisplay.getJob_parts().length!=0)
@@ -583,6 +612,7 @@ public void addJobPart (View view)
 
             if(jobToDisplay.getPart_lists().length!=0)
             {
+
                 for (PartList pl:jobToDisplay.getPart_lists())
                 {
 
@@ -633,6 +663,16 @@ public void addJobPart (View view)
 
 
         }
+
+        else if((parent==editJobPartQuantitySpinner))
+        {
+            Log.v("spinner","updated quantity: "+(String)parent.getItemAtPosition(position));
+            editJobPartQuantitySpinner.setPrompt((String)parent.getItemAtPosition(position));
+            //new GetJob(this).execute("jobs/"+jobToDisplay.getId());
+
+        }
+
+
 
         jobPartToPost.setJob_id(jobToDisplay.getId());
 

@@ -42,7 +42,7 @@ public class PartsUsedAdapter extends ArrayAdapter<JobPart>
         TextView quantityThisRow=(TextView)viewOfRow.findViewById(R.id.sparesOrderRowQuantity);
         ImageView deleteButtonThisRow=(ImageView)viewOfRow.findViewById(R.id.spares_row_delete_symbol);
         ImageView editButtonThisRow=(ImageView)viewOfRow.findViewById(R.id.spares_row_edit_symbol);
-        Spinner spinnerForQuantity=(Spinner) viewOfRow.findViewById(R.id.spinnerForQuantity);
+        Spinner spinnerForQuantity=(Spinner) viewOfRow.findViewById(R.id.editPartQtySpinner);
         spinnerForQuantity.setVisibility(View.INVISIBLE);
 
 
