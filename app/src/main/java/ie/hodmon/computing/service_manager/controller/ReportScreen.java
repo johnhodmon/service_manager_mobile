@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
+
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
@@ -36,8 +37,6 @@ import ie.hodmon.computing.service_manager.model.Report;
 
 public class ReportScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener
 {
-
-
 
 
 
@@ -93,6 +92,14 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         jobParts=new ArrayList<JobPart>();
         partList=new ArrayList<PartList>();
         jobPartToPost=new JobPart();
+        Intent intent=getIntent();
+        intent.getExtras();
+        String barcode = intent.getStringExtra("barcode");
+        if (barcode!=null)
+        {
+            Log.v("scanner","code: "+barcode);
+            addScannedPart(barcode);
+        }
 
 
 
@@ -135,6 +142,11 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
     {
         super.onDestroy();
 
+
+    }
+
+    public void addScannedPart(String barcode)
+    {
 
     }
 
@@ -251,6 +263,11 @@ public void addJobPart (View view)
         reportText.setVisibility(View.INVISIBLE);
         editText.setText(reportText.getText().toString());
         editText.hasFocus();
+    }
+
+    public void scanBarcode(View view)
+    {
+        startActivity(new Intent(this,barcode_scanner.class));
     }
 
     public void saveReport(View view)

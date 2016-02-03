@@ -228,6 +228,15 @@
             android:layout_toStartOf="@+id/report_pump_image"
             android:onClick="recordReport" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="scan"
+            android:id="@+id/scan_button"
+            android:layout_alignBottom="@+id/sparesHeader"
+            android:layout_toStartOf="@+id/record_report_icon"
+            android:onClick="scanBarcode" />
+
 
     </RelativeLayout>
 

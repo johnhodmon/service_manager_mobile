@@ -87,15 +87,15 @@
     <string name="job_details_fault">Fault</string>
     <string name="job_details_customer_name">Customer Name</string>
     <string name="job_details_phone_number">Phone</string>
-    <string name="job_details_street" >street</string>
+    <string name="job_details_street">street</string>
     <string name="job_details_town">town</string>
     <string name="report_product_name">Product Name</string>
     <string name="report_fault">Fault</string>
     <string name="report_service_engineer">Engineer Name</string>
-    <string name="job_details_go_to_report" >Report</string>
+    <string name="job_details_go_to_report">Report</string>
     <string name="report_heading">Observations</string>
     <string name="part_list_row_description">description</string>
-    <string name="part_list_row_quantity" >Qty</string>
+    <string name="part_list_row_quantity">Qty</string>
     <string name="report_orrder_parts_header">Order Spare Parts</string>
     <string name="report_photos_header">Photos</string>
     <string name="selectPhotoMethod">Choose to browse gallery for a photo or take photo with camera</string>
@@ -107,6 +107,7 @@
     <string name="login_header">Log In</string>
     <string name="part_list_spinner_description">description</string>
     <string name="part_list_spinner_id">id</string>
+    <string name="title_activity_barcode_scanner">BarcodeScanner</string>
 
 
 </resources>
