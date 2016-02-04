@@ -31,10 +31,10 @@ import ie.hodmon.computing.service_manager.CameraSourcePreview;
 import ie.hodmon.computing.service_manager.GraphicOverlay;
 import ie.hodmon.computing.service_manager.R;
 
-public class barcode_scanner extends AppCompatActivity {
+public class barcode_scanner extends ClassForCommonAttributes {
 
 
-    private CameraSource mCameraSource;
+    public CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
     private  BarcodeTrackerFactory barcodeFactory;
@@ -111,7 +111,7 @@ public class barcode_scanner extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mCameraSource.release(); //release the resources
     }

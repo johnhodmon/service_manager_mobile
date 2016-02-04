@@ -32,6 +32,7 @@ import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.PartList;
+import ie.hodmon.computing.service_manager.model.PartListWithPartNumber;
 import ie.hodmon.computing.service_manager.model.Report;
 
 
@@ -63,22 +64,8 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
     private PartListSpinnerAdapter  partDescriptionAdapter;
     private JobPart jobPartToPost;
     private String updatedQuantity;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private String barcode;
+    private List<PartListWithPartNumber>partListsWithPartNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +81,8 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         jobPartToPost=new JobPart();
         Intent intent=getIntent();
         intent.getExtras();
-        String barcode = intent.getStringExtra("barcode");
-        if (barcode!=null)
-        {
-            Log.v("scanner","code: "+barcode);
-            addScannedPart(barcode);
-        }
+        barcode = intent.getStringExtra("barcode");
+
 
 
 
@@ -133,6 +116,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         new GetJob(this).execute("/jobs/"+jobToDisplay.getId());
 
 
+
     }
 
 
@@ -145,8 +129,39 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
 
     }
 
-    public void addScannedPart(String barcode)
+    public void addScannedPart()
     {
+        if(!jobParts.isEmpty())
+        {
+            int partId=0;
+            for (PartList pl: partList)
+            {
+                Log.v("scanner","part number:"+pl.getPartNumber());
+                if (pl.getPartNumber().equals(barcode))
+                {
+                    partId=pl.getPart_id();
+                }
+            }
+
+            if(partId!=0)
+            {
+                jobPartToPost.setPart_id(partId);
+
+                jobPartToPost.setJob_id(jobToDisplay.getId());
+                jobPartToPost.setQuantity(1);
+                Log.v("scanner","job id:"+jobToDisplay.getId());
+                new addJobPart(this).execute("/jobs/" + jobToDisplay.getId(), jobPartToPost);
+            }
+
+            else
+            {
+                Toast.makeText(this,"Part number not found in database",Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(this,"Part list not yet loaded, check internet connection",Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -573,6 +588,7 @@ public void addJobPart (View view)
             {
                 plToModify.setDescription(p.getDescription());
                 plToModify.setPartNumber(p.getPart_number());
+                Log.v("scanner", "portnumber:" + p.getPart_number());
             }
 
             partDescriptionAdapter.notifyDataSetChanged();
@@ -692,11 +708,6 @@ public void addJobPart (View view)
 
                 }
             }
-
-
-
-
-
 
 
         }
