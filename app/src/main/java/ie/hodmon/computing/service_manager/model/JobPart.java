@@ -10,8 +10,7 @@ public class JobPart
     private int job_id;
     private int part_id;
     private int quantity;
-    private transient String part_number;
-    private transient String description;
+
 
 
 
@@ -30,13 +29,7 @@ public class JobPart
 
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public int getId() {
         return id;
@@ -70,11 +63,5 @@ public class JobPart
         this.quantity = quantity;
     }
 
-    public String getPart_number() {
-        return part_number;
-    }
 
-    public void setPart_number(String part_number) {
-        this.part_number = part_number;
-    }
 }

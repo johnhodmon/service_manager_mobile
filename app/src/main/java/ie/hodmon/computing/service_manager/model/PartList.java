@@ -9,8 +9,7 @@ public class PartList
    private int part_id;
    private int product_id;
    private int quantity;
-   private String description;
-    private String partNumber;
+
 
     public PartList(int id, int part_id, int product_id, int quantity)
     {
@@ -53,19 +52,5 @@ public class PartList
         this.quantity = quantity;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPartNumber() {
-        return partNumber;
-    }
-
-    public void setPartNumber(String partNumber) {
-        this.partNumber = partNumber;
-    }
 }

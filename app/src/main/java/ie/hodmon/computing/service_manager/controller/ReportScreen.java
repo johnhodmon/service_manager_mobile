@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +29,7 @@ import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
+import ie.hodmon.computing.service_manager.model.JobPartWithPartNumber;
 import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.PartList;
 import ie.hodmon.computing.service_manager.model.PartListWithPartNumber;
@@ -57,15 +57,15 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
     private ImageView addJobPartSave;
     private Spinner partDescriptionSpinner;
     private Spinner editJobPartQuantitySpinner;
-    private List<JobPart>jobParts;
     private PartsUsedAdapter adapterJobParts;
     private static final int SPEECH_REQUEST_CODE = 1;
-    private List<PartList>partList;
-    private PartListSpinnerAdapter  partDescriptionAdapter;
+     private PartListSpinnerAdapter  partDescriptionAdapter;
     private JobPart jobPartToPost;
     private String updatedQuantity;
-    private String barcode;
+
     private List<PartListWithPartNumber>partListsWithPartNumber;
+    private List<JobPartWithPartNumber> jobPartsWithPartNumber;
+    private List <JobPart>jobParts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +75,14 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         addJobPart =(ImageView)findViewById(R.id.report_add_part);
         addJobPartSave =(ImageView)findViewById(R.id.report_add_part_save);
         Intent i=getIntent();
-        String jobId=i.getStringExtra("id");
         jobParts=new ArrayList<JobPart>();
-        partList=new ArrayList<PartList>();
+        jobPartsWithPartNumber=new ArrayList<JobPartWithPartNumber>();
+        partListsWithPartNumber=new ArrayList<PartListWithPartNumber>();
+
         jobPartToPost=new JobPart();
         Intent intent=getIntent();
         intent.getExtras();
-        barcode = intent.getStringExtra("barcode");
+
 
 
 
@@ -100,7 +101,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
 
         ArrayAdapter<Integer> quantityArrayAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,quantity);
         orderPartQuantitySpinner.setAdapter(quantityArrayAdapter);
-        partDescriptionAdapter=new PartListSpinnerAdapter(this,partList);
+        partDescriptionAdapter=new PartListSpinnerAdapter(this,partListsWithPartNumber);
         partDescriptionSpinner.setAdapter(partDescriptionAdapter);
         partDescriptionSpinner.setOnItemSelectedListener(this);
         orderPartQuantitySpinner.setOnItemSelectedListener(this);
@@ -111,7 +112,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         System.out.println("id:" + jobToDisplay.getId());
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);
-        adapterJobParts =new PartsUsedAdapter(ReportScreen.this,jobParts);
+        adapterJobParts =new PartsUsedAdapter(ReportScreen.this,jobPartsWithPartNumber);
         listOfJobPartsView.setAdapter(adapterJobParts);
         new GetJob(this).execute("/jobs/"+jobToDisplay.getId());
 
@@ -131,13 +132,13 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
 
     public void addScannedPart()
     {
-        if(!jobParts.isEmpty())
+        if(!partListsWithPartNumber.isEmpty())
         {
             int partId=0;
-            for (PartList pl: partList)
+            for (PartListWithPartNumber pl: partListsWithPartNumber)
             {
-                Log.v("scanner","part number:"+pl.getPartNumber());
-                if (pl.getPartNumber().equals(barcode))
+                Log.v("scanner","part number:"+pl.getPart_number());
+                if (pl.getPart_number().equals(getIntent().getStringExtra("barcode")))
                 {
                     partId=pl.getPart_id();
                 }
@@ -150,6 +151,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
                 jobPartToPost.setJob_id(jobToDisplay.getId());
                 jobPartToPost.setQuantity(1);
                 Log.v("scanner","job id:"+jobToDisplay.getId());
+
                 new addJobPart(this).execute("/jobs/" + jobToDisplay.getId(), jobPartToPost);
             }
 
@@ -163,19 +165,22 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
             Toast.makeText(this,"Part list not yet loaded, check internet connection",Toast.LENGTH_LONG).show();
         }
 
+        getIntent().removeExtra("barcode");
+
+
     }
 
     public void deleteJobPart(View view)
     {
         View row=(View)view.getParent();
         ListView lv=(ListView)row.getParent();
-        JobPart jp=jobParts.get(lv.getPositionForView(row));
-        onDeleteJobPart(jp);
+        JobPartWithPartNumber jpp=jobPartsWithPartNumber.get(lv.getPositionForView(row));
+        onDeleteJobPart(jpp);
 
     }
 
-    public void onDeleteJobPart(final JobPart jp) {
-        final String jpId = ""+jp.getId();
+    public void onDeleteJobPart(final JobPartWithPartNumber jp) {
+        final String jpId = ""+jp.getJobPartId();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete This Part from Parts Used?");
         builder.setIcon(android.R.drawable.ic_delete);
@@ -230,7 +235,7 @@ public void addJobPart (View view)
     public void editJobPart(View view) {
         RelativeLayout rowContainingButton = (RelativeLayout) view.getParent();
         ListView lv=(ListView)rowContainingButton.getParent();
-        JobPart jp=jobParts.get(lv.getPositionForView(rowContainingButton));
+        JobPartWithPartNumber jpp=jobPartsWithPartNumber.get(lv.getPositionForView(rowContainingButton));
         editJobPartQuantitySpinner = (Spinner) rowContainingButton.getChildAt(2);
         editJobPartQuantitySpinner.setOnItemSelectedListener(this);
         TextView quantityTextView = (TextView) rowContainingButton.getChildAt(1);
@@ -239,6 +244,15 @@ public void addJobPart (View view)
 
         deleteJobPart = (ImageView) rowContainingButton.getChildAt(3);
         editJobPart = (ImageView) rowContainingButton.getChildAt(4);
+
+        JobPart jp=new JobPart();
+        for(JobPart j:jobParts)
+        {
+            if(j.getId()==jpp.getJobPartId())
+            {
+                jp=j;
+            }
+        }
 
 
         if (editJobPartQuantitySpinner.getVisibility() == View.INVISIBLE) {
@@ -483,123 +497,10 @@ public void addJobPart (View view)
 
 
 
-    private class FillJobPartList extends AsyncTask<String,Void,Part> {
-
-        protected ProgressDialog dialog;
-        protected Context context;
-
-        public FillJobPartList(Context context)
-        {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected Part doInBackground(String... params) {
-            try {
-                Log.v("REST", "Getting Part");
-                return (Part) ConnectionAPI.getPart((String) params[0]);
-            }
-            catch (Exception e) {
-                Log.v("REST", "ERROR : " + e);
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Part result) {
-            super.onPostExecute(result);
-            Part p=result;
-            JobPart jpToModify=null;
-            for(JobPart jp:jobParts)
-            {
-                if(jp.getPart_id()==p.getId())
-                {
-                    jpToModify=jp;
-                }
-            }
-            if(jpToModify!=null)
-            {
-                jpToModify.setDescription(p.getDescription());
-                jpToModify.setPart_number(p.getPart_number());
-            }
-
-            adapterJobParts.notifyDataSetChanged();
 
 
 
 
-
-        }
-
-
-    }
-
-
-
-    private class FillPartList extends AsyncTask<String,Void,Part> {
-
-        protected ProgressDialog dialog;
-        protected Context context;
-
-        public FillPartList(Context context)
-        {
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected Part doInBackground(String... params) {
-            try {
-                Log.v("REST", "Getting Part");
-                return (Part) ConnectionAPI.getPart((String) params[0]);
-            }
-            catch (Exception e) {
-                Log.v("REST", "ERROR : " + e);
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Part result) {
-            super.onPostExecute(result);
-            Part p=result;
-            PartList plToModify=null;
-            for(PartList pl:partList)
-            {
-                if(pl.getPart_id()==p.getId())
-                {
-                    plToModify=pl;
-                }
-            }
-            if(plToModify!=null)
-            {
-                plToModify.setDescription(p.getDescription());
-                plToModify.setPartNumber(p.getPart_number());
-                Log.v("scanner", "portnumber:" + p.getPart_number());
-            }
-
-            partDescriptionAdapter.notifyDataSetChanged();
-
-
-
-
-        }
-
-
-    }
 
     private class DeleteJobPart extends AsyncTask<String, Void, String> {
 
@@ -651,8 +552,7 @@ public void addJobPart (View view)
 
         protected Context context;
 
-        public GetJob(Context context)
-        {
+        public GetJob(Context context) {
             this.context = context;
         }
 
@@ -667,8 +567,7 @@ public void addJobPart (View view)
             try {
                 Log.v("REST", "Getting Job");
                 return (Job) ConnectionAPI.getJob((String) params[0]);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.v("REST", "ERROR : " + e);
                 e.printStackTrace();
             }
@@ -678,36 +577,57 @@ public void addJobPart (View view)
         @Override
         protected void onPostExecute(Job result) {
             super.onPostExecute(result);
-            jobParts.clear();
-            partList.clear();
+            jobPartsWithPartNumber.clear();
+            partListsWithPartNumber.clear();
 
-            jobToDisplay=result;
+            jobToDisplay = result;
 
-            if(jobToDisplay.getJob_parts().length!=0)
+            Log.v("fill_lists","job parts length: "+jobToDisplay.getJob_parts().length);
+            Log.v("fill_lists","job parts with numbers length: "+ jobToDisplay.getJob_parts_with_part_numbers().length);
+            Log.v("fill_lists","part list with nums length: "+  jobToDisplay.getPart_lists_with_part_numbers().length);
+
+
+
+            if (jobToDisplay.getJob_parts().length != 0)
             {
-                for (JobPart jp:jobToDisplay.getJob_parts())
+                for(JobPart jp:jobToDisplay.getJob_parts())
                 {
+                    jobParts.add(jp);
+                }
 
-                   jobParts.add(jp);
+            }
 
-                    new FillJobPartList(ReportScreen.this).execute("/parts/" + jp.getPart_id());
+
+                if (jobToDisplay.getPart_lists_with_part_numbers().length != 0) {
+
+                    Log.v("fill_lists","attempting to fill partlist with numbers list");
+                    for (PartListWithPartNumber plp : jobToDisplay.getPart_lists_with_part_numbers()) {
+                        partListsWithPartNumber.add(plp);
+                        Log.v("fill_lists","adding part with id to partlists: "+plp.getPart_id());
+                    }
+
+                    partDescriptionAdapter.notifyDataSetChanged();
+
+                }
+
+                if (jobToDisplay.getJob_parts_with_part_numbers().length != 0)
+                {
+                    Log.v("fill_lists","attempting to fill jobpart with numbers list");
+                    for (JobPartWithPartNumber jpp : jobToDisplay.getJob_parts_with_part_numbers()) {
+                        jobPartsWithPartNumber.add(jpp);
+                        Log.v("fill_lists", "adding jobpart partlists. jobpartid:: " + jpp.getJobPartId());
+                    }
+
                     adapterJobParts.notifyDataSetChanged();
 
                 }
+
+
+                if (getIntent().getStringExtra("barcode")!=null) {
+                addScannedPart();
+
             }
 
-            if(jobToDisplay.getPart_lists().length!=0)
-            {
-
-                for (PartList pl:jobToDisplay.getPart_lists())
-                {
-
-                    partList.add(pl);
-                    partDescriptionAdapter.notifyDataSetChanged();
-                    new FillPartList(ReportScreen.this).execute("/parts/" + pl.getPart_id());
-
-                }
-            }
 
 
         }
@@ -723,24 +643,25 @@ public void addJobPart (View view)
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
     {
-        Log.v("spinner", "partlist size" + partList.size());
+
 
         if(parent==orderPartQuantitySpinner)
         {
             jobPartToPost.setQuantity((int) parent.getItemAtPosition(position));
+            Log.v("spinner","qty: "+parent.getItemAtPosition(position));
 
         }
 
         else if((parent==partDescriptionSpinner))
         {
 
+            Log.v("spinner","description: "+parent.getItemAtPosition(position));
 
+            PartListWithPartNumber plp=(PartListWithPartNumber)parent.getItemAtPosition(position);
+            Log.v("spinner","desc: "+plp.getDescription());
+            Log.v("spinner","partId: "+plp.getPart_id());
 
-            PartList pl=(PartList)parent.getItemAtPosition(position);
-            Log.v("spinner","desc: "+pl.getDescription());
-            Log.v("spinner","partId: "+pl.getPart_id());
-            Log.v("spinner","id: "+pl.getId());
-            jobPartToPost.setPart_id(pl.getPart_id());
+            jobPartToPost.setPart_id(plp.getPart_id());
 
 
         }

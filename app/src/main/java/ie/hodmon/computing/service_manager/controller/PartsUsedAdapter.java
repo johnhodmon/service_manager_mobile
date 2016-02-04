@@ -13,17 +13,18 @@ import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.model.JobPart;
+import ie.hodmon.computing.service_manager.model.JobPartWithPartNumber;
 
 /**
  * Created by John on 22/02/2015.
  */
-public class PartsUsedAdapter extends ArrayAdapter<JobPart>
+public class PartsUsedAdapter extends ArrayAdapter<JobPartWithPartNumber>
 
 {
    private Context sparesOrderItemAdapterContext;
-    public List<JobPart> jobPartList;
+    public List<JobPartWithPartNumber> jobPartList;
 
-    public PartsUsedAdapter(Context sparesOrderItemAdapterContext, List<JobPart> jobPartList)
+    public PartsUsedAdapter(Context sparesOrderItemAdapterContext, List<JobPartWithPartNumber> jobPartList)
     {
         super(sparesOrderItemAdapterContext, R.layout.row_parts_used, jobPartList);
         this.sparesOrderItemAdapterContext=sparesOrderItemAdapterContext;
@@ -36,7 +37,7 @@ public class PartsUsedAdapter extends ArrayAdapter<JobPart>
                 (LayoutInflater)sparesOrderItemAdapterContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View viewOfRow=inflaterForReport.inflate(R.layout.row_parts_used,parent,false);
-        JobPart jobPartToShow = jobPartList.get(position);
+        JobPartWithPartNumber jobPartToShow = jobPartList.get(position);
 
         TextView descriptionInThisRow=(TextView)viewOfRow.findViewById(R.id.sparesOrderRowDescription);
         TextView quantityThisRow=(TextView)viewOfRow.findViewById(R.id.sparesOrderRowQuantity);

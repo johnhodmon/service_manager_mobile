@@ -18,6 +18,8 @@ public class Job
     private Report report;
     private JobPart[] job_parts;
     private PartList[] part_lists;
+    private PartListWithPartNumber[]part_lists_with_part_numbers;
+    private JobPartWithPartNumber [] job_parts_with_part_numbers;
 
 
 
@@ -135,6 +137,23 @@ public class Job
 
     public void setPart_lists(PartList[] part_lists) {
         this.part_lists = part_lists;
+    }
+
+    public PartListWithPartNumber[] getPart_lists_with_part_numbers() {
+        return part_lists_with_part_numbers;
+    }
+
+    public void setPart_lists_with_part_numbers(PartListWithPartNumber[] part_lists_with_part_numbers) {
+        this.part_lists_with_part_numbers = part_lists_with_part_numbers;
+    }
+
+
+    public JobPartWithPartNumber[] getJob_parts_with_part_numbers() {
+        return job_parts_with_part_numbers;
+    }
+
+    public void setJob_parts_with_part_numbers(JobPartWithPartNumber[] job_parts_with_part_numbers) {
+        this.job_parts_with_part_numbers = job_parts_with_part_numbers;
     }
 }
 

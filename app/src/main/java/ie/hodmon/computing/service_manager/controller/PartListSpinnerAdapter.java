@@ -1,6 +1,7 @@
 package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +15,22 @@ import java.util.List;
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.PartList;
+import ie.hodmon.computing.service_manager.model.PartListWithPartNumber;
 
 /**
  * Created by john on 01/02/16.
  */
-public class PartListSpinnerAdapter extends ArrayAdapter<PartList>
+public class PartListSpinnerAdapter extends ArrayAdapter<PartListWithPartNumber>
 {
 
         private Context partlistSpinnerContext;
-        private List<PartList> partList;
+        private List<PartListWithPartNumber> partListWithPartNumbers;
 
-        public PartListSpinnerAdapter (Context partlistSpinnerContext , List < PartList > partList)
+        public PartListSpinnerAdapter (Context partlistSpinnerContext , List <PartListWithPartNumber> partListWithPartNumbers)
         {
-            super(partlistSpinnerContext, R.layout.part_list_for_spinner,partList);
+            super(partlistSpinnerContext, R.layout.part_list_for_spinner,partListWithPartNumbers);
             this.partlistSpinnerContext=partlistSpinnerContext;
-            this.partList=partList;
+            this.partListWithPartNumbers=partListWithPartNumbers;
         }
 
         @Override
@@ -37,23 +39,22 @@ public class PartListSpinnerAdapter extends ArrayAdapter<PartList>
                 (LayoutInflater)partlistSpinnerContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View viewOfRow=inflaterForReport.inflate(R.layout.part_list_for_spinner,parent,false);
-        PartList partListToShow = partList.get(position);
+        PartListWithPartNumber partListToShow = partListWithPartNumbers.get(position);
         TextView descriptionInThisRow=(TextView)viewOfRow.findViewById(R.id.part_list_spinner_description);
-        TextView idThisRow=(TextView)viewOfRow.findViewById(R.id.part_list_spinner_id);
 
 
 
 
-        if (!partList.isEmpty()) {
+
+        if (!partListWithPartNumbers.isEmpty()) {
 
 
 
             descriptionInThisRow.setText("" + partListToShow.getDescription());
-            idThisRow.setText("" + partListToShow.getId());
+
+            //Log.v("spinner", "adapter setting description: " + partListToShow.getDescription());
+            //Log.v("spinner","adapter setting id: "+partListToShow.getPart_id());
         }
-
-
-
 
         return viewOfRow;
 
@@ -67,15 +68,17 @@ public class PartListSpinnerAdapter extends ArrayAdapter<PartList>
         LayoutInflater inflaterForReport =
                 (LayoutInflater)partlistSpinnerContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewOfRow=inflaterForReport.inflate(R.layout.part_list_for_spinner,parent,false);
-        PartList partListToShow = partList.get(position);
+        PartListWithPartNumber partListToShow = partListWithPartNumbers.get(position);
         TextView descriptionInThisRow=(TextView)viewOfRow.findViewById(R.id.part_list_spinner_description);
-        TextView idThisRow=(TextView)viewOfRow.findViewById(R.id.part_list_spinner_id);
-        if (!partList.isEmpty()) {
+
+        if (!partListWithPartNumbers.isEmpty()) {
 
 
 
             descriptionInThisRow.setText("" + partListToShow.getDescription());
-            idThisRow.setText("" + partListToShow.getId());
+
+           // Log.v("spinner", "adapter setting dropdown description: " + partListToShow.getDescription());
+            //Log.v("spinner", "adapter setting dropdown id: " + partListToShow.getPart_id());
         }
         return viewOfRow;
     }
