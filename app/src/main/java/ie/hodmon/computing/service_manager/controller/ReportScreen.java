@@ -62,6 +62,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
      private PartListSpinnerAdapter  partDescriptionAdapter;
     private JobPart jobPartToPost;
     private String updatedQuantity;
+    private ImageView barcodeIcon;
 
     private List<PartListWithPartNumber>partListsWithPartNumber;
     private List<JobPartWithPartNumber> jobPartsWithPartNumber;
@@ -82,7 +83,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         jobPartToPost=new JobPart();
         Intent intent=getIntent();
         intent.getExtras();
-
+        barcodeIcon=(ImageView)findViewById(R.id.barcode_icon);
 
 
 
@@ -212,6 +213,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
 public void addJobPart (View view)
 {
     addJobPart.setVisibility(View.INVISIBLE);
+    barcodeIcon.setVisibility(View.INVISIBLE);
     addJobPartSave.setVisibility(View.VISIBLE);
     partDescriptionSpinner.setVisibility(View.VISIBLE);
     orderPartQuantitySpinner.setVisibility(View.VISIBLE);
@@ -228,6 +230,7 @@ public void addJobPart (View view)
         partDescriptionSpinner.setVisibility(View.INVISIBLE);
         orderPartQuantitySpinner.setVisibility(View.INVISIBLE);
         listOfJobPartsView.setVisibility(View.VISIBLE);
+        barcodeIcon.setVisibility(View.VISIBLE);
         new addJobPart(this).execute("/jobs/" + jobToDisplay.getId(), jobPartToPost);
 
     }

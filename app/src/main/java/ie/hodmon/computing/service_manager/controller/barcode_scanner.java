@@ -145,6 +145,7 @@ class BarcodeGraphicTracker extends Tracker<Barcode> {
 
         Intent intent=new Intent(barcode_scanner.this,ReportScreen.class);
         intent.putExtra("barcode",item.rawValue);
+        finish();
         startActivity(intent);
 
     }
