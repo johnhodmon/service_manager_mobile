@@ -6,6 +6,8 @@ package ie.hodmon.computing.service_manager.barcode_scanner; /**
 import android.Manifest;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.hardware.Camera;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,6 +19,7 @@ import com.google.android.gms.common.images.Size;
 import com.google.android.gms.vision.CameraSource;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class CameraSourcePreview extends ViewGroup {
     private static final String TAG = "ie.hodmon.computing.service_manager.barcode_scanner.CameraSourcePreview";
@@ -77,6 +80,7 @@ public class CameraSourcePreview extends ViewGroup {
     private void startIfReady() throws IOException, SecurityException {
         if (mStartRequested && mSurfaceAvailable) {
             mCameraSource.start(mSurfaceView.getHolder());
+            cameraFocus(mCameraSource, Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             if (mOverlay != null) {
                 Size size = mCameraSource.getPreviewSize();
                 int min = Math.min(size.getWidth(), size.getHeight());
@@ -92,6 +96,38 @@ public class CameraSourcePreview extends ViewGroup {
             }
             mStartRequested = false;
         }
+    }
+
+    public static boolean cameraFocus(@NonNull CameraSource cameraSource,String focusMode) {
+        Field[] declaredFields = CameraSource.class.getDeclaredFields();
+
+        for (Field field : declaredFields) {
+            if (field.getType() == Camera.class) {
+                field.setAccessible(true);
+                try {
+                    Camera camera = (Camera) field.get(cameraSource);
+                    if (camera != null) {
+                        Camera.Parameters params = camera.getParameters();
+
+                        if (!params.getSupportedFocusModes().contains(focusMode)) {
+                            return false;
+                        }
+
+                        params.setFocusMode(focusMode);
+                        camera.setParameters(params);
+                        return true;
+                    }
+
+                    return false;
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            }
+        }
+
+        return false;
     }
 
     private class SurfaceCallback implements SurfaceHolder.Callback {

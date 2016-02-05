@@ -45,11 +45,12 @@ public class barcode_scanner extends ClassForCommonAttributes {
                 .setFacing(CameraSource.CAMERA_FACING_BACK)
                 .setRequestedPreviewSize(1600, 1024)
                 .build();
+        mCamera=Camera.open();
 
-        Camera.Parameters parameters = mCamera.getParameters();
+        //Camera.Parameters parameters = mCamera.getParameters();
 
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            mCamera.setParameters(parameters);
+           // parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+           // mCamera.setParameters(parameters);
 
 
 
