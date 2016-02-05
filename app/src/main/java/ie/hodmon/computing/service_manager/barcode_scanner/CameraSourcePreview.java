@@ -1,4 +1,4 @@
-package ie.hodmon.computing.service_manager; /**
+package ie.hodmon.computing.service_manager.barcode_scanner; /**
  * Created by john on 03/02/16.
  */
 
@@ -14,12 +14,12 @@ import android.view.SurfaceView;
 import android.view.ViewGroup;
 
 import com.google.android.gms.common.images.Size;
-import com.google.android.gms.vision.CameraSource;
+
 
 import java.io.IOException;
 
 public class CameraSourcePreview extends ViewGroup {
-    private static final String TAG = "ie.hodmon.computing.service_manager.CameraSourcePreview";
+    private static final String TAG = "ie.hodmon.computing.service_manager.barcode_scanner.CameraSourcePreview";
 
     private Context mContext;
     private SurfaceView mSurfaceView;
@@ -101,9 +101,9 @@ public class CameraSourcePreview extends ViewGroup {
             try {
                 startIfReady();
             } catch (SecurityException se) {
-                Log.e(TAG,"Do not have permission to start the camera", se);
+
             } catch (IOException e) {
-                Log.e(TAG, "Could not start camera source.", e);
+
             }
         }
 
@@ -157,9 +157,9 @@ public class CameraSourcePreview extends ViewGroup {
         try {
             startIfReady();
         } catch (SecurityException se) {
-            Log.e(TAG,"Do not have permission to start the camera", se);
+
         } catch (IOException e) {
-            Log.e(TAG, "Could not start camera source.", e);
+
         }
     }
 
@@ -172,7 +172,7 @@ public class CameraSourcePreview extends ViewGroup {
             return true;
         }
 
-        Log.d(TAG, "isPortraitMode returning false by default");
+
         return false;
     }
 }

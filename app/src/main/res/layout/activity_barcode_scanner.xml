@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ie.hodmon.computing.service_manager.CameraSourcePreview
+    <ie.hodmon.computing.service_manager.barcode_scanner.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ie.hodmon.computing.service_manager.GraphicOverlay
+        <ie.hodmon.computing.service_manager.barcode_scanner.GraphicOverlay
             android:id="@+id/overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </ie.hodmon.computing.service_manager.CameraSourcePreview>
+    </ie.hodmon.computing.service_manager.barcode_scanner.CameraSourcePreview>
 
 </LinearLayout>

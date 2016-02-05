@@ -162,7 +162,7 @@
             android:layout_alignBottom="@+id/sparesHeader"
             android:layout_toLeftOf="@+id/report_add_part"
             android:layout_marginRight="12dp"
-            android:onClick="scanPart" />
+            android:onClick="scanBarcode" />
 
         <ImageView
             android:layout_width="wrap_content"

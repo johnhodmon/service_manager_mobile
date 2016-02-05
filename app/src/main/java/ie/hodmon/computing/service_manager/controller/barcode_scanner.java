@@ -1,24 +1,13 @@
 package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.CameraSource;
+
 import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -26,19 +15,21 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-import ie.hodmon.computing.service_manager.BarcodeGraphic;
-import ie.hodmon.computing.service_manager.CameraSourcePreview;
-import ie.hodmon.computing.service_manager.GraphicOverlay;
+import ie.hodmon.computing.service_manager.barcode_scanner.BarcodeGraphic;
+import ie.hodmon.computing.service_manager.barcode_scanner.CameraSource;
+import ie.hodmon.computing.service_manager.barcode_scanner.CameraSourcePreview;
+import ie.hodmon.computing.service_manager.barcode_scanner.GraphicOverlay;
 import ie.hodmon.computing.service_manager.R;
 
 public class barcode_scanner extends ClassForCommonAttributes {
 
 
-    public CameraSource mCameraSource;
+
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
     private  BarcodeTrackerFactory barcodeFactory;
     private BarcodeDetector barcodeDetector;
+    public CameraSource mCameraSource;
 
 
     @Override
@@ -52,9 +43,19 @@ public class barcode_scanner extends ClassForCommonAttributes {
         barcodeDetector = new BarcodeDetector.Builder(this).build();
         barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay);
         barcodeDetector.setProcessor(new MultiProcessor.Builder<>(barcodeFactory).build());
-        mCameraSource = new CameraSource.Builder(this, barcodeDetector)
+        CameraSource.Builder builder = new CameraSource.Builder(getApplicationContext(), barcodeDetector)
                 .setFacing(CameraSource.CAMERA_FACING_BACK)
                 .setRequestedPreviewSize(1600, 1024)
+                .setRequestedFps(15.0f);
+
+        // make sure that auto focus is an available option
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            builder = builder.setFocusMode(
+                    true ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
+        }
+
+        mCameraSource = builder
+                .setFlashMode(true ? Camera.Parameters.FLASH_MODE_TORCH : null)
                 .build();
 
         if(!barcodeDetector.isOperational()){
