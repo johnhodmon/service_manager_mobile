@@ -1,6 +1,7 @@
 package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Intent;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class barcode_scanner extends ClassForCommonAttributes {
     private GraphicOverlay mGraphicOverlay;
     private  BarcodeTrackerFactory barcodeFactory;
     private BarcodeDetector barcodeDetector;
+    private Camera mCamera;
 
 
     @Override
@@ -43,6 +45,14 @@ public class barcode_scanner extends ClassForCommonAttributes {
                 .setFacing(CameraSource.CAMERA_FACING_BACK)
                 .setRequestedPreviewSize(1600, 1024)
                 .build();
+
+        Camera.Parameters parameters = mCamera.getParameters();
+
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            mCamera.setParameters(parameters);
+
+
+
 
         if(!barcodeDetector.isOperational()){
             Toast.makeText(getApplicationContext(), "Could not set up the detector!", Toast.LENGTH_SHORT).show();
