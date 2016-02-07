@@ -61,7 +61,12 @@ public class ConnectionAPI
         Log.v("REST","json for put is: "+json);
         return REST.put(call, json);
     }
-
+    public static String editJob(String call, Job job) {
+        Type objType = new TypeToken<Job>(){}.getType();
+        String json = new Gson().toJson(job, objType);
+        Log.v("REST","json for put is: "+json);
+        return REST.put(call, json);
+    }
 
 
     public static String addJobPart(String call, JobPart jobPart) {
