@@ -14,12 +14,12 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-import ie.hodmon.computing.service_manager.barcode_scanner.BarcodeGraphic;
-import ie.hodmon.computing.service_manager.barcode_scanner.CameraSourcePreview;
-import ie.hodmon.computing.service_manager.barcode_scanner.GraphicOverlay;
+import ie.hodmon.computing.service_manager.barcode_scanner_classes.BarcodeGraphic;
+import ie.hodmon.computing.service_manager.barcode_scanner_classes.CameraSourcePreview;
+import ie.hodmon.computing.service_manager.barcode_scanner_classes.GraphicOverlay;
 import ie.hodmon.computing.service_manager.R;
 
-public class barcode_scanner extends ClassForCommonAttributes {
+public class BarcodeScanner extends ClassForCommonAttributes {
 
 
     public CameraSource mCameraSource;
@@ -135,7 +135,7 @@ class BarcodeGraphicTracker extends Tracker<Barcode> {
         mOverlay.add(mGraphic);
         mGraphic.updateItem(item);
 
-        Intent intent=new Intent(barcode_scanner.this,ReportScreen.class);
+        Intent intent=new Intent(BarcodeScanner.this,ReportScreen.class);
         intent.putExtra("barcode",item.rawValue);
         finish();
         startActivity(intent);

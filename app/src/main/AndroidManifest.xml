@@ -61,7 +61,7 @@
             android:name=".controller.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".controller.barcode_scanner"
+            android:name=".controller.BarcodeScanner"
             android:label="@string/title_activity_barcode_scanner"
             android:parentActivityName=".controller.ClassForCommonAttributes"
             android:theme="@style/AppTheme">

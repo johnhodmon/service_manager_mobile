@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spares_row_delete_symbol"
-        android:src="@drawable/ic_delete_black_36dp"
+        android:src="@drawable/ic_delete_black_24dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:onClick="deleteJobPart" />
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spares_row_edit_symbol"
-        android:src="@drawable/ic_create_black_36dp"
+        android:src="@drawable/ic_create_black_24dp"
         android:layout_toLeftOf="@+id/spares_row_delete_symbol"
         android:layout_marginRight="10dp"
         android:layout_alignParentTop="true"

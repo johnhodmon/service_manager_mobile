@@ -1,4 +1,4 @@
-package ie.hodmon.computing.service_manager.barcode_scanner;
+package ie.hodmon.computing.service_manager.barcode_scanner_classes;
 
 import android.content.Context;
 import android.graphics.Canvas;

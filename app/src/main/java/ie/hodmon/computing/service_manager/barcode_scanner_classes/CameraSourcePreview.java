@@ -1,4 +1,4 @@
-package ie.hodmon.computing.service_manager.barcode_scanner; /**
+package ie.hodmon.computing.service_manager.barcode_scanner_classes; /**
  * Created by john on 03/02/16.
  */
 
@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 public class CameraSourcePreview extends ViewGroup {
-    private static final String TAG = "ie.hodmon.computing.service_manager.barcode_scanner.CameraSourcePreview";
+    private static final String TAG = "ie.hodmon.computing.service_manager.BarcodeScanner.CameraSourcePreview";
 
     private Context mContext;
     private SurfaceView mSurfaceView;

@@ -27,6 +27,7 @@ public class REST
 
 
     private static final String URL = "http://192.168.1.101";
+    private static final String cloudURL = "https://whispering-gorge-59927.herokuapp.com";
 
 
     public static void establishConnection(String request) {

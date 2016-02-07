@@ -30,8 +30,6 @@ import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.JobPartWithPartNumber;
-import ie.hodmon.computing.service_manager.model.Part;
-import ie.hodmon.computing.service_manager.model.PartList;
 import ie.hodmon.computing.service_manager.model.PartListWithPartNumber;
 import ie.hodmon.computing.service_manager.model.Report;
 
@@ -63,7 +61,6 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
     private JobPart jobPartToPost;
     private String updatedQuantity;
     private ImageView barcodeIcon;
-
     private List<PartListWithPartNumber>partListsWithPartNumber;
     private List<JobPartWithPartNumber> jobPartsWithPartNumber;
     private List <JobPart>jobParts;
@@ -184,7 +181,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         final String jpId = ""+jp.getJobPartId();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete This Part from Parts Used?");
-        builder.setIcon(android.R.drawable.ic_delete);
+        builder.setIcon(R.drawable.ic_delete_black_24dp);
         builder.setMessage("Are you sure?");
         builder.setCancelable(false);
 
@@ -299,7 +296,7 @@ public void addJobPart (View view)
 
     public void scanBarcode(View view)
     {
-        startActivity(new Intent(this,barcode_scanner.class));
+        startActivity(new Intent(this,BarcodeScanner.class));
     }
 
     public void saveReport(View view)
@@ -581,6 +578,8 @@ public void addJobPart (View view)
         protected void onPostExecute(Job result) {
             super.onPostExecute(result);
             jobPartsWithPartNumber.clear();
+            partDescriptionAdapter.notifyDataSetChanged();
+            adapterJobParts.notifyDataSetChanged();
             partListsWithPartNumber.clear();
 
             jobToDisplay = result;
