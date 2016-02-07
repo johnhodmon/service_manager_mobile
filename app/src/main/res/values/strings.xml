@@ -108,6 +108,11 @@
     <string name="part_list_spinner_description">description</string>
     <string name="part_list_spinner_id">id</string>
     <string name="title_activity_barcode_scanner">BarcodeScanner</string>
+    <string name="rb_job_job_progress_traveling">Travelling to job</string>
+    <string name="rb_job_progress_on_site">Arrived on site</string>
+    <string name="rb_job_progress_start_job">Started job</string>
+    <string name="rb_job_progress_job_complete">Job Complete</string>
+    <string name="rb_job_progress_return_visit">Return visit required</string>
 
 
 </resources>

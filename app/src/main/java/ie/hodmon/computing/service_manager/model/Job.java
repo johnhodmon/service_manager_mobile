@@ -25,6 +25,7 @@ public class Job
 
 
 
+
     public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product,
                Customer customer,Manufacturer manufacturer, Report report,JobPart[]job_parts,
                String travel_start,String travel_end,String labour_start, String labour_end)

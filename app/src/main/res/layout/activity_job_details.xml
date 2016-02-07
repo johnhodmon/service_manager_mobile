@@ -133,4 +133,58 @@
         android:src="@drawable/ic_chevron_right_black_36dp"
         android:onClick="openReport" />
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp"
+        android:id="@+id/rg_job_progress"
+        android:layout_below="@+id/job_details_go_to_report"
+        >
+
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:text="@string/rb_job_job_progress_traveling"
+            android:id="@+id/rb_travelling"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rb_job_progress_on_site"
+            android:id="@+id/rb_on_site"
+            android:enabled="false"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rb_job_progress_start_job"
+            android:enabled="false"
+            android:id="@+id/rb_start_job"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rb_job_progress_job_complete"
+            android:id="@+id/rb_job_complete"
+            android:enabled="false"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rb_job_progress_return_visit"
+            android:id="@+id/rb_return_visit"
+            android:checked="false"
+
+            android:enabled="false" />
+
+    </RadioGroup>
+
 </RelativeLayout>

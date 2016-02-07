@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,7 +32,7 @@ import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.Product;
 
 
-public class JobScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener {
+public class JobScreen extends ClassForCommonAttributes implements AdapterView.OnItemClickListener, RadioGroup.OnCheckedChangeListener {
 
     private ListView calloutListView;
     private List<Job> jobs;
@@ -39,6 +41,12 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
     private List<CustomerProduct>customerproducts;
     private List<Product>products;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private RadioGroup jobProgress;
+    private RadioButton travelling;
+    private RadioButton onSite;
+    private RadioButton beginJob;
+    private RadioButton jobComplete;
+    private RadioButton returnVisit;
 
 
 
@@ -56,6 +64,12 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         calloutListView=(ListView)findViewById(R.id.calloutListView);
         calloutListView.setOnItemClickListener(this);
         mSwipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.job_screen_swipe_refresh_layout);
+        travelling=(RadioButton)findViewById(R.id.rb_travelling);
+        jobProgress=(RadioGroup)findViewById(R.id.rg_job_progress);
+        onSite=(RadioButton)findViewById(R.id.rb_on_site);
+        beginJob=(RadioButton)findViewById(R.id.rb_start_job);
+        jobComplete=(RadioButton)findViewById(R.id.rb_start_job);
+        returnVisit=(RadioButton)findViewById(R.id.rb_return_visit);
 
         Calendar c = Calendar.getInstance();
 
@@ -155,6 +169,14 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
 
         intent.putExtra("bundle",args);
         startActivity(intent);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId)
+    {
+        Log.v("radiobuttons","Group: "+group);
+        Log.v("radiobuttons","id: "+checkedId);
+
     }
 
 
