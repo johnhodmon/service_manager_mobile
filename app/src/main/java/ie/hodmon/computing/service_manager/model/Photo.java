@@ -5,8 +5,10 @@ package ie.hodmon.computing.service_manager.model;
  */
 public class Photo
 {
+    private int id;
     private int job_id;
     private byte[] photo_data;
+
 
     public Photo(int job_id, byte[] photo_data)
     {
@@ -28,5 +30,13 @@ public class Photo
 
     public void setPhoto_data(byte[] photo_data) {
         this.photo_data = photo_data;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.Part;
+import ie.hodmon.computing.service_manager.model.Photo;
 import ie.hodmon.computing.service_manager.model.Report;
 import ie.hodmon.computing.service_manager.model.SessionWrapper;
 
@@ -29,6 +30,15 @@ public class ConnectionAPI
 
             return new Gson().fromJson(json, collectionType);
         }
+
+    public static List<Photo> getPhotos(String uri) {
+        String json = REST.get(uri);
+        Log.v("REST", "JSON RESULT : " + json);
+        Type collectionType = new TypeToken<List<Photo>>() {
+        }.getType();
+
+        return new Gson().fromJson(json, collectionType);
+    }
 
     public static Job getJob(String uri) {
         String json = REST.get(uri);
@@ -76,6 +86,13 @@ public class ConnectionAPI
         return REST.post(call, json);
     }
 
+    public static String addPhoto(String call, Photo photo) {
+        Type objType = new TypeToken<Photo>(){}.getType();
+        String json = new Gson().toJson(photo, objType);
+        Log.v("REST","json for post to jobparts is: "+json);
+        return REST.post(call, json);
+    }
+
     public static String login (String call,SessionWrapper sw)
 {
     Type objType = new TypeToken<SessionWrapper>(){}.getType();
@@ -86,7 +103,7 @@ public class ConnectionAPI
     return REST.login(call, json);
 }
 
-    public static String deleteJobPart(String call)
+    public static String delete(String call)
     {
         return REST.delete(call);
     }

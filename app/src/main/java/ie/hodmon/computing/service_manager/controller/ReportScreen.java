@@ -523,7 +523,7 @@ public void addJobPart (View view)
         protected String doInBackground(String... params) {
 
             try {
-                return (String) ConnectionAPI.deleteJobPart((String) params[0]);
+                return (String) ConnectionAPI.delete((String) params[0]);
             } catch (Exception e) {
                 Log.v("REST", "ERROR : " + e);
                 e.printStackTrace();
