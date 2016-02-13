@@ -243,7 +243,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         }
 
        else if (checkedId == onSite.getId()) {
-            jobToDisplay.setTravel_end("2016-02-07 20:00:00");
+            jobToDisplay.setTravel_end("2016-02-09 11:00:00");
             jobToDisplay.setStatus("on site");
 
 
@@ -252,14 +252,14 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         }
 
         else if (checkedId == beginJob.getId()) {
-            jobToDisplay.setLabour_start("2016-02-07 20:00:00");
+            jobToDisplay.setLabour_start("2016-02-09 11:00:00");
             jobToDisplay.setStatus("job started");
           ;
         }
 
         else if (checkedId == jobComplete.getId())
         {
-            jobToDisplay.setLabour_end("2016-02-07 21:00:00");
+            jobToDisplay.setLabour_end("2016-02-09 12:00:00");
             jobToDisplay.setStatus("complete");
 
         }

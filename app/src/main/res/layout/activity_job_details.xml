@@ -145,9 +145,8 @@
 
         <RadioButton
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:enabled="true"
+            android:enabled="false"
             android:text="@string/rb_job_job_progress_traveling"
             android:id="@+id/rb_travelling"
             android:checked="false" />
@@ -182,7 +181,6 @@
             android:text="@string/rb_job_progress_return_visit"
             android:id="@+id/rb_return_visit"
             android:checked="false"
-
             android:enabled="false" />
 
     </RadioGroup>
