@@ -3,6 +3,7 @@ package ie.hodmon.computing.service_manager.controller;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,12 @@ public class ReportImagesAdapter extends ArrayAdapter<Photo>
                 (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewOfRow=inflaterForReport.inflate(R.layout.row_report_pictures, parent, false);
         Photo photoInThisRow=imageList.get(position);
-        byte[] byteInThisRow=photoInThisRow.getPhoto_data();
+        String dataInThisRow=photoInThisRow.getPhoto_data();
         ImageView imageThisRow=(ImageView)viewOfRow.findViewById(R.id.report_image);
         TextView photoIdThisRow=(TextView)viewOfRow.findViewById(R.id.photo_id);
-        photoIdThisRow.setText(""+photoInThisRow.getId());
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteInThisRow, 0, byteInThisRow.length);
+        photoIdThisRow.setText("" + photoInThisRow.getId());
+        byte[]bytes= Base64.decode(dataInThisRow,Base64.DEFAULT);
+        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         imageThisRow.setImageBitmap(bmp);
 
 

@@ -235,10 +235,12 @@ public class ReportPhotos extends ClassForCommonAttributes {
         @Override
         protected void onPostExecute(List<Photo> result) {
             super.onPostExecute(result);
-            listOfPhotos=result;
+            if(result!=null) {
+                listOfPhotos = result;
 
-            ReportImagesAdapter ria=new ReportImagesAdapter(ReportPhotos.this,listOfPhotos);
-            reportPictureListView.setAdapter(ria);
+                ReportImagesAdapter ria = new ReportImagesAdapter(ReportPhotos.this, listOfPhotos);
+                reportPictureListView.setAdapter(ria);
+            }
 
             if (dialog.isShowing())
             {

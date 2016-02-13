@@ -66,8 +66,8 @@ public class LoginScreen extends ClassForCommonAttributes {
     {
 
         errorMessage.setText("");
-        //SessionWrapper sw=new SessionWrapper(new Session("jhodmon@servicemanager.ie","secret"));
-        SessionWrapper sw=new SessionWrapper(new Session(emailAddress.getText().toString(),password.getText().toString()));
+        SessionWrapper sw=new SessionWrapper(new Session("jhodmon@servicemanager.ie","secret"));
+        //SessionWrapper sw=new SessionWrapper(new Session(emailAddress.getText().toString(),password.getText().toString()));
         new Login(this).execute("/login",sw);
     }
 
