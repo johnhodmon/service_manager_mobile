@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -106,6 +107,7 @@ public class ReportPhotos extends ClassForCommonAttributes {
                 Bundle extras = data.getExtras();
                 Bitmap bitmap = (Bitmap) extras.get("data");
                 Photo photo=new Photo(jobToDisplay.getId(),prepareImageForUpload(bitmap));
+                photo.setPhoto_data(prepareImageForUpload(bitmap));
                 new AddPhoto(this).execute("/photos",photo);
 
 
@@ -125,14 +127,15 @@ public class ReportPhotos extends ClassForCommonAttributes {
 
     }
 
-    public byte[] prepareImageForUpload(Bitmap scaledBitmap)
+    public String prepareImageForUpload(Bitmap scaledBitmap)
     {
 
         try {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            return byteArray;
+           String encodedBinary= Base64.encodeToString(byteArray,Base64.DEFAULT);
+            return encodedBinary;
         }
 
         catch (Exception ex)

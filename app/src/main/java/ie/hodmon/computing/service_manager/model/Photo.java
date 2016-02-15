@@ -7,17 +7,20 @@ import android.util.Base64;
  */
 public class Photo
 {
-    private int id;
+    private String id;
     private int job_id;
     private String photo_data;
 
 
-    public Photo(int job_id, byte[] photo_data)
+    public Photo(int job_id, String photo_data)
     {
         this.job_id=job_id;
-        this .photo_data=Base64.encodeToString(photo_data, Base64.DEFAULT);
+        this .photo_data=photo_data;
+
 
     }
+
+    public Photo(){}
 
     public int getJob_id() {
         return job_id;
@@ -31,15 +34,15 @@ public class Photo
         return photo_data;
     }
 
-    public void setPhoto_data(byte[] photo_data) {
-        this .photo_data=Base64.encodeToString(photo_data, Base64.DEFAULT);
+    public void setPhoto_data(String photo_data) {
+        this .photo_data=photo_data;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }
