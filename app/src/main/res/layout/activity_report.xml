@@ -44,6 +44,17 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:onClick="openPhotographs" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/go_to_videos"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/go_to_pictures"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/ic_videocam_black_36dp"
+            android:onClick="openVideos"></ImageView>
+
     </RelativeLayout>
     <ScrollView
         android:layout_width="fill_parent"
