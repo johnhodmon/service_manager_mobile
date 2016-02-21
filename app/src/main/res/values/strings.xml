@@ -113,6 +113,8 @@
     <string name="rb_job_progress_start_job">Started job</string>
     <string name="rb_job_progress_job_complete">Job Complete</string>
     <string name="rb_job_progress_return_visit">Return visit required</string>
+    <string name="title_activity_report_videos">report_videos</string>
+    <string name="title_report_videos">Report Videos</string>
 
 
 </resources>
