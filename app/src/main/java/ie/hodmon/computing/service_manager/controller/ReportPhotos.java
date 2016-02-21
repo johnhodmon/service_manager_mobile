@@ -107,7 +107,7 @@ public class ReportPhotos extends ClassForCommonAttributes {
                 Bundle extras = data.getExtras();
                 Bitmap bitmap = (Bitmap) extras.get("data");
                 Photo photo=new Photo(jobToDisplay.getId(),prepareImageForUpload(bitmap));
-                photo.setPhoto_data(prepareImageForUpload(bitmap));
+
                 new AddPhoto(this).execute("/photos",photo);
 
 

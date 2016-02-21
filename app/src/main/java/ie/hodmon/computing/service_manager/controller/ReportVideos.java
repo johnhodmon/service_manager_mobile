@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.os.Bundle;
@@ -24,19 +25,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
-import ie.hodmon.computing.service_manager.model.JobPart;
-import ie.hodmon.computing.service_manager.model.JobPartWithPartNumber;
 import ie.hodmon.computing.service_manager.model.Photo;
 
-public class ReportPhotos extends ClassForCommonAttributes {
+public class ReportVideos extends ClassForCommonAttributes {
 
-    private List<Photo>listOfPhotos;
-    private ListView reportPictureListView;
+    private List<Photo> listOfVideos;
+    private ListView reportVideoListView;
 
 
 
@@ -45,13 +48,13 @@ public class ReportPhotos extends ClassForCommonAttributes {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        listOfPhotos=new ArrayList<Photo>();
-        setContentView(R.layout.activity_report_photos);
-        reportPictureListView=(ListView)findViewById(R.id.report_picture_list_view);
-        Log.v("check picture list", "" + listOfPhotos.size());
-        ReportImagesAdapter ria=new ReportImagesAdapter(this,listOfPhotos);
-        reportPictureListView.setAdapter(ria);
-        new GetPhotos(ReportPhotos.this).execute("/photos?job_id="+ jobToDisplay.getId());
+        listOfVideos =new ArrayList<Photo>();
+        setContentView(R.layout.activity_report_videos);
+        reportVideoListView=(ListView)findViewById(R.id.report_video_list_view);
+        Log.v("check picture list", "" + listOfVideos.size());
+        ReportImagesAdapter ria=new ReportImagesAdapter(this, listOfVideos);
+        reportVideoListView.setAdapter(ria);
+        //new GetVideos(ReportVideos.this).execute("/videos?job_id=" + jobToDisplay.getId());
     }
 
     @Override
@@ -76,15 +79,15 @@ public class ReportPhotos extends ClassForCommonAttributes {
         return super.onOptionsItemSelected(item);
     }
 
-    public void takePhoto(View view)
+    public void captureVideo(View view)
     {
         try
         {
 
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (takePictureIntent.resolveActivity(getPackageManager()) != null)
+            Intent recordVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            if (recordVideoIntent.resolveActivity(getPackageManager()) != null)
             {
-                startActivityForResult(takePictureIntent, 2);
+                startActivityForResult(recordVideoIntent, 1);
             }
 
         }
@@ -95,36 +98,38 @@ public class ReportPhotos extends ClassForCommonAttributes {
         }
     }
 
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         try {
-
-            if((requestCode == 2 && resultCode == RESULT_OK
-                    && null != data))
-            {
-                Bundle extras = data.getExtras();
-                Bitmap bitmap = (Bitmap) extras.get("data");
-                Photo photo=new Photo(jobToDisplay.getId(),prepareImageForUpload(bitmap));
-                photo.setPhoto_data(prepareImageForUpload(bitmap));
-                new AddPhoto(this).execute("/photos",photo);
-
+            if (requestCode == 1 && resultCode == RESULT_OK) {
+                Uri videoUri = data.getData();
+                Log.v("VIDEO", "URI: " + videoUri);
+                InputStream is = getContentResolver().openInputStream(videoUri);
+                byte[] bytes=getBytes(is);
+                Log.v("VIDEO", "BYTES: " + bytes.length);
 
 
 
             }
-
-
-
         }
 
-        catch (Exception e)
-        {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
-                    .show();
-        }
-
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                Toast.makeText(this,"Something went wrong",Toast.LENGTH_LONG).show();
+            }
     }
 
     public String prepareImageForUpload(Bitmap scaledBitmap)
@@ -168,7 +173,7 @@ public class ReportPhotos extends ClassForCommonAttributes {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                new DeletePhoto(ReportPhotos.this).execute("/photos/" + photoId);
+                new DeletePhoto(ReportVideos.this).execute("/photos/" + photoId);
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -204,12 +209,12 @@ public class ReportPhotos extends ClassForCommonAttributes {
 
     }
 
-    private class GetPhotos extends AsyncTask<String, Void, List<Photo>> {
+    private class GetVideos extends AsyncTask<String, Void, List<Photo>> {
 
         protected ProgressDialog dialog;
         protected Context context;
 
-        public GetPhotos(Context context)
+        public GetVideos(Context context)
         {
             this.context = context;
         }
@@ -239,10 +244,10 @@ public class ReportPhotos extends ClassForCommonAttributes {
         protected void onPostExecute(List<Photo> result) {
             super.onPostExecute(result);
             if(result!=null) {
-                listOfPhotos = result;
+                listOfVideos = result;
 
-                ReportImagesAdapter ria = new ReportImagesAdapter(ReportPhotos.this, listOfPhotos);
-                reportPictureListView.setAdapter(ria);
+                ReportImagesAdapter ria = new ReportImagesAdapter(ReportVideos.this, listOfVideos);
+                reportVideoListView.setAdapter(ria);
             }
 
             if (dialog.isShowing())
@@ -290,7 +295,7 @@ public class ReportPhotos extends ClassForCommonAttributes {
             String s = result;
             Log.v("REST", "DELETE REQUEST : " + s);
 
-            new GetPhotos(ReportPhotos.this).execute("/photos?job_id=" + jobToDisplay.getId());
+            new GetVideos(ReportVideos.this).execute("/photos?job_id=" + jobToDisplay.getId());
 
             if (dialog.isShowing())
                 dialog.dismiss();
@@ -340,8 +345,8 @@ public class ReportPhotos extends ClassForCommonAttributes {
             if(result!=null) {
                 Log.v("REST", "Post Photo result: "+result);
             }
-            Toast.makeText(ReportPhotos.this,"Photo uploaded", Toast.LENGTH_LONG).show();
-            new GetPhotos(ReportPhotos.this).execute("/photos?job_id=" + jobToDisplay.getId());
+            Toast.makeText(ReportVideos.this,"Photo uploaded", Toast.LENGTH_LONG).show();
+            new GetVideos(ReportVideos.this).execute("/photos?job_id=" + jobToDisplay.getId());
             if (dialog.isShowing())
                 dialog.dismiss();
 

@@ -75,7 +75,7 @@
                 android:value="ie.hodmon.computing.service_manager.controller.ClassForCommonAttributes" />
         </activity>
         <activity
-            android:name=".controller.report_videos"
+            android:name=".controller.ReportVideos"
             android:label="@string/title_activity_report_videos"
             android:theme="@style/AppTheme"></activity>
     </application>

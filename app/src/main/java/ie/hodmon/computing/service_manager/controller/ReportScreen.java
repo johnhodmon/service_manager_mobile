@@ -284,6 +284,10 @@ public void addJobPart (View view)
         startActivity(new Intent(this, ReportPhotos.class));
     }
 
+    public void openVideos(View view) {
+        startActivity(new Intent(this, ReportVideos.class));
+    }
+
     public void editReport(View view)
     {
         editText.setVisibility(View.VISIBLE);
