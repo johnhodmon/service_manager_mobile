@@ -14,6 +14,7 @@ import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.Photo;
 import ie.hodmon.computing.service_manager.model.Report;
 import ie.hodmon.computing.service_manager.model.SessionWrapper;
+import ie.hodmon.computing.service_manager.model.Video;
 
 /**
  * Created by john on 16/01/16.
@@ -35,6 +36,15 @@ public class ConnectionAPI
         String json = REST.get(uri);
         Log.v("REST", "JSON RESULT : " + json);
         Type collectionType = new TypeToken<List<Photo>>() {
+        }.getType();
+
+        return new Gson().fromJson(json, collectionType);
+    }
+
+    public static List<Video> getVideos(String uri) {
+        String json = REST.get(uri);
+        Log.v("REST", "JSON RESULT : " + json);
+        Type collectionType = new TypeToken<List<Video>>() {
         }.getType();
 
         return new Gson().fromJson(json, collectionType);
@@ -90,6 +100,13 @@ public class ConnectionAPI
         Type objType = new TypeToken<Photo>(){}.getType();
         String json = new Gson().toJson(photo, objType);
         Log.v("REST","json for post to jobparts is: "+json);
+        return REST.post(call, json);
+    }
+
+    public static String addVideo(String call, Video video) {
+        Type objType = new TypeToken<Video>(){}.getType();
+        String json = new Gson().toJson(video, objType);
+        Log.v("REST","json for post to videos is: "+json);
         return REST.post(call, json);
     }
 

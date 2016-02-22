@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <VideoView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/report_video"
+        android:layout_alignParentTop="true"
+        android:paddingTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:paddingBottom="16dp"
+        android:layout_alignParentLeft="true"
+        android:onClick="enlarge" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reportVideosDelete"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:src="@drawable/ic_delete_black_36dp"
+        android:nestedScrollingEnabled="false"
+        android:onClick="deleteVideo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/video_id"
+        android:visibility="invisible"
+        android:layout_below="@+id/reportVideosDelete"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp" />
+
+
+</RelativeLayout>
