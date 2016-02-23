@@ -3,16 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <VideoView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/report_video"
-        android:layout_alignParentTop="true"
-        android:paddingTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:paddingBottom="16dp"
-        android:layout_alignParentLeft="true"
-        android:onClick="enlarge" />
+   <ImageView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentLeft="true"
+       android:onClick="playVideo"
+       android:id="@+id/video_preview"
+       />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -31,6 +29,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/video_id"
+        android:visibility="invisible"
+        android:layout_below="@+id/reportVideosDelete"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/video_path"
         android:visibility="invisible"
         android:layout_below="@+id/reportVideosDelete"
         android:layout_centerHorizontal="true"

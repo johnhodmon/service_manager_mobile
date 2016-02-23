@@ -115,6 +115,7 @@
     <string name="rb_job_progress_return_visit">Return visit required</string>
     <string name="title_activity_report_videos">report_videos</string>
     <string name="title_report_videos">Report Videos</string>
+    <string name="title_activity_test">Test</string>
 
 
 </resources>

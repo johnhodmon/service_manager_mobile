@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -19,11 +22,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -47,8 +53,6 @@ public class ReportVideos extends ClassForCommonAttributes {
         setContentView(R.layout.activity_report_videos);
         reportVideoListView=(ListView)findViewById(R.id.report_video_list_view);
         Log.v("check picture list", "" + listOfVideos.size());
-        ReportVideosAdapter riv=new ReportVideosAdapter(this, listOfVideos);
-        reportVideoListView.setAdapter(riv);
         new GetVideos(ReportVideos.this).execute("/videos?job_id=" + jobToDisplay.getId());
     }
 
@@ -72,6 +76,29 @@ public class ReportVideos extends ClassForCommonAttributes {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void playVideo(View view)
+    {
+       try {
+           Log.v("video_save", "entering play video method");
+
+           RelativeLayout rowContainingVideo = (RelativeLayout) view.getParent();
+           TextView videoPath = (TextView) rowContainingVideo.getChildAt(3);
+           String url="http://192.168.1.101/videos/2";
+           MediaPlayer mediaPlayer = new MediaPlayer();
+           mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+           mediaPlayer.setDataSource(url);
+           mediaPlayer.prepare(); // might take long! (for buffering, etc)
+           mediaPlayer.start();
+       }
+
+       catch (Exception e)
+       {
+           e.printStackTrace();
+       }
+
+
     }
 
     public void captureVideo(View view)
