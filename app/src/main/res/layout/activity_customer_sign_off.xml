@@ -1,0 +1,48 @@
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/green"
+        android:layout_width="match_parent"
+        android:id="@+id/layout100"
+        android:paddingTop="16dp"
+        android:paddingBottom="32dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:text="@string/customerSignOffHeader"
+            android:id="@+id/customerSignOffHeader"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true" />
+
+
+        <android.gesture.GestureOverlayView
+        android:id="@+id/signaturePad"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+            android:layout_weight="5"
+                 android:background="@color/white"
+                android:eventsInterceptionEnabled="true"
+                 android:fadeEnabled="false"
+                android:gestureColor="@color/gray"
+                 android:gestureStrokeLengthThreshold="0.1"
+                android:gestureStrokeType="multiple"
+               android:orientation="vertical" >
+             </android.gesture.GestureOverlayView>
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+

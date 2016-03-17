@@ -19,6 +19,7 @@
     <string name="calloutPhoneDefault">phone</string>
     <string name="title_activity_callout_form">Service Request Form</string>
     <string name="calloutFormHeader">Add Service Request</string>
+    <string name="customerSignOffHeader">Customer Signature</string>
     <string name="calloutFormNameDefault">Name</string>
     <string name="calloutFormStreetDefault">Street</string>
     <string name="calloutFormTownDefault">Town</string>
@@ -116,6 +117,7 @@
     <string name="title_activity_report_videos">report_videos</string>
     <string name="title_report_videos">Report Videos</string>
     <string name="title_activity_test">Test</string>
+    <string name="title_activity_customer_sign_off">CustomerSignOff</string>
 
 
 </resources>
