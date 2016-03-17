@@ -37,13 +37,7 @@ public class ClassForCommonAttributes extends AppCompatActivity
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
 
-
-    }
 
     public LatLng convertStringToLatLng(String s)
     {
