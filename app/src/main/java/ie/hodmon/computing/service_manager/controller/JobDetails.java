@@ -183,6 +183,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
                 jobComplete.setEnabled(false);
                 returnVisit.setEnabled(false);
 
+
             }
 
             else if(jobToDisplay.getStatus().equals("job started"))
@@ -261,6 +262,8 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         {
             jobToDisplay.setLabour_end("2016-02-09 12:00:00");
             jobToDisplay.setStatus("complete");
+            startActivity(new Intent(this,CustomerSignOff.class));
+
 
         }
 

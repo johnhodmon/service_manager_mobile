@@ -1,3 +1,7 @@
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -23,26 +27,53 @@
             android:layout_centerHorizontal="true" />
 
 
-        <android.gesture.GestureOverlayView
-        android:id="@+id/signaturePad"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-            android:layout_weight="5"
-                 android:background="@color/white"
-                android:eventsInterceptionEnabled="true"
-                 android:fadeEnabled="false"
-                android:gestureColor="@color/gray"
-                 android:gestureStrokeLengthThreshold="0.1"
-                android:gestureStrokeType="multiple"
-               android:orientation="vertical" >
-             </android.gesture.GestureOverlayView>
+
+
 
 
 
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/layout100"
+
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/mysignature"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp" >
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:onClick="clearSignature"
+            android:layout_below="@+id/mysignature"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="saveSignature"
+            android:text="save"
+            android:layout_below="@+id/mysignature"
+            android:layout_alignParentEnd="true" />
 
 
 
+
+
+
+</RelativeLayout>
+
+</RelativeLayout>
 
