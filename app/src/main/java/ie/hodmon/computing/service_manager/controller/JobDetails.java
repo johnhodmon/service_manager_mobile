@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -240,6 +241,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         if (checkedId == travelling.getId()) {
             jobToDisplay.setTravel_start(formatDate());
             jobToDisplay.setStatus("travelling");
+            new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
 
 
 
@@ -248,6 +250,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
        else if (checkedId == onSite.getId()) {
             jobToDisplay.setTravel_end("2016-02-09 11:00:00");
             jobToDisplay.setStatus("on site");
+            new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
 
 
 
@@ -257,7 +260,8 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         else if (checkedId == beginJob.getId()) {
             jobToDisplay.setLabour_start("2016-02-09 11:00:00");
             jobToDisplay.setStatus("job started");
-          ;
+            new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
+
         }
 
         else if (checkedId == jobComplete.getId())
@@ -273,6 +277,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         {
             jobToDisplay.setLabour_end(formatDate());
             jobToDisplay.setStatus("return required");
+            new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
 
         }
 
@@ -280,7 +285,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
 
 
 
-        new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
+
 
     }
 
@@ -292,6 +297,9 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
 
 
                    Log.v("SIGNATURE","SIG LENGTH" +data.getByteArrayExtra("byteArray").length);
+            String encodedBinary= Base64.encodeToString(data.getByteArrayExtra("byteArray"), Base64.DEFAULT);
+                    jobToDisplay.setCust_sig(encodedBinary);
+            new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
 
         }
     }
@@ -321,7 +329,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         protected void onPreExecute() {
             super.onPreExecute();
             this.dialog = new ProgressDialog(context, 1);
-            this.dialog.setMessage("Updating job part....");
+            this.dialog.setMessage("Updating job ....");
             this.dialog.show();
         }
 
@@ -347,7 +355,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(JobDetails.this, "Job Updated ", Toast.LENGTH_LONG).show();
+            Toast.makeText(JobDetails.this, "Job Updated ", Toast.LENGTH_SHORT).show();
             if (dialog.isShowing())
                 dialog.dismiss();
 

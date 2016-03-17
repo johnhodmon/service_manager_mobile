@@ -22,6 +22,8 @@ public class Job
     private String travel_end;
     private String labour_start;
     private String labour_end;
+    private String cust_sig;
+
 
 
 
@@ -171,6 +173,14 @@ public class Job
 
     public void setLabour_end(String labour_end) {
         this.labour_end = labour_end;
+    }
+
+    public String getCust_sig() {
+        return cust_sig;
+    }
+
+    public void setCust_sig(String cust_sig) {
+        this.cust_sig = cust_sig;
     }
 }
 
