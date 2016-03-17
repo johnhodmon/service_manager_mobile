@@ -3,6 +3,8 @@ package ie.hodmon.computing.service_manager.controller;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -262,7 +264,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         {
             jobToDisplay.setLabour_end("2016-02-09 12:00:00");
             jobToDisplay.setStatus("complete");
-            startActivity(new Intent(this,CustomerSignOff.class));
+            startActivityForResult(new Intent(this, CustomerSignOff.class), 0);
 
 
         }
@@ -281,6 +283,20 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
 
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == 1) {
+
+
+                   Log.v("SIGNATURE","SIG LENGTH" +data.getByteArrayExtra("byteArray").length);
+
+        }
+    }
+
+
 
     private String formatDate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(

@@ -1,6 +1,7 @@
 package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -98,6 +99,11 @@ public void saveSignature(View view)
 
             ByteArrayOutputStream bs = new ByteArrayOutputStream();
             returnedBitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+            Intent intent = new Intent();
+            intent.putExtra("byteArray", bs.toByteArray());
+            setResult(1, intent);
+            finish();
+
 
         }
 
