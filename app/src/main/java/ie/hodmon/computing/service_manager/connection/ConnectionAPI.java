@@ -106,9 +106,16 @@ public class ConnectionAPI
     public static String addVideo(String call, Video video) {
         Type objType = new TypeToken<Video>(){}.getType();
         String json = new Gson().toJson(video, objType);
-        Log.v("REST","json for post to videos is: "+json);
+        Log.v("REST", "json for post to videos is: " + json);
         return REST.post(call, json);
     }
+
+   /* public static String addVideo(String call, Video video) {
+        Type objType = new TypeToken<Video>(){}.getType();
+        String json = new Gson().toJson(video, objType);
+        Log.v("REST","json for post to videos is: "+json);
+        return REST.post(call, json);
+    }*/
 
     public static String login (String call,SessionWrapper sw)
 {

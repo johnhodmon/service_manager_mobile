@@ -1,19 +1,22 @@
 package ie.hodmon.computing.service_manager.connection;
 
-import android.preference.PreferenceActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.CookieManager;
-import java.net.CookieStore;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+
+import ie.hodmon.computing.service_manager.model.Video;
 
 /**
  * Created by john on 16/01/16.
@@ -26,7 +29,7 @@ public class REST
 
 
 
-    private static final String URL = "http://192.168.1.101";
+    private static final String URL = "http://192.168.1.103";
     private static final String cloudURL = "https://whispering-gorge-59927.herokuapp.com";
 
 
@@ -245,5 +248,85 @@ public class REST
         }
 
         return response;
+    }
+
+    public static void uploadVideo(String url,Video v)
+    {
+
+        String fileName = v.getLocalUri().getPath();
+        establishConnection(url);
+        DataOutputStream dos = null;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1 * 1024 * 1024;
+        File sourceFile = new File(v.getLocalUri().getPath());
+
+            try {
+
+                // open a URL connection to the Servlet
+                FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                httpCon.setDoInput(true); // Allow Inputs
+                httpCon.setDoOutput(true); // Allow Outputs
+                httpCon.setUseCaches(false); // Don't use a Cached Copy
+                httpCon.setRequestMethod("POST");
+                httpCon.setRequestProperty("Connection", "Keep-Alive");
+                //  conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                httpCon.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                httpCon.setRequestProperty("video", fileName);
+                dos = new DataOutputStream(httpCon.getOutputStream());
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+                //job_id
+
+
+
+
+                //video file upload
+                dos.writeBytes("Content-Disposition: form-data; name=\"vid_attach\""+ lineEnd);
+                dos.writeBytes(lineEnd);
+                // create a buffer of maximum size
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                buffer = new byte[bufferSize];
+                // read file and write it into form...
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                while (bytesRead > 0)
+                {
+                    dos.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                }
+
+                // send multipart form data necesssary after file data...
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                // Responses from the server (code and message)
+                int serverResponseCode = httpCon.getResponseCode();
+                String serverResponseMessage = httpCon.getResponseMessage();
+
+                Log.v("REST", "HTTP Response is : "
+                        + serverResponseMessage + ": " + serverResponseCode);
+
+
+
+                //close the streams //
+                fileInputStream.close();
+                dos.flush();
+                dos.close();
+
+
+    }
+
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                Log.v("REST","Error uploading video: "+e.getMessage());
+            }
     }
 }

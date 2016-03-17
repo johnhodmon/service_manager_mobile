@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -30,13 +31,17 @@ import android.widget.VideoView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
+import ie.hodmon.computing.service_manager.connection.REST;
 import ie.hodmon.computing.service_manager.model.Photo;
 import ie.hodmon.computing.service_manager.model.Video;
 
@@ -44,6 +49,11 @@ public class ReportVideos extends ClassForCommonAttributes {
 
     private List<Video> listOfVideos;
     private ListView reportVideoListView;
+    private static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private Uri fileUri;
+    public static final int MEDIA_TYPE_VIDEO = 2;
+    public static final int MEDIA_TYPE_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -103,15 +113,17 @@ public class ReportVideos extends ClassForCommonAttributes {
 
     public void captureVideo(View view)
     {
-        try
-        {
+        try {
 
-            Intent recordVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            if (recordVideoIntent.resolveActivity(getPackageManager()) != null)
-            {
-                startActivityForResult(recordVideoIntent, 1);
-            }
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
+            fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);  // create a file to save the video
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);  // set the image file name
+
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
+
+            // start the Video Capture Intent
+            startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
         }
 
         catch (Exception ex)
@@ -120,42 +132,76 @@ public class ReportVideos extends ClassForCommonAttributes {
         }
     }
 
-    public byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
-    }
+
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        try {
-            if (requestCode == 1 && resultCode == RESULT_OK) {
-                Uri videoUri = data.getData();
-                Log.v("VIDEO", "URI: " + videoUri);
-                InputStream is = getContentResolver().openInputStream(videoUri);
-                byte[] bytes=getBytes(is);
-                String encodedBinary= Base64.encodeToString(bytes, Base64.DEFAULT);
-                Log.v("VIDEO", "BYTES: " + bytes.length);
-                Video video=new Video(jobToDisplay.getId(),encodedBinary);
-                new AddVideo(this).execute("/videos",video);
-
-
-
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Image captured and saved to fileUri specified in the Intent
+                Toast.makeText(this, "Image saved to:\n" +
+                        data.getData(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the image capture
+            } else {
+                // Image capture failed, advise user
             }
         }
 
-            catch (Exception e)
-            {
-                e.printStackTrace();
-                Toast.makeText(this,"Something went wrong",Toast.LENGTH_LONG).show();
+        if (requestCode == CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE&& fileUri!=null) {
+            if (resultCode == RESULT_OK) {
+
+                Video v=new Video(jobToDisplay.getId());
+                v.setLocalUri(fileUri);
+                new AddVideo(this).execute("/videos",v);
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the video capture
+            } else {
+                // Video capture failed, advise user
             }
+        }
     }
+
+    private static Uri getOutputMediaFileUri(int type){
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    /** Create a File for saving an image or video */
+    private static File getOutputMediaFile(int type){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "MyCameraApp");
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                Log.d("MyCameraApp", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE){
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "IMG_"+ timeStamp + ".jpg");
+        } else if(type == MEDIA_TYPE_VIDEO) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                    "VID_"+ timeStamp + ".mp4");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+
 
 
 
@@ -300,7 +346,7 @@ public class ReportVideos extends ClassForCommonAttributes {
         protected void onPreExecute() {
             super.onPreExecute();
             this.dialog = new ProgressDialog(context, 1);
-            this.dialog.setMessage("Adding Video....");
+            this.dialog.setMessage("Uploading Video....");
             this.dialog.show();
         }
 
@@ -311,7 +357,7 @@ public class ReportVideos extends ClassForCommonAttributes {
             try {
                 Log.v("REST", "Posting video");
 
-                ConnectionAPI.addVideo((String) params[0], (Video) params[1]);
+                REST.uploadVideo((String) params[0], (Video) params[1]);
 
             }
 

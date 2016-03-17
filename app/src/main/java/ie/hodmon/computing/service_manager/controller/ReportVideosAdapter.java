@@ -47,37 +47,12 @@ public class ReportVideosAdapter extends ArrayAdapter<Video>
                 (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewOfRow=inflaterForReport.inflate(R.layout.row_report_videos, parent, false);
         Video videoInThisRow=videoList.get(position);
-        String dataInThisRow=videoInThisRow.getData();
         ImageView videoThumb=(ImageView)viewOfRow.findViewById(R.id.video_preview);
         TextView videoIdThisRow=(TextView)viewOfRow.findViewById(R.id.video_id);
-        TextView video_path_thisRow=(TextView)viewOfRow.findViewById(R.id.video_path);
+        TextView videoAttachmentThisRow=(TextView)viewOfRow.findViewById(R.id.video_path);
         videoIdThisRow.setText("" + videoInThisRow.getId());
-        byte[]bytes= Base64.decode(dataInThisRow, Base64.DEFAULT);
+        videoAttachmentThisRow.setText(videoInThisRow.getVid_attach());
 
-            String path= Environment.getExternalStorageDirectory()
-                    + "/"+videoInThisRow.getId()+".mp4";
-        Log.v("video_save", "path: " + path);
-
-
-
-
-
-
-        try{
-            FileOutputStream out = new FileOutputStream(path);
-            out.write(bytes);
-            out.close();
-
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            Log.v("video_save","output stream error: "+e.getMessage());
-        }
-        Bitmap thumb = ThumbnailUtils.createVideoThumbnail(path,
-                MediaStore.Images.Thumbnails.MINI_KIND);
-        videoThumb.setImageBitmap(thumb);
 
 
           return viewOfRow;
