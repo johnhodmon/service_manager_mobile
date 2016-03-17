@@ -84,6 +84,10 @@
         <activity
             android:name=".controller.CustomerSignOff"
             android:label="@string/title_activity_customer_sign_off"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".controller.VideoPLay"
+            android:label="@string/title_activity_video_play"
             android:theme="@style/AppTheme"></activity>
     </application>
 

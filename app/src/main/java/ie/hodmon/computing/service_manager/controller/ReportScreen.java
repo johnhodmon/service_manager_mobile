@@ -298,6 +298,11 @@ public void addJobPart (View view)
         editText.hasFocus();
     }
 
+    public void playVideo(View view)
+    {
+        startActivity(new Intent(this,VideoPLay.class));
+    }
+
     public void scanBarcode(View view)
     {
         startActivity(new Intent(this,BarcodeScanner.class));
