@@ -29,7 +29,7 @@ public class REST
 
 
 
-    private static final String URL = "http://192.168.1.103";
+    private static final String URL = "http://192.168.1.102";
     private static final String cloudURL = "https://whispering-gorge-59927.herokuapp.com";
 
 
@@ -250,7 +250,7 @@ public class REST
         return response;
     }
 
-    public static void uploadVideo(String url,Video v)
+   /* public static void uploadVideo(String url,Video v)
     {
 
         String fileName = v.getLocalUri().getPath();
@@ -328,5 +328,5 @@ public class REST
                 e.printStackTrace();
                 Log.v("REST","Error uploading video: "+e.getMessage());
             }
-    }
+    }*/
 }

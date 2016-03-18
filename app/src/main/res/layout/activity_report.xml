@@ -53,7 +53,7 @@
             android:layout_toLeftOf="@+id/go_to_pictures"
             android:layout_marginRight="12dp"
             android:src="@drawable/ic_videocam_black_36dp"
-            android:onClick="playVideo"></ImageView>
+            android:onClick="openVideos"></ImageView>
 
     </RelativeLayout>
     <ScrollView

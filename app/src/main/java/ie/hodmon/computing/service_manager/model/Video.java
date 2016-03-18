@@ -9,19 +9,21 @@ public class Video
 {
     private String id;
     private int job_id;
-    private String vid_attach;
-    private Uri localUri;
+    private String video_attachment_file_name;
+    private String url;
+
 
     public Video(int job_id) {
         this.job_id = job_id;
     }
 
-    public Uri getLocalUri() {
-        return localUri ;
+
+    public String getId() {
+        return id;
     }
 
-    public void setLocalUri(Uri localUri) {
-        this.localUri = localUri;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getJob_id() {
@@ -32,19 +34,20 @@ public class Video
         this.job_id = job_id;
     }
 
-    public String getVid_attach() {
-        return vid_attach;
+    public String getVideo_attachment_file_name() {
+        return video_attachment_file_name;
     }
 
-    public void setVid_attach(String vid_attach) {
-        this.vid_attach = vid_attach;
+    public void setVideo_attachment_file_name(String video_attachment_file_name) {
+        this.video_attachment_file_name = video_attachment_file_name;
     }
 
-    public String getId() {
-        return id;
+    public String getUrl() {
+        return url;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
+

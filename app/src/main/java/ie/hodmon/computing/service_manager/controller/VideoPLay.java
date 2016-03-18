@@ -1,5 +1,6 @@
 package ie.hodmon.computing.service_manager.controller;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -23,7 +25,7 @@ public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder
     private MediaPlayer mediaPlayer;
     private SurfaceHolder vidHolder;
     private SurfaceView vidSurface;
-    private String address="http://192.168.1.103/test_video";
+    private String address;
     private MediaController mc;
     private Handler handler = new Handler();
 
@@ -37,6 +39,11 @@ public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder
         vidHolder = vidSurface.getHolder();
         vidHolder.addCallback(this);
         mc = new MediaController(this);
+        Intent intent = getIntent();
+        String url=intent.getStringExtra("url");
+        address="http://192.168.1.102"+url;
+        Log.v("VIDEO", "ADDRESS: "+address);
+
 
 
 

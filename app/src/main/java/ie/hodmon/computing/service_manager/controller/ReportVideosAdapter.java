@@ -47,11 +47,10 @@ public class ReportVideosAdapter extends ArrayAdapter<Video>
                 (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewOfRow=inflaterForReport.inflate(R.layout.row_report_videos, parent, false);
         Video videoInThisRow=videoList.get(position);
-        ImageView videoThumb=(ImageView)viewOfRow.findViewById(R.id.video_preview);
-        TextView videoIdThisRow=(TextView)viewOfRow.findViewById(R.id.video_id);
-        TextView videoAttachmentThisRow=(TextView)viewOfRow.findViewById(R.id.video_path);
-        videoIdThisRow.setText("" + videoInThisRow.getId());
-        videoAttachmentThisRow.setText(videoInThisRow.getVid_attach());
+        TextView videoUrlThisRow=(TextView)viewOfRow.findViewById(R.id.video_url);
+        TextView videoFileNameThisRow=(TextView)viewOfRow.findViewById(R.id.video_path);
+        videoUrlThisRow.setText("" + videoInThisRow.getUrl());
+        videoFileNameThisRow.setText(videoInThisRow.getVideo_attachment_file_name());
 
 
 

@@ -88,7 +88,7 @@ public class ReportVideos extends ClassForCommonAttributes {
         return super.onOptionsItemSelected(item);
     }
 
-    public void playVideo(View view)
+  /*  public void playVideo(View view)
     {
        try {
            Log.v("video_save", "entering play video method");
@@ -167,7 +167,7 @@ public class ReportVideos extends ClassForCommonAttributes {
         return Uri.fromFile(getOutputMediaFile(type));
     }
 
-    /** Create a File for saving an image or video */
+
     private static File getOutputMediaFile(int type){
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
@@ -202,7 +202,7 @@ public class ReportVideos extends ClassForCommonAttributes {
     }
 
 
-
+*/
 
 
     public void deleteVideo(View view)
@@ -332,7 +332,7 @@ public class ReportVideos extends ClassForCommonAttributes {
         }
     }
 
-    private class AddVideo extends AsyncTask<Object, Void, String> {
+  /*  private class AddVideo extends AsyncTask<Object, Void, String> {
 
         protected ProgressDialog dialog;
         protected Context context;
@@ -381,6 +381,20 @@ public class ReportVideos extends ClassForCommonAttributes {
                 dialog.dismiss();
 
         }
+    }*/
+
+    public void playVideo(View view)
+    {
+        Log.v("VIDEO", "PLAY VIDEO ENTERED");
+        RelativeLayout rowContainingButton=(RelativeLayout)view.getParent();
+
+        TextView tw=(TextView)rowContainingButton.getChildAt(3);
+        String url=tw.getText().toString();
+        Intent i=new Intent(this,VideoPLay.class);
+        i.putExtra("url",url);
+        startActivity(i);
+
+
     }
 
 }
