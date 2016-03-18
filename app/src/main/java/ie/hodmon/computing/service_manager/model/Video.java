@@ -11,6 +11,7 @@ public class Video
     private int job_id;
     private String video_attachment_file_name;
     private String url;
+    private Uri localUri;
 
 
     public Video(int job_id) {
@@ -48,6 +49,14 @@ public class Video
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Uri getLocalUri() {
+        return localUri;
+    }
+
+    public void setLocalUri(Uri localUri) {
+        this.localUri = localUri;
     }
 }
 

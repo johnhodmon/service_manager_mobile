@@ -88,28 +88,7 @@ public class ReportVideos extends ClassForCommonAttributes {
         return super.onOptionsItemSelected(item);
     }
 
-  /*  public void playVideo(View view)
-    {
-       try {
-           Log.v("video_save", "entering play video method");
 
-           RelativeLayout rowContainingVideo = (RelativeLayout) view.getParent();
-           TextView videoPath = (TextView) rowContainingVideo.getChildAt(3);
-           String url="http://192.168.1.101/videos/2";
-           MediaPlayer mediaPlayer = new MediaPlayer();
-           mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-           mediaPlayer.setDataSource(url);
-           mediaPlayer.prepare(); // might take long! (for buffering, etc)
-           mediaPlayer.start();
-       }
-
-       catch (Exception e)
-       {
-           e.printStackTrace();
-       }
-
-
-    }
 
     public void captureVideo(View view)
     {
@@ -117,12 +96,11 @@ public class ReportVideos extends ClassForCommonAttributes {
 
             Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
-            fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);  // create a file to save the video
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);  // set the image file name
+            fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
 
-            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 
-            // start the Video Capture Intent
             startActivityForResult(intent, CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE);
         }
 
@@ -154,6 +132,7 @@ public class ReportVideos extends ClassForCommonAttributes {
 
                 Video v=new Video(jobToDisplay.getId());
                 v.setLocalUri(fileUri);
+                Log.v("VIDEO"," file uri"+fileUri);
                 new AddVideo(this).execute("/videos",v);
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the video capture
@@ -174,6 +153,7 @@ public class ReportVideos extends ClassForCommonAttributes {
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "MyCameraApp");
+        Log.v("VIDEO","media storage directory: "+mediaStorageDir);
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.
 
@@ -202,16 +182,17 @@ public class ReportVideos extends ClassForCommonAttributes {
     }
 
 
-*/
+
 
 
     public void deleteVideo(View view)
     {
         RelativeLayout rowContainingButton=(RelativeLayout)view.getParent();
 
-        TextView tw=(TextView)rowContainingButton.getChildAt(2);
+        TextView tw=(TextView)rowContainingButton.getChildAt(4);
         String videoId=tw.getText().toString();
         onDeleteVideo(videoId);
+
 
 
     }
@@ -332,7 +313,7 @@ public class ReportVideos extends ClassForCommonAttributes {
         }
     }
 
-  /*  private class AddVideo extends AsyncTask<Object, Void, String> {
+    private class AddVideo extends AsyncTask<Object, Void, String> {
 
         protected ProgressDialog dialog;
         protected Context context;
@@ -381,7 +362,7 @@ public class ReportVideos extends ClassForCommonAttributes {
                 dialog.dismiss();
 
         }
-    }*/
+    }
 
     public void playVideo(View view)
     {
