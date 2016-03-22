@@ -101,17 +101,6 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
 
     }
 
-    public void map(View view) {
-
-
-        LatLng jobLoc = convertStringToLatLng(jobToDisplay.getCustomer().getLat_lng());
-        Bundle args = new Bundle();
-        Intent intent = new Intent(this, MapsActivity.class);
-        args.putParcelable(jobToDisplay.getCustomer().getName(), jobLoc);
-        args.putInt("zoom", 13);
-        intent.putExtra("bundle", args);
-        startActivity(intent);
-    }
 
     public void getDirections(View view) {
 
