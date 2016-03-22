@@ -34,7 +34,7 @@ public class REST
 
 
 
-    private static final String URL = "http://192.168.1.102";
+    private static final String URL = "http://192.168.1.105";
     private static final String cloudURL = "https://whispering-gorge-59927.herokuapp.com";
 
 

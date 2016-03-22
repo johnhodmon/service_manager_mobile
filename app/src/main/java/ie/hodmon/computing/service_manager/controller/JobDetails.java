@@ -113,6 +113,15 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         startActivity(intent);
     }
 
+    public void getDirections(View view) {
+
+        Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+
+    }
+
     private class GetJob extends AsyncTask<String, Void, Job> {
 
         protected ProgressDialog dialog;
