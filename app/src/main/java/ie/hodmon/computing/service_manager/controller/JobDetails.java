@@ -115,10 +115,20 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
 
     public void getDirections(View view) {
 
-        Uri gmmIntentUri = Uri.parse("google.streetview:cbll=46.414382,10.013988");
+        LatLng jobLoc= convertStringToLatLng(jobToDisplay.getCustomer().getLat_lng());
+
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+jobLoc.latitude+","+jobLoc.longitude);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
-        startActivity(mapIntent);
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
+
+        else
+        {
+            Toast.makeText(this,"There was a problem launching Google Maps",Toast.LENGTH_LONG).show();
+
+        }
 
     }
 
@@ -242,7 +252,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
     }
 
     @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
+    public void onCheckedChanged (RadioGroup group,int checkedId) {
 
 
 
