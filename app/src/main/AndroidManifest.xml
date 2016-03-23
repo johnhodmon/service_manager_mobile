@@ -81,7 +81,13 @@
             android:label="@string/title_activity_callout_screen" />
         <activity
             android:name=".controller.JobDetails"
-            android:label="@string/title_activity_callout_details" />
+            android:label="@string/title_activity_callout_details"
+            android:parentActivityName=".controller.JobScreen">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".controller.JobScreen"/>
+          />
+        </activity>
         <activity
             android:name=".controller.ReportScreen"
             android:label="@string/title_activity_report" />

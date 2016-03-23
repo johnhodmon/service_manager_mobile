@@ -30,6 +30,8 @@ import com.google.android.gms.gcm.GcmListenerService;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.controller.JobDetails;
+import ie.hodmon.computing.service_manager.controller.JobScreen;
+import ie.hodmon.computing.service_manager.controller.LoginScreen;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -46,6 +48,7 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
+        String id=data.getString("id");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
 
@@ -67,7 +70,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        sendNotification(message,id);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -77,16 +80,17 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message) {
+    private void sendNotification(String message,String id) {
         Intent intent = new Intent(this, JobDetails.class);
+        intent.putExtra("id",id);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_add_black_36dp)
-                .setContentTitle("GCM Message")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Service Manager")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
