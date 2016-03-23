@@ -14,6 +14,7 @@ import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.Photo;
 import ie.hodmon.computing.service_manager.model.Report;
 import ie.hodmon.computing.service_manager.model.SessionWrapper;
+import ie.hodmon.computing.service_manager.model.User;
 import ie.hodmon.computing.service_manager.model.Video;
 
 /**
@@ -39,6 +40,17 @@ public class ConnectionAPI
         }.getType();
 
         return new Gson().fromJson(json, collectionType);
+    }
+
+    public static void registerGmsToken(String call,User u)
+    {
+        Type objType = new TypeToken<User>(){}.getType();
+        String json = new Gson().toJson(u, objType);
+        Log.v("REST","json for gms token is: "+json);
+
+
+
+        REST.put(call, json);
     }
 
     public static List<Video> getVideos(String uri) {

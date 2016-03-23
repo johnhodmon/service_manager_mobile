@@ -67,7 +67,7 @@ public class LoginScreen extends ClassForCommonAttributes {
     {
 
         errorMessage.setText("");
-        SessionWrapper sw=new SessionWrapper(new Session("jhodmon@servicemanager.ie","secret"));
+        SessionWrapper sw=new SessionWrapper(new Session("jhodmon@servicemanager.ie","secret",""));
         //SessionWrapper sw=new SessionWrapper(new Session(emailAddress.getText().toString(),password.getText().toString()));
         new Login(this).execute("/login",sw);
     }
@@ -119,7 +119,9 @@ public class LoginScreen extends ClassForCommonAttributes {
 
             if(result.equals("login sucessful"))
             {
-                startActivity(new Intent(LoginScreen.this, MainActivity.class));
+
+                ClassForCommonAttributes.engineerEmail=emailAddress.getText().toString();
+                startActivity(new Intent(LoginScreen.this, JobScreen.class));
 
             }
 

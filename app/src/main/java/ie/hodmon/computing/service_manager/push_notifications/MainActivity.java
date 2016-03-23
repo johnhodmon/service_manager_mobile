@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mInformationTextView = (TextView) findViewById(R.id.informationTextView);
-
-        // Registering BroadcastReceiver
         registerReceiver();
 
         if (checkPlayServices()) {

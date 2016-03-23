@@ -1,21 +1,17 @@
 package ie.hodmon.computing.service_manager.model;
 
 /**
- * Created by john on 23/01/16.
+ * Created by john on 23/03/16.
  */
-public class Session
+public class User
 {
     private String email;
-    private String password;
     private String gms_token;
 
-
-    public Session(String email,String password,String gms_token)
+    public User(String email, String gms_token)
     {
         this.email=email;
-        this.password=password;
         this.gms_token=gms_token;
-
     }
 
     public String getEmail() {
@@ -24,14 +20,6 @@ public class Session
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getGms_token() {
