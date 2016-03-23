@@ -24,6 +24,7 @@ import ie.hodmon.computing.service_manager.model.Engineer;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.Session;
 import ie.hodmon.computing.service_manager.model.SessionWrapper;
+import ie.hodmon.computing.service_manager.push_notifications.MainActivity;
 
 
 public class LoginScreen extends ClassForCommonAttributes {
@@ -118,7 +119,7 @@ public class LoginScreen extends ClassForCommonAttributes {
 
             if(result.equals("login sucessful"))
             {
-                startActivity(new Intent(LoginScreen.this, JobScreen.class));
+                startActivity(new Intent(LoginScreen.this, MainActivity.class));
 
             }
 
