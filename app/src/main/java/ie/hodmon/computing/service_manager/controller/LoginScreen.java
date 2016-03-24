@@ -45,8 +45,11 @@ public class LoginScreen extends ClassForCommonAttributes {
         emailAddress = (EditText) findViewById(R.id.emailAddress);
         errorMessage = (TextView) findViewById(R.id.error_message);
         loginButton=(Button)findViewById(R.id.button);
-        login(loginButton);
-
+        //login(loginButton);
+        if(loggedIn)
+        {
+            startActivity(new Intent(this, JobScreen.class));
+        }
 
     }
 
@@ -121,6 +124,7 @@ public class LoginScreen extends ClassForCommonAttributes {
             {
 
                 ClassForCommonAttributes.engineerEmail=emailAddress.getText().toString();
+                loggedIn=true;
                 startActivity(new Intent(LoginScreen.this, JobScreen.class));
 
             }

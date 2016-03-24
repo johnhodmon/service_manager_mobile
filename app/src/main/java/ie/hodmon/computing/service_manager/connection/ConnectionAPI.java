@@ -1,5 +1,7 @@
 package ie.hodmon.computing.service_manager.connection;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -8,6 +10,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import ie.hodmon.computing.service_manager.controller.JobDetails;
+import ie.hodmon.computing.service_manager.controller.LoginScreen;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.Part;
@@ -63,8 +67,17 @@ public class ConnectionAPI
     }
 
     public static Job getJob(String uri) {
+
         String json = REST.get(uri);
+
         Log.v("REST", "JSON RESULT : " + json);
+        if(json.contains("\"remember_token\":null"))
+        {
+            Job j=new Job();
+            j.setStatus("not logged in");
+            return j;
+        }
+
         Type collectionType = new TypeToken<Job>() {
         }.getType();
 

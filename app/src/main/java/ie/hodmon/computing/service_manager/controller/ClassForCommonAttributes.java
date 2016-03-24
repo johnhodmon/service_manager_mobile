@@ -28,7 +28,7 @@ public class ClassForCommonAttributes extends AppCompatActivity
     public static String engineerEmail;
     public static long dateSelected;
     public static List<Job>jobs;
-    private boolean loggedIn;
+    public static boolean loggedIn;
 
 
 

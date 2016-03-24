@@ -155,88 +155,80 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
             super.onPostExecute(result);
 
             jobToDisplay = result;
-            jobDetailsName.setText(jobToDisplay.getCustomer().getName());
-            jobDetailsStreet.setText(jobToDisplay.getCustomer().getStreet());
-            jobDetailsTown.setText(jobToDisplay.getCustomer().getTown());
-            jobDetailsProduct.setText(jobToDisplay.getManufacturer().getName() + " " + jobToDisplay.getProduct().getProduct_number());
-            jobDetailsReportedFault.setText(jobToDisplay.getReported_fault());
-            jobDetailsPhone.setText(jobToDisplay.getCustomer().getPhone());
-
-
-            if(jobToDisplay.getStatus().equals("allocated"))
+            if(jobToDisplay.getStatus().equals("not logged in"))
             {
-
-                travelling.setEnabled(true);
-                onSite.setEnabled(false);
-                beginJob.setEnabled(false);
-                jobComplete.setEnabled(false);
-                returnVisit.setEnabled(false);
-
+                startActivity(new Intent(JobDetails.this,LoginScreen.class));
             }
 
-            else if(jobToDisplay.getStatus().equals("travelling"))
-            {
-                travelling.setEnabled(false);
-                travelling.setChecked(true);
-                onSite.setEnabled(true);
-                beginJob.setEnabled(false);
-                jobComplete.setEnabled(false);
-                returnVisit.setEnabled(false);
+            else {
+                Log.v("REST", " RESULT : " + result.toString());
+                jobDetailsName.setText(jobToDisplay.getCustomer().getName());
+                jobDetailsStreet.setText(jobToDisplay.getCustomer().getStreet());
+                jobDetailsTown.setText(jobToDisplay.getCustomer().getTown());
+                jobDetailsProduct.setText(jobToDisplay.getManufacturer().getName() + " " + jobToDisplay.getProduct().getProduct_number());
+                jobDetailsReportedFault.setText(jobToDisplay.getReported_fault());
+                jobDetailsPhone.setText(jobToDisplay.getCustomer().getPhone());
+
+
+                if (jobToDisplay.getStatus().equals("allocated")) {
+
+                    travelling.setEnabled(true);
+                    onSite.setEnabled(false);
+                    beginJob.setEnabled(false);
+                    jobComplete.setEnabled(false);
+                    returnVisit.setEnabled(false);
+
+                } else if (jobToDisplay.getStatus().equals("travelling")) {
+                    travelling.setEnabled(false);
+                    travelling.setChecked(true);
+                    onSite.setEnabled(true);
+                    beginJob.setEnabled(false);
+                    jobComplete.setEnabled(false);
+                    returnVisit.setEnabled(false);
+
+                } else if (jobToDisplay.getStatus().equals("on site")) {
+                    travelling.setEnabled(false);
+                    onSite.setEnabled(false);
+                    onSite.setChecked(true);
+                    beginJob.setEnabled(true);
+                    jobComplete.setEnabled(false);
+                    returnVisit.setEnabled(false);
+
+
+                } else if (jobToDisplay.getStatus().equals("job started")) {
+                    travelling.setEnabled(false);
+                    onSite.setEnabled(false);
+                    beginJob.setEnabled(false);
+                    beginJob.setChecked(true);
+                    jobComplete.setEnabled(true);
+                    returnVisit.setEnabled(true);
+
+                } else if (jobToDisplay.getStatus().equals("complete")) {
+                    travelling.setEnabled(false);
+                    onSite.setEnabled(false);
+                    beginJob.setEnabled(false);
+                    jobComplete.setEnabled(false);
+                    returnVisit.setEnabled(false);
+                    jobComplete.setChecked(true);
+
+                } else if (jobToDisplay.getStatus().equals("return required")) {
+                    travelling.setEnabled(false);
+                    onSite.setEnabled(false);
+                    beginJob.setEnabled(false);
+                    jobComplete.setEnabled(false);
+                    returnVisit.setEnabled(false);
+                    returnVisit.setChecked(true);
+
+                }
+
+
+                jobProgress.setOnCheckedChangeListener(JobDetails.this);
+
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
 
             }
-
-           else if(jobToDisplay.getStatus().equals("on site"))
-            {
-                travelling.setEnabled(false);
-                onSite.setEnabled(false);
-                onSite.setChecked(true);
-                beginJob.setEnabled(true);
-                jobComplete.setEnabled(false);
-                returnVisit.setEnabled(false);
-
-
-            }
-
-            else if(jobToDisplay.getStatus().equals("job started"))
-            {
-                travelling.setEnabled(false);
-                onSite.setEnabled(false);
-                beginJob.setEnabled(false);
-                beginJob.setChecked(true);
-                jobComplete.setEnabled(true);
-                returnVisit.setEnabled(true);
-
-            }
-
-            else if(jobToDisplay.getStatus().equals("complete"))
-            {
-                travelling.setEnabled(false);
-                onSite.setEnabled(false);
-                beginJob.setEnabled(false);
-                jobComplete.setEnabled(false);
-                returnVisit.setEnabled(false);
-                jobComplete.setChecked(true);
-
-            }
-
-            else if(jobToDisplay.getStatus().equals("return required"))
-            {
-                travelling.setEnabled(false);
-                onSite.setEnabled(false);
-                beginJob.setEnabled(false);
-                jobComplete.setEnabled(false);
-                returnVisit.setEnabled(false);
-                returnVisit.setChecked(true);
-
-            }
-
-
-            jobProgress.setOnCheckedChangeListener(JobDetails.this);
-
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-
         }
     }
 
