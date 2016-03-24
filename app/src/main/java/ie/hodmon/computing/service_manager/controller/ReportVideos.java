@@ -121,7 +121,7 @@ public class ReportVideos extends ClassForCommonAttributes {
                 Toast.makeText(this, "Image saved to:\n" +
                         data.getData(), Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the image capture
+                // GmsToken cancelled the image capture
             } else {
                 // Image capture failed, advise user
             }
@@ -135,7 +135,7 @@ public class ReportVideos extends ClassForCommonAttributes {
                 Log.v("VIDEO"," file uri"+fileUri);
                 new AddVideo(this).execute("/videos",v);
             } else if (resultCode == RESULT_CANCELED) {
-                // User cancelled the video capture
+                // GmsToken cancelled the video capture
             } else {
                 // Video capture failed, advise user
             }

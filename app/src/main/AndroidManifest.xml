@@ -129,10 +129,6 @@
             android:name=".controller.VideoPLay"
             android:label="@string/title_activity_video_play"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".push_notifications.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

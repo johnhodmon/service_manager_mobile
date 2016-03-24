@@ -1,7 +1,5 @@
 package ie.hodmon.computing.service_manager.connection;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,15 +8,13 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import ie.hodmon.computing.service_manager.controller.JobDetails;
-import ie.hodmon.computing.service_manager.controller.LoginScreen;
+import ie.hodmon.computing.service_manager.model.GmsToken;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
 import ie.hodmon.computing.service_manager.model.Part;
 import ie.hodmon.computing.service_manager.model.Photo;
 import ie.hodmon.computing.service_manager.model.Report;
 import ie.hodmon.computing.service_manager.model.SessionWrapper;
-import ie.hodmon.computing.service_manager.model.User;
 import ie.hodmon.computing.service_manager.model.Video;
 
 /**
@@ -46,9 +42,9 @@ public class ConnectionAPI
         return new Gson().fromJson(json, collectionType);
     }
 
-    public static void registerGmsToken(String call,User u)
+    public static void registerGmsToken(String call,GmsToken u)
     {
-        Type objType = new TypeToken<User>(){}.getType();
+        Type objType = new TypeToken<GmsToken>(){}.getType();
         String json = new Gson().toJson(u, objType);
         Log.v("REST","json for gms token is: "+json);
 

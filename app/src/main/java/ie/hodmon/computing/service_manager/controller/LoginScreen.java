@@ -1,12 +1,17 @@
 package ie.hodmon.computing.service_manager.controller;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,17 +19,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
-
-
-import java.util.List;
-
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
-import ie.hodmon.computing.service_manager.model.Engineer;
-import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.Session;
 import ie.hodmon.computing.service_manager.model.SessionWrapper;
-import ie.hodmon.computing.service_manager.push_notifications.MainActivity;
+import ie.hodmon.computing.service_manager.push_notifications.QuickstartPreferences;
+import ie.hodmon.computing.service_manager.push_notifications.RegistrationIntentService;
 
 
 public class LoginScreen extends ClassForCommonAttributes {
@@ -33,6 +33,10 @@ public class LoginScreen extends ClassForCommonAttributes {
     private EditText password;
     private TextView errorMessage;
     private Button loginButton;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "MainActivity";
+    private BroadcastReceiver registrationBroadcastReceiver;
+    private boolean isReceiverRegistered;
 
 
     @Override
@@ -45,6 +49,17 @@ public class LoginScreen extends ClassForCommonAttributes {
         emailAddress = (EditText) findViewById(R.id.emailAddress);
         errorMessage = (TextView) findViewById(R.id.error_message);
         loginButton=(Button)findViewById(R.id.button);
+        registrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+
+            }
+        };
         //login(loginButton);
         if(loggedIn)
         {
@@ -54,6 +69,13 @@ public class LoginScreen extends ClassForCommonAttributes {
     }
 
 
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(registrationBroadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+        }
+    }
     public boolean connectedToInternet(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -123,7 +145,12 @@ public class LoginScreen extends ClassForCommonAttributes {
             if(result.equals("login sucessful"))
             {
 
-                ClassForCommonAttributes.engineerEmail=emailAddress.getText().toString();
+                registerReceiver();
+
+
+
+                Intent intent = new Intent(LoginScreen.this, RegistrationIntentService.class);
+                startService(intent);
                 loggedIn=true;
                 startActivity(new Intent(LoginScreen.this, JobScreen.class));
 

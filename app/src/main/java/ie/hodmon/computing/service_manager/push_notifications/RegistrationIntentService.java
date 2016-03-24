@@ -25,18 +25,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
-import java.io.IOException;
-
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
-import ie.hodmon.computing.service_manager.controller.ClassForCommonAttributes;
-import ie.hodmon.computing.service_manager.model.Session;
-import ie.hodmon.computing.service_manager.model.SessionWrapper;
-import ie.hodmon.computing.service_manager.model.User;
+import ie.hodmon.computing.service_manager.model.GmsToken;
 
 public class RegistrationIntentService extends IntentService {
 
@@ -63,9 +57,7 @@ public class RegistrationIntentService extends IntentService {
 
             sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
         } catch (Exception e) {
-            Log.d(TAG, "Failed to complete token refresh", e);
-            // If an exception happens while fetching the new token or updating our registration data
-            // on a third-party server, this ensures that we'll attempt the update at a later time.
+
             sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
         }
         Intent registrationComplete = new Intent(QuickstartPreferences.REGISTRATION_COMPLETE);
@@ -75,7 +67,7 @@ public class RegistrationIntentService extends IntentService {
 
     private void sendRegistrationToServer(String token)
     {
-       User u=new User("johnhodmon@gmail.com",token);
+       GmsToken u=new GmsToken(token);
         ConnectionAPI.registerGmsToken("/users",u);
 
     }
