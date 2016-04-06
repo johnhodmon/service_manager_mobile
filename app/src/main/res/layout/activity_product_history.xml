@@ -1,0 +1,97 @@
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    tools:context="ie.hodmon.computing.service_manager.controller.JobScreen">
+
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="#14cd8d"
+        android:layout_width="match_parent"
+        android:id="@+id/layout1"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/calloutsTitle"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            android:id="@+id/calloutsTitle"
+            android:layout_marginLeft="50dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/jobs_screen_calendar_icon"
+
+            android:src="@drawable/ic_event_black_36dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignTop="@+id/directions_icon"
+            android:layout_toStartOf="@+id/directions_icon"
+            android:onClick="changeDate" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/directions_icon"
+            android:src="@drawable/ic_directions_car_black_36dp"
+            android:layout_alignBottom="@+id/calloutsTitle"
+            android:layout_alignParentEnd="true"
+            android:onClick="map" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+
+        android:layout_width="match_parent"
+        android:layout_below="@+id/layout1"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="0dp"
+        android:layout_height="match_parent">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/job_screen_swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            >
+            <ListView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/calloutListView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+
+
+
+
+
