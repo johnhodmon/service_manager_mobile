@@ -23,14 +23,14 @@ public class Job
     private String labour_start;
     private String labour_end;
     private String cust_sig;
-
+    private String created_at;
 
 
 
 
     public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product,
                Customer customer,Manufacturer manufacturer, Report report,JobPart[]job_parts,
-               String travel_start,String travel_end,String labour_start, String labour_end)
+               String travel_start,String travel_end,String labour_start, String labour_end, String created_at)
     {
         this.id=id;
         this .reported_fault=reported_fault;
@@ -45,13 +45,21 @@ public class Job
         this.travel_end=travel_end;
         this.labour_start=labour_start;
         this.labour_end=labour_end;
+        this.created_at=created_at;
+
 
     }
     public Job()
     {
 
     }
+    public String getCreated_at() {
+        return created_at;
+    }
 
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
     public Report getReport() {
         return report;
     }
