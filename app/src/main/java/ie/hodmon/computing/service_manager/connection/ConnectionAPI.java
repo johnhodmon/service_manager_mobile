@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import ie.hodmon.computing.service_manager.model.CustomerProduct;
 import ie.hodmon.computing.service_manager.model.GmsToken;
 import ie.hodmon.computing.service_manager.model.Job;
 import ie.hodmon.computing.service_manager.model.JobPart;
@@ -26,6 +27,7 @@ public class ConnectionAPI
 
         public static List<Job> getJobs(String uri) {
             String json = REST.get(uri);
+
             Log.v("REST", "JSON RESULT : " + json);
             Type collectionType = new TypeToken<List<Job>>() {
             }.getType();
@@ -84,6 +86,15 @@ public class ConnectionAPI
         String json = REST.get(uri);
         Log.v("REST", "JSON RESULT : " + json);
         Type collectionType = new TypeToken<Part>() {
+        }.getType();
+
+        return new Gson().fromJson(json, collectionType);
+    }
+
+    public static CustomerProduct getCustomerProduct(String uri) {
+        String json = REST.get(uri);
+        Log.v("REST", "JSON RESULT : " + json);
+        Type collectionType = new TypeToken<CustomerProduct>() {
         }.getType();
 
         return new Gson().fromJson(json, collectionType);

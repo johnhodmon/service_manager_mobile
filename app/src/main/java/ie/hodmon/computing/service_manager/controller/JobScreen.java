@@ -204,7 +204,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
             {
                 mapButton.setVisibility(View.INVISIBLE);
             }
-            ProductHistoryAdapter adapterForCalloutListView =new ProductHistoryAdapter(JobScreen.this, jobs);
+            JobsAdapter adapterForCalloutListView =new JobsAdapter(JobScreen.this, jobs);
             calloutListView.setAdapter(adapterForCalloutListView);
             mSwipeRefreshLayout.setRefreshing(false);
             if (dialog.isShowing())

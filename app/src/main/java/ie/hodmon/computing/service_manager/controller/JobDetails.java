@@ -99,6 +99,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
 
     public void openReport(View view) {
         Intent intent = new Intent(this, ReportScreen.class);
+        intent.putExtra("id",""+jobToDisplay.getId());
 
 
         startActivity(intent);
@@ -108,7 +109,9 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
     public void productHistory(View view)
     {
         Intent jobHistoryIntent=new Intent(this,ProductHistory.class);
+        jobHistoryIntent.putExtra("customer_product_name",""+jobToDisplay.getProduct().getDescription());
         jobHistoryIntent.putExtra("customer_product_id",""+jobToDisplay.getProduct().getId());
+        startActivity(jobHistoryIntent);
 
     }
 

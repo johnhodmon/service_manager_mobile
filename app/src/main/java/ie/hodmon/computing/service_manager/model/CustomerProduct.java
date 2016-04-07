@@ -9,13 +9,15 @@ public class CustomerProduct
     private int customer_id;
     private int product_id;
     private String serial_number;
+    private Job[]jobs;
 
-    public CustomerProduct(int id, int customer_id, int product_id,String serial_number)
+    public CustomerProduct(int id, int customer_id, int product_id,String serial_number, Job[] jobs)
     {
         this.id=id;
         this.customer_id=customer_id;
         this.product_id=product_id;
         this.serial_number=serial_number;
+        this.jobs=jobs;
 
     }
 
@@ -49,5 +51,13 @@ public class CustomerProduct
 
     public void setSerial_number(String serial_number) {
         this.serial_number = serial_number;
+    }
+
+    public Job[] getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(Job[] jobs) {
+        this.jobs = jobs;
     }
 }

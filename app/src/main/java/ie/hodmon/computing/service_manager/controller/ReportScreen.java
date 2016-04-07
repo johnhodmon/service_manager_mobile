@@ -64,6 +64,8 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
     private List<PartListWithPartNumber>partListsWithPartNumber;
     private List<JobPartWithPartNumber> jobPartsWithPartNumber;
     private List <JobPart>jobParts;
+    private ImageView recordReportIcon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         jobParts=new ArrayList<JobPart>();
         jobPartsWithPartNumber=new ArrayList<JobPartWithPartNumber>();
         partListsWithPartNumber=new ArrayList<PartListWithPartNumber>();
+        recordReportIcon=(ImageView)findViewById(R.id.record_report_icon);
 
         jobPartToPost=new JobPart();
         Intent intent=getIntent();
@@ -112,7 +115,8 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         saveSymbol=(ImageView)findViewById(R.id.report_save);
         adapterJobParts =new PartsUsedAdapter(ReportScreen.this,jobPartsWithPartNumber);
         listOfJobPartsView.setAdapter(adapterJobParts);
-        new GetJob(this).execute("/jobs/"+jobToDisplay.getId());
+
+        new GetJob(this).execute("/jobs/"+intent.getStringExtra("id"));
 
 
 

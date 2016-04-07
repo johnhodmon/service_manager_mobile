@@ -18,6 +18,7 @@
     <string name="calloutCountyDefault">county</string>
     <string name="calloutPhoneDefault">phone</string>
     <string name="title_activity_callout_form">Service Request Form</string>
+    <string name="title_activity_product_history">Product History</string>
     <string name="calloutFormHeader">Add Service Request</string>
     <string name="customerSignOffHeader">Customer Signature</string>
     <string name="calloutFormNameDefault">Name</string>
@@ -124,7 +125,6 @@
     <string name="job_history_row_fault">Fault</string>
      <string name="gcm_send_message">Token retrieved and sent to server! You can now use gcmsender to
         send downstream messages to this app.</string>
-
     <string name="jobHistoryTitle">Title</string>
     <string name="registering_message">Generating InstanceID token...</string>
     <string name="token_error_message">An error occurred while either fetching the InstanceID token,

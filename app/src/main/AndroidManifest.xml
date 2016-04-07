@@ -98,6 +98,10 @@
             android:name=".controller.ReportPhotos"
             android:label="@string/title_activity_report_photos" />
 
+        <activity
+            android:name=".controller.ProductHistory"
+            android:label="@string/title_activity_product_history" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

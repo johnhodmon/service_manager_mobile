@@ -1,13 +1,17 @@
 package ie.hodmon.computing.service_manager.controller;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.model.Job;
@@ -33,7 +37,7 @@ public class ProductHistoryAdapter extends ArrayAdapter<Job>
         LayoutInflater inflaterForReport =
                 (LayoutInflater) productHistoryAdapterContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View viewOfRow=inflaterForReport.inflate(R.layout.row_callout,parent,false);
+        View viewOfRow=inflaterForReport.inflate(R.layout.row_product_history,parent,false);
         Job jobToShow = jobList.get(position);
         TextView dateInThisRow=(TextView)viewOfRow.findViewById(R.id.product_history_row_date);
         TextView faultInThisRow=(TextView)viewOfRow.findViewById(R.id.product_history_row_fault);
@@ -43,7 +47,7 @@ public class ProductHistoryAdapter extends ArrayAdapter<Job>
 
 
         if (!jobList.isEmpty()) {
-            dateInThisRow.setText("" + jobToShow.getCreated_at());
+            dateInThisRow.setText(formatDate(jobToShow.getCreated_at()));
             faultInThisRow.setText("" + jobToShow.getReported_fault());
 
 
@@ -53,6 +57,15 @@ public class ProductHistoryAdapter extends ArrayAdapter<Job>
 
 
         return viewOfRow;
+
+    }
+
+    private String formatDate(Date date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd-MM-yyyy", Locale.getDefault());
+
+        Log.v("radiobuttons", "date being formatted " + dateFormat.format(date));
+        return dateFormat.format(date);
 
     }
 

@@ -13,11 +13,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Arrays;
 import java.util.List;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
+import ie.hodmon.computing.service_manager.model.CustomerProduct;
 import ie.hodmon.computing.service_manager.model.Job;
+import ie.hodmon.computing.service_manager.model.Report;
 
 
 public class ProductHistory extends ClassForCommonAttributes implements AdapterView.OnItemClickListener
@@ -38,11 +41,12 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
         setContentView(R.layout.activity_product_history);
         Log.v("check email", "email: " + engineerEmail);
         title=(TextView)findViewById(R.id.jobHistoryTitle);
-        title.setText("Previous Jobs for " + getIntent().getStringExtra("customer_product_name"));
+        title.setText("Previous Jobs for this Product");
         jobListView =(ListView)findViewById(R.id.productHistoryListView);
         jobListView.setOnItemClickListener(this);
+        Log.v("productHistory","getting jobs for "+getIntent().getStringExtra("customer_product_id"));
 
-        new GetJobs(this).execute("/jobs?customer_product_id=" + getIntent().getStringExtra("customer_product_id"));
+        new GetCustomerProduct(this).execute("/customer_products/"+getIntent().getStringExtra("customer_product_id"));
 
 
 
@@ -71,7 +75,7 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
 
         Job c=(Job)parent.getItemAtPosition(position);
 
-        Intent intent = new Intent(this, JobDetails.class);
+        Intent intent = new Intent(this, ReportScreen.class);
 
         intent.putExtra("id",""+c.getId());
         startActivity(intent);
@@ -92,12 +96,12 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
 
 
 
-    private class GetJobs extends AsyncTask<String, Void, List<Job>> {
+    private class GetCustomerProduct extends AsyncTask<String, Void, CustomerProduct> {
 
         protected ProgressDialog dialog;
         protected Context context;
 
-        public GetJobs(Context context)
+        public GetCustomerProduct(Context context)
         {
             this.context = context;
         }
@@ -106,15 +110,15 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
         protected void onPreExecute() {
             super.onPreExecute();
             this.dialog = new ProgressDialog(context, 1);
-            this.dialog.setMessage("Retrieving Jobs");
+            this.dialog.setMessage("Retrieving History");
             this.dialog.show();
         }
 
         @Override
-        protected List<Job> doInBackground(String... params) {
+        protected CustomerProduct doInBackground(String... params) {
             try {
                 Log.v("REST", "Getting Jobs");
-                return (List<Job>) ConnectionAPI.getJobs((String) params[0]);
+                return (CustomerProduct) ConnectionAPI.getCustomerProduct((String) params[0]);
             }
             catch (Exception e) {
                 Log.v("REST", "ERROR : " + e);
@@ -124,10 +128,10 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
         }
 
         @Override
-        protected void onPostExecute(List<Job> result) {
+        protected void onPostExecute(CustomerProduct result) {
             super.onPostExecute(result);
 
-            jobs=result;
+            jobs= Arrays.asList(result.getJobs());
 
             ProductHistoryAdapter adapterForCalloutListView =new ProductHistoryAdapter(ProductHistory.this, jobs);
             jobListView.setAdapter(adapterForCalloutListView);
