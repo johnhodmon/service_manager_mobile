@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
@@ -61,7 +62,10 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
 
         Calendar c = Calendar.getInstance();
 
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat(
+                "yyyy-MM-dd", Locale.getDefault());
+
+
         String formattedDate ="";
         if(notToday) {
             formattedDate=dateToShow;
@@ -72,12 +76,14 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         {
             formattedDate = df.format(c.getTime());
         }
-       new GetJobs(this).execute("/jobs.json");
+        new GetJobs(JobScreen.this).execute("/jobs?created_at="+formattedDate);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new GetJobs(JobScreen.this).execute("/jobs");
+               // new GetJobs(JobScreen.this).execute("/jobs?created_at"+formattedDate);
+
+
             }
         });
 
@@ -157,7 +163,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         args.putInt("zoom",10);
 
 
-        intent.putExtra("bundle",args);
+        intent.putExtra("bundle", args);
         startActivity(intent);
     }
 

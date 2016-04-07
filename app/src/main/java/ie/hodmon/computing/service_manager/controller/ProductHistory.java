@@ -45,7 +45,6 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
         jobListView =(ListView)findViewById(R.id.productHistoryListView);
         jobListView.setOnItemClickListener(this);
         Log.v("productHistory","getting jobs for "+getIntent().getStringExtra("customer_product_id"));
-
         new GetCustomerProduct(this).execute("/customer_products/"+getIntent().getStringExtra("customer_product_id"));
 
 
@@ -60,12 +59,6 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
         getMenuInflater().inflate(R.menu.menu_callout_screen, menu);
         return true;
     }
-
-
-
-
-
-
 
 
 

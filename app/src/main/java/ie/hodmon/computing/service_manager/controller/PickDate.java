@@ -79,7 +79,7 @@ public class PickDate extends ClassForCommonAttributes implements CalendarView.O
     public void confirmDate(View view)
     {
         notToday=true;
-        dateToShow = (day + "/" +month + "/"+year);
+        dateToShow = (year + "-" +month + "-"+day);
         finish();
         startActivity(new Intent(this,JobScreen.class));
         dateSelected=calendarView.getDate();
