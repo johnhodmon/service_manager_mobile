@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,7 @@ public class ProductHistory extends ClassForCommonAttributes implements AdapterV
         title.setText("Previous Jobs for " + getIntent().getStringExtra("customer_product_name"));
         jobListView =(ListView)findViewById(R.id.productHistoryListView);
         jobListView.setOnItemClickListener(this);
+
         new GetJobs(this).execute("/jobs?customer_product_id=" + getIntent().getStringExtra("customer_product_id"));
 
 

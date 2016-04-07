@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
     private RadioButton beginJob;
     private RadioButton jobComplete;
     private RadioButton returnVisit;
+    private ImageView jobHistoryLauncher;
+
 
 
     @Override
@@ -62,6 +65,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         jobDetailsPhone = (TextView) findViewById(R.id.job_details_phone_number);
         travelling = (RadioButton) findViewById(R.id.rb_travelling);
         jobProgress = (RadioGroup) findViewById(R.id.rg_job_progress);
+        jobHistoryLauncher=(ImageView)findViewById(R.id.access_job_history);
 
         onSite = (RadioButton) findViewById(R.id.rb_on_site);
         beginJob = (RadioButton) findViewById(R.id.rb_start_job);
@@ -101,6 +105,12 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
 
     }
 
+    public void productHistory(View view)
+    {
+        Intent jobHistoryIntent=new Intent(this,ProductHistory.class);
+        jobHistoryIntent.putExtra("customer_product_id",""+jobToDisplay.getProduct().getId());
+
+    }
 
     public void getDirections(View view) {
 
