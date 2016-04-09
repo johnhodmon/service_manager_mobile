@@ -151,12 +151,6 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
 
         for(Job j: jobs)
         {
-
-
-
-
-
-
             LatLng latLng=  convertStringToLatLng(j.getCustomer().getLat_lng());
             args.putParcelable(j.getCustomer().getName(),latLng);
         }
