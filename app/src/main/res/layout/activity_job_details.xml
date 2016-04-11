@@ -59,9 +59,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/job_details_product_description"
+        android:id="@+id/job_details_product_description"
+        android:layout_below="@+id/job_details_product_name"
+        android:layout_alignStart="@+id/job_details_product_name"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/job_details_fault"
         android:id="@+id/job_details_fault"
-        android:layout_below="@+id/job_details_product_name"
+        android:layout_below="@+id/job_details_product_description"
         android:layout_alignStart="@+id/job_details_product_name"
         android:layout_marginTop="16dp" />
 

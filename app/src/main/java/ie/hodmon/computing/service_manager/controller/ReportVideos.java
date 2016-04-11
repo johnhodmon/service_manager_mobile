@@ -133,7 +133,7 @@ public class ReportVideos extends ClassForCommonAttributes {
                 Video v=new Video(jobToDisplay.getId());
                 v.setLocalUri(fileUri);
                 Log.v("VIDEO"," file uri"+fileUri);
-                new AddVideo(this).execute("/videos",v);
+                new AddVideo(this).execute(v);
             } else if (resultCode == RESULT_CANCELED) {
                 // GmsToken cancelled the video capture
             } else {
@@ -315,7 +315,7 @@ public class ReportVideos extends ClassForCommonAttributes {
 
     private class AddVideo extends AsyncTask<Object, Void, String> {
 
-        protected ProgressDialog dialog;
+
         protected Context context;
 
         public AddVideo(Context context)
@@ -326,9 +326,9 @@ public class ReportVideos extends ClassForCommonAttributes {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            this.dialog = new ProgressDialog(context, 1);
-            this.dialog.setMessage("Uploading Video....");
-            this.dialog.show();
+            Toast.makeText(ReportVideos.this,"Video will be uploaded in background",Toast.LENGTH_LONG).show();
+
+
         }
 
         @Override
@@ -338,7 +338,7 @@ public class ReportVideos extends ClassForCommonAttributes {
             try {
                 Log.v("REST", "Posting video");
 
-                REST.uploadVideo((String) params[0], (Video) params[1]);
+                REST.uploadVideo((Video) params[0]);
 
             }
 
@@ -358,8 +358,7 @@ public class ReportVideos extends ClassForCommonAttributes {
             }
             Toast.makeText(ReportVideos.this,"Video uploaded", Toast.LENGTH_LONG).show();
             new GetVideos(ReportVideos.this).execute("/videos?job_id=" + jobToDisplay.getId());
-            if (dialog.isShowing())
-                dialog.dismiss();
+
 
         }
     }

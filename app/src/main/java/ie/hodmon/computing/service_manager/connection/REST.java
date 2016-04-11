@@ -255,11 +255,11 @@ public class REST
         return response;
     }
 
-    public static void uploadVideo(String url,Video v)
+    public static void uploadVideo(Video v)
     {
         try {
             MultipartUtility mp = new MultipartUtility("http://192.168.1.102/videos", "UTF-8");
-            mp.addFormField("job_id", "1");
+            mp.addFormField("job_id", ""+v.getJob_id());
             File videoFile=new File(v.getLocalUri().getPath());
             mp.addFilePart("video_attachment",videoFile);
             Log.v("REST","Launching multipart form:");
@@ -297,6 +297,7 @@ public class REST
             // creates a unique boundary based on time stamp
             boundary = "===" + System.currentTimeMillis() + "===";
             URL url = new URL(requestURL);
+
             httpConn = (HttpURLConnection) url.openConnection();
             httpConn.setUseCaches(false);
             httpConn.setDoOutput(true);    // indicates POST method

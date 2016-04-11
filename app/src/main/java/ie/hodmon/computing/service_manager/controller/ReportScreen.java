@@ -64,6 +64,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
     private List<PartListWithPartNumber>partListsWithPartNumber;
     private List<JobPartWithPartNumber> jobPartsWithPartNumber;
     private List <JobPart>jobParts;
+    private TextView reportProductDescription;
     private ImageView recordReportIcon;
 
 
@@ -79,7 +80,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         jobPartsWithPartNumber=new ArrayList<JobPartWithPartNumber>();
         partListsWithPartNumber=new ArrayList<PartListWithPartNumber>();
         recordReportIcon=(ImageView)findViewById(R.id.record_report_icon);
-
+        reportProductDescription=(TextView)findViewById(R.id.product_description);
         jobPartToPost=new JobPart();
         Intent intent=getIntent();
         intent.getExtras();
@@ -110,6 +111,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         fault=(TextView)findViewById(R.id.report_fault);
         fault.setText(jobToDisplay.getReported_fault());
         productName.setText(jobToDisplay.getManufacturer().getName() + " " + jobToDisplay.getProduct().getProduct_number());
+        reportProductDescription.setText(jobToDisplay.getProduct().getDescription());
         System.out.println("id:" + jobToDisplay.getId());
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);

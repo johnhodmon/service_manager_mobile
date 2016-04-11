@@ -40,6 +40,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
     private TextView jobDetailsTown;
     private TextView jobDetailsPhone;
     private TextView jobDetailsProduct;
+    private TextView jobDetailsProductDescription;
     private TextView jobDetailsReportedFault;
     private RadioGroup jobProgress;
     private RadioButton travelling;
@@ -61,6 +62,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         jobDetailsStreet = (TextView) findViewById(R.id.job_details_street);
         jobDetailsTown = (TextView) findViewById(R.id.job_details_town);
         jobDetailsProduct = (TextView) findViewById(R.id.job_details_product_name);
+        jobDetailsProductDescription = (TextView) findViewById(R.id.job_details_product_description);
         jobDetailsReportedFault = (TextView) findViewById(R.id.job_details_fault);
         jobDetailsPhone = (TextView) findViewById(R.id.job_details_phone_number);
         travelling = (RadioButton) findViewById(R.id.rb_travelling);
@@ -77,12 +79,6 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_job_details, menu);
-        return true;
-    }
 
 
     public void dialNumber(View view) {
@@ -179,6 +175,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
                 jobDetailsStreet.setText(jobToDisplay.getCustomer().getStreet());
                 jobDetailsTown.setText(jobToDisplay.getCustomer().getTown());
                 jobDetailsProduct.setText(jobToDisplay.getManufacturer().getName() + " " + jobToDisplay.getProduct().getProduct_number());
+                jobDetailsProductDescription.setText(jobToDisplay.getProduct().getDescription());
                 jobDetailsReportedFault.setText(jobToDisplay.getReported_fault());
                 jobDetailsPhone.setText(jobToDisplay.getCustomer().getPhone());
 

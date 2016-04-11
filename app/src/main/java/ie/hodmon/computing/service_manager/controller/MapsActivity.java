@@ -17,8 +17,10 @@ import ie.hodmon.computing.service_manager.R;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
 
-    private List<LatLng> coordinates=new ArrayList<LatLng>();
+    private List<LatLng> coordinates = new ArrayList<LatLng>();
     private int zoom;
+    private Bundle bundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,16 +28,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        Bundle bundle = getIntent().getParcelableExtra("bundle");
+        bundle = getIntent().getParcelableExtra("bundle");
         for (String key : bundle.keySet()) {
-            if(!key.equals("zoom")) {
-                coordinates.add((LatLng) bundle.get(key));
+            if (key.equals("zoom")) {
+
+                zoom = bundle.getInt(key);
             }
 
-            else
-            {
-                zoom=bundle.getInt(key);
-            }
 
         }
 
@@ -45,13 +44,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap map) {
         // Add a marker in Sydney, Australia, and move the camera.
         map.setMyLocationEnabled(true);
-        for (LatLng l:coordinates)
-        {
-            map.addMarker(new MarkerOptions().position(l).title("Job Here"));
 
+        for (String key : bundle.keySet()) {
+            if (!key.equals("zoom")) {
+                coordinates.add((LatLng) bundle.get(key));
+                map.addMarker(new MarkerOptions().position((LatLng) bundle.get(key)).title(key));
+
+            }
+
+
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates.get(0), zoom));
         }
-
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates.get(0), zoom));
     }
 }
 

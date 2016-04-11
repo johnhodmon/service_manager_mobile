@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Hodmon Services</string>
+    <string name="app_name">Service Manager</string>
     <string name="job_row_product_name">Product Name</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -130,8 +130,9 @@
     <string name="token_error_message">An error occurred while either fetching the InstanceID token,
         sending the fetched token to the server or subscribing to the PubSub topic. Please try
         running the sample again.</string>
-
-
+    <string name="report_product_description">description</string>
+    <string name="job_details_product_description">description</string>
+    <string name="logout">Log Out</string>
 
 
 </resources>
