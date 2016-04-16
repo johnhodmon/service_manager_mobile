@@ -34,13 +34,13 @@ public class REST
 
 
 
-    private static final String URL = "http://192.168.1.102";
+    private static final String localURL = "http://192.168.1.102";
     private static final String cloudURL = "https://whispering-gorge-59927.herokuapp.com";
 
 
     public static void establishConnection(String request) {
         try {
-            url = new URL(cloudURL + request);
+            url = new URL(localURL + request);
             httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setUseCaches(false);
             httpCon.setReadTimeout(15 * 1000); // 15 seconds to timeout
@@ -258,7 +258,7 @@ public class REST
     public static void uploadVideo(Video v)
     {
         try {
-            MultipartUtility mp = new MultipartUtility("https://whispering-gorge-59927.herokuapp.com/videos", "UTF-8");
+            MultipartUtility mp = new MultipartUtility("http://192.168.1.102/videos", "UTF-8");
             mp.addFormField("job_id", ""+v.getJob_id());
             File videoFile=new File(v.getLocalUri().getPath());
             mp.addFilePart("video_attachment",videoFile);

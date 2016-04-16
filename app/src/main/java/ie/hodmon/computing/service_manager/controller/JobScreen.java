@@ -76,7 +76,7 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
         {
             formattedDate = df.format(c.getTime());
         }
-        new GetJobs(JobScreen.this).execute("/jobs?created_at="+formattedDate);
+        new GetJobs(JobScreen.this).execute("/jobs?allocation_date="+formattedDate);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

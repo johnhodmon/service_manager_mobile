@@ -58,7 +58,7 @@ public class ReportVideosAdapter extends ArrayAdapter<Video>
         Video videoInThisRow=videoList.get(position);
 
         String url=videoInThisRow.getUrl();
-       String address = "https://whispering-gorge-59927.herokuapp.com" + url;
+       String address = "http://192.168.1.102" + url;
         Log.v("video", "address" + address);
         try {
             Bitmap bmp= new GetVideoPreview().execute(address).get();
@@ -73,7 +73,10 @@ public class ReportVideosAdapter extends ArrayAdapter<Video>
 
         TextView videoIdThisRow=(TextView)viewOfRow.findViewById(R.id.video_id);
         TextView videoFileNameThisRow=(TextView)viewOfRow.findViewById(R.id.video_file_name);
+
+
         videoFileNameThisRow.setText(videoInThisRow.getVideoLocation());
+        Log.v("video", "filename" + videoInThisRow.getVideoLocation());
 
 
         videoIdThisRow.setText("" + videoInThisRow.getId());

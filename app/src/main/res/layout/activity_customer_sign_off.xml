@@ -37,16 +37,18 @@
 
     <RelativeLayout
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_below="@+id/layout100"
+
 
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
             android:orientation="horizontal"
             android:id="@+id/mysignature"
+            android:layout_marginBottom="50dp"
             android:layout_width="fill_parent"
-            android:layout_height="100dp" >
+            android:layout_height="match_parent" >
         </LinearLayout>
 
 
@@ -56,8 +58,11 @@
             android:layout_height="wrap_content"
             android:text="Clear"
             android:onClick="clearSignature"
-            android:layout_below="@+id/mysignature"
-            android:layout_alignParentStart="true" />
+
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/purple"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/save"
@@ -65,8 +70,10 @@
             android:layout_height="wrap_content"
             android:onClick="saveSignature"
             android:text="save"
-            android:layout_below="@+id/mysignature"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/green" />
 
 
 

@@ -95,7 +95,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
 
         listOfJobPartsView =(ListView)findViewById(R.id.listOfSparesOrders);
         reportText=(TextView)findViewById(R.id.reportText);
-        reportText.setText(jobToDisplay.getReport().getEngineer_report());
+
         editReport=(ImageView)findViewById(R.id.report_edit_report);
         addJobPart =(ImageView)findViewById(R.id.report_add_part);
         partDescriptionSpinner=(Spinner)findViewById(R.id.report_part_spinner);
@@ -109,9 +109,7 @@ public class ReportScreen extends ClassForCommonAttributes implements AdapterVie
         orderPartQuantitySpinner.setOnItemSelectedListener(this);
         productName=(TextView)findViewById(R.id.report_product_name);
         fault=(TextView)findViewById(R.id.report_fault);
-        fault.setText(jobToDisplay.getReported_fault());
-        productName.setText(jobToDisplay.getManufacturer().getName() + " " + jobToDisplay.getProduct().getProduct_number());
-        reportProductDescription.setText(jobToDisplay.getProduct().getDescription());
+
         System.out.println("id:" + jobToDisplay.getId());
         editText=(EditText)findViewById(R.id.report_edit_text);
         saveSymbol=(ImageView)findViewById(R.id.report_save);
@@ -598,6 +596,10 @@ public void addJobPart (View view)
             partListsWithPartNumber.clear();
 
             jobToDisplay = result;
+            reportText.setText(jobToDisplay.getReport().getEngineer_report());
+            fault.setText(jobToDisplay.getReported_fault());
+            productName.setText(jobToDisplay.getManufacturer().getName() + " " + jobToDisplay.getProduct().getProduct_number());
+            reportProductDescription.setText(jobToDisplay.getProduct().getDescription());
 
             Log.v("fill_lists","job parts length: "+jobToDisplay.getJob_parts().length);
             Log.v("fill_lists","job parts with numbers length: "+ jobToDisplay.getJob_parts_with_part_numbers().length);

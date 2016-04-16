@@ -47,7 +47,7 @@ public class ProductHistoryAdapter extends ArrayAdapter<Job>
 
 
         if (!jobList.isEmpty()) {
-            dateInThisRow.setText(formatDate(jobToShow.getCreated_at()));
+            dateInThisRow.setText(formatDate(jobToShow.getAllocation_date()));
             faultInThisRow.setText("" + jobToShow.getReported_fault());
 
 

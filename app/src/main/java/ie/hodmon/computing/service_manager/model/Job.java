@@ -25,13 +25,15 @@ public class Job
     private String labour_end;
     private String cust_sig;
     private Date created_at;
+    private Date allocation_date;
+
 
 
 
 
     public Job(int id,String reported_fault,int miles,int labour_time,int engineer_id,int customer_product_id,String status,Product product,
                Customer customer,Manufacturer manufacturer, Report report,JobPart[]job_parts,
-               String travel_start,String travel_end,String labour_start, String labour_end, Date created_at)
+               String travel_start,String travel_end,String labour_start, String labour_end, Date created_at, Date allocation_date)
     {
         this.id=id;
         this .reported_fault=reported_fault;
@@ -47,6 +49,7 @@ public class Job
         this.labour_start=labour_start;
         this.labour_end=labour_end;
         this.created_at=created_at;
+        this.allocation_date=allocation_date;
 
 
     }
@@ -186,6 +189,14 @@ public class Job
 
     public String getCust_sig() {
         return cust_sig;
+    }
+
+    public Date getAllocation_date() {
+        return allocation_date;
+    }
+
+    public void setAllocation_date(Date allocation_date) {
+        this.allocation_date = allocation_date;
     }
 
     public void setCust_sig(String cust_sig) {
