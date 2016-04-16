@@ -250,7 +250,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         }
 
        else if (checkedId == onSite.getId()) {
-            jobToDisplay.setTravel_end("2016-02-09 11:00:00");
+            jobToDisplay.setTravel_end("2016-04-16 18:00:00");
             jobToDisplay.setStatus("on site");
             new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
 
@@ -260,7 +260,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         }
 
         else if (checkedId == beginJob.getId()) {
-            jobToDisplay.setLabour_start("2016-02-09 11:00:00");
+            jobToDisplay.setLabour_start("2016-04-16 18:00:00");
             jobToDisplay.setStatus("job started");
             new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
 
@@ -268,7 +268,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
 
         else if (checkedId == jobComplete.getId())
         {
-            jobToDisplay.setLabour_end("2016-02-09 12:00:00");
+            jobToDisplay.setLabour_end("2016-04-16 19:00:00");
             jobToDisplay.setStatus("complete");
             startActivityForResult(new Intent(this, CustomerSignOff.class), 0);
 
