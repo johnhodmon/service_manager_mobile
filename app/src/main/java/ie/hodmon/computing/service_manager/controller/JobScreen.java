@@ -200,12 +200,18 @@ public class JobScreen extends ClassForCommonAttributes implements AdapterView.O
             super.onPostExecute(result);
 
            jobs=result;
-            if (jobs.isEmpty())
+            if (jobs!=null&&!jobs.isEmpty())
+            {
+                JobsAdapter adapterForCalloutListView =new JobsAdapter(JobScreen.this, jobs);
+                calloutListView.setAdapter(adapterForCalloutListView);
+
+            }
+
+            else
             {
                 mapButton.setVisibility(View.INVISIBLE);
             }
-            JobsAdapter adapterForCalloutListView =new JobsAdapter(JobScreen.this, jobs);
-            calloutListView.setAdapter(adapterForCalloutListView);
+
             mSwipeRefreshLayout.setRefreshing(false);
             if (dialog.isShowing())
             {

@@ -3,8 +3,11 @@ package ie.hodmon.computing.service_manager.controller;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -19,7 +22,10 @@ import android.widget.VideoView;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import ie.hodmon.computing.service_manager.R;
 import ie.hodmon.computing.service_manager.model.Photo;
@@ -32,6 +38,7 @@ public class ReportVideosAdapter extends ArrayAdapter<Video>
 {
     private Context context;
     private List<Video> videoList;
+
     public ReportVideosAdapter(Context context,List<Video> videoList)
     {
         super(context, R.layout.row_report_videos,videoList);
@@ -46,13 +53,31 @@ public class ReportVideosAdapter extends ArrayAdapter<Video>
         LayoutInflater inflaterForReport =
                 (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewOfRow=inflaterForReport.inflate(R.layout.row_report_videos, parent, false);
+       ImageView videoPreview=(ImageView)viewOfRow.findViewById(R.id.video_preview);
+        
         Video videoInThisRow=videoList.get(position);
+
+        String url=videoInThisRow.getUrl();
+       String address = "http://192.168.1.102" + url;
+        Log.v("video", "address" + address);
+        try {
+            Bitmap bmp= new GetVideoPreview().execute(address).get();
+
+            videoPreview.setImageBitmap(bmp);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
         TextView videoIdThisRow=(TextView)viewOfRow.findViewById(R.id.video_id);
-        TextView videoUrlThisRow=(TextView)viewOfRow.findViewById(R.id.video_url);
-        TextView videoFileNameThisRow=(TextView)viewOfRow.findViewById(R.id.video_path);
-        videoUrlThisRow.setText("" + videoInThisRow.getUrl());
+        TextView videoFileNameThisRow=(TextView)viewOfRow.findViewById(R.id.video_file_name);
+        videoFileNameThisRow.setText(videoInThisRow.getVideoLocation());
+
+
         videoIdThisRow.setText("" + videoInThisRow.getId());
-        videoFileNameThisRow.setText(videoInThisRow.getVideo_attachment_file_name());
+
 
 
 
@@ -62,5 +87,29 @@ public class ReportVideosAdapter extends ArrayAdapter<Video>
 
 
     }
+
+    private class GetVideoPreview extends AsyncTask<String, Void, Bitmap> {
+
+
+
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+
+        }
+    }
+
 
 }

@@ -47,7 +47,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
     private RadioButton onSite;
     private RadioButton beginJob;
     private RadioButton jobComplete;
-    private RadioButton returnVisit;
+
     private ImageView jobHistoryLauncher;
 
 
@@ -72,7 +72,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
         onSite = (RadioButton) findViewById(R.id.rb_on_site);
         beginJob = (RadioButton) findViewById(R.id.rb_start_job);
         jobComplete = (RadioButton) findViewById(R.id.rb_job_complete);
-        returnVisit = (RadioButton) findViewById(R.id.rb_return_visit);
+
         new GetJob(this).execute("/jobs/" + jobId);
 
 
@@ -186,7 +186,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
                     onSite.setEnabled(false);
                     beginJob.setEnabled(false);
                     jobComplete.setEnabled(false);
-                    returnVisit.setEnabled(false);
+
 
                 } else if (jobToDisplay.getStatus().equals("travelling")) {
                     travelling.setEnabled(false);
@@ -194,7 +194,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
                     onSite.setEnabled(true);
                     beginJob.setEnabled(false);
                     jobComplete.setEnabled(false);
-                    returnVisit.setEnabled(false);
+
 
                 } else if (jobToDisplay.getStatus().equals("on site")) {
                     travelling.setEnabled(false);
@@ -202,7 +202,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
                     onSite.setChecked(true);
                     beginJob.setEnabled(true);
                     jobComplete.setEnabled(false);
-                    returnVisit.setEnabled(false);
+
 
 
                 } else if (jobToDisplay.getStatus().equals("job started")) {
@@ -211,23 +211,15 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
                     beginJob.setEnabled(false);
                     beginJob.setChecked(true);
                     jobComplete.setEnabled(true);
-                    returnVisit.setEnabled(true);
+
 
                 } else if (jobToDisplay.getStatus().equals("complete")) {
                     travelling.setEnabled(false);
                     onSite.setEnabled(false);
                     beginJob.setEnabled(false);
                     jobComplete.setEnabled(false);
-                    returnVisit.setEnabled(false);
-                    jobComplete.setChecked(true);
 
-                } else if (jobToDisplay.getStatus().equals("return required")) {
-                    travelling.setEnabled(false);
-                    onSite.setEnabled(false);
-                    beginJob.setEnabled(false);
-                    jobComplete.setEnabled(false);
-                    returnVisit.setEnabled(false);
-                    returnVisit.setChecked(true);
+                    jobComplete.setChecked(true);
 
                 }
 
@@ -283,13 +275,7 @@ public class JobDetails extends ClassForCommonAttributes implements RadioGroup.O
 
         }
 
-        else if (checkedId == returnVisit.getId())
-        {
-            jobToDisplay.setLabour_end(formatDate());
-            jobToDisplay.setStatus("return required");
-            new EditJob(this).execute("/jobs/"+jobToDisplay.getId(),jobToDisplay);
 
-        }
 
 
 

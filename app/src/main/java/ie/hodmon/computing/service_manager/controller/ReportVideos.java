@@ -1,5 +1,6 @@
 package ie.hodmon.computing.service_manager.controller;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -189,7 +190,7 @@ public class ReportVideos extends ClassForCommonAttributes {
     {
         RelativeLayout rowContainingButton=(RelativeLayout)view.getParent();
 
-        TextView tw=(TextView)rowContainingButton.getChildAt(4);
+        TextView tw=(TextView)rowContainingButton.getChildAt(3);
         String videoId=tw.getText().toString();
         onDeleteVideo(videoId);
 
@@ -357,7 +358,9 @@ public class ReportVideos extends ClassForCommonAttributes {
                 Log.v("REST", "Post Video result: "+result);
             }
             Toast.makeText(ReportVideos.this,"Video uploaded", Toast.LENGTH_LONG).show();
-            new GetVideos(ReportVideos.this).execute("/videos?job_id=" + jobToDisplay.getId());
+            startActivity(new Intent(getApplicationContext(),ReportVideos.class));
+
+            //new GetVideos(ReportVideos.this).execute("/videos?job_id=" + jobToDisplay.getId());
 
 
         }
@@ -368,7 +371,7 @@ public class ReportVideos extends ClassForCommonAttributes {
         Log.v("VIDEO", "PLAY VIDEO ENTERED");
         RelativeLayout rowContainingButton=(RelativeLayout)view.getParent();
 
-        TextView tw=(TextView)rowContainingButton.getChildAt(3);
+        TextView tw=(TextView)rowContainingButton.getChildAt(4);
         String url=tw.getText().toString();
         Intent i=new Intent(this,VideoPLay.class);
         i.putExtra("url",url);

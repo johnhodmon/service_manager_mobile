@@ -14,7 +14,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="#14cd8d"
+        android:background="@color/navy"
         android:layout_width="match_parent"
         android:id="@+id/layout3"
         android:paddingTop="16dp"
@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
+
         android:text="@string/calloutDetailsHeader"
         android:id="@+id/calloutDetailsHeader"
         android:layout_alignParentTop="true"
@@ -42,8 +43,19 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="29dp"
-            android:onClick="productHistory" />
+            android:onClick="productHistory"
+            android:tint="@color/white" />
     </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/layout3"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,9 +63,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/job_details_product_name"
         android:id="@+id/job_details_product_name"
-        android:layout_below="@+id/layout3"
+       android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="31dp" />
+        android:layout_marginStart="31dp"
+        android:textColor="@color/navy" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,7 +96,8 @@
         android:id="@+id/job_details_customer_name"
         android:layout_below="@+id/job_details_fault"
         android:layout_alignStart="@+id/job_details_fault"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"
+        android:textColor="@color/navy" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,7 +136,8 @@
         android:layout_above="@+id/job_details_phone_number"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_directions_car_black_36dp"
-        android:onClick="getDirections" />
+        android:onClick="getDirections"
+        android:tint="@color/navy" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -132,7 +147,8 @@
         android:layout_alignTop="@+id/call_details_directions"
         android:layout_toStartOf="@+id/call_details_directions"
         android:layout_marginEnd="32dp"
-        android:onClick="dialNumber" />
+        android:onClick="dialNumber"
+        android:tint="@color/green" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -142,7 +158,8 @@
         android:id="@+id/job_details_go_to_report"
         android:layout_below="@+id/job_details_town"
         android:layout_alignStart="@+id/job_details_town"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"
+        android:textColor="@color/navy" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -169,7 +186,8 @@
             android:enabled="false"
             android:text="@string/rb_job_job_progress_traveling"
             android:id="@+id/rb_travelling"
-            android:checked="false" />
+            android:checked="false"
+            android:buttonTint="@color/green" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -177,7 +195,8 @@
             android:text="@string/rb_job_progress_on_site"
             android:id="@+id/rb_on_site"
             android:enabled="false"
-            android:checked="false" />
+            android:checked="false"
+            android:buttonTint="@color/green" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -185,7 +204,8 @@
             android:text="@string/rb_job_progress_start_job"
             android:enabled="false"
             android:id="@+id/rb_start_job"
-            android:checked="false" />
+            android:checked="false"
+            android:buttonTint="@color/green" />
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -193,16 +213,11 @@
             android:text="@string/rb_job_progress_job_complete"
             android:id="@+id/rb_job_complete"
             android:enabled="false"
-            android:checked="false" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rb_job_progress_return_visit"
-            android:id="@+id/rb_return_visit"
             android:checked="false"
-            android:enabled="false" />
+            android:buttonTint="@color/green" />
+
 
     </RadioGroup>
-
+</RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

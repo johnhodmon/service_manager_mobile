@@ -4,27 +4,30 @@
     android:layout_height="match_parent">
 
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/video_preview"
+        android:layout_marginLeft="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="12dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/video_path"
-
         />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/reportVideosPlay"
-        android:layout_toLeftOf="@+id/reportVideosDelete"
-        android:layout_marginRight="16dp"
+       android:layout_alignParentTop="true"
+        android:background="@color/navy"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+
+
         android:src="@drawable/ic_play_arrow_black_36dp"
         android:nestedScrollingEnabled="false"
-        android:onClick="playVideo" />
+        android:onClick="playVideo"
+        android:tint="@color/white" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -34,15 +37,15 @@
         android:layout_marginRight="16dp"
         android:src= "@drawable/ic_delete_black_36dp"
         android:nestedScrollingEnabled="false"
-        android:onClick="deleteVideo" />
-
+        android:onClick="deleteVideo"
+        android:tint="@color/purple" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/video_url"
+        android:id="@+id/video_id"
         android:visibility="invisible"
         android:layout_below="@+id/reportVideosDelete"
         android:layout_centerHorizontal="true"
@@ -53,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/video_id"
+        android:id="@+id/video_file_name"
         android:visibility="invisible"
         android:layout_below="@+id/reportVideosDelete"
         android:layout_centerHorizontal="true"

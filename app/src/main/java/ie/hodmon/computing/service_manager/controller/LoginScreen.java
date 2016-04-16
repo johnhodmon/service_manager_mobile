@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import ie.hodmon.computing.service_manager.R;
@@ -93,8 +94,17 @@ public class LoginScreen extends ClassForCommonAttributes {
 
         errorMessage.setText("");
         SessionWrapper sw=new SessionWrapper(new Session("jhodmon@servicemanager.ie","secret",""));
-        //SessionWrapper sw=new SessionWrapper(new Session(emailAddress.getText().toString(),password.getText().toString()));
-        new Login(this).execute("/login",sw);
+        //SessionWrapper sw=new SessionWrapper(new Session(emailAddress.getText().toString(),password.getText().toString(),""));
+        if(connectedToInternet(this)) {
+
+            new Login(this).execute("/login", sw);
+        }
+
+        else
+        {
+
+            Toast.makeText(this,"Please check internet connection",Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -142,7 +152,7 @@ public class LoginScreen extends ClassForCommonAttributes {
 
 
 
-            if(result.equals("login sucessful"))
+            if(result!=null&&result.equals("login sucessful"))
             {
 
                 registerReceiver();
@@ -158,7 +168,7 @@ public class LoginScreen extends ClassForCommonAttributes {
 
             else
             {
-                errorMessage.setText("Incorrect log in details, try again");
+                Toast.makeText(LoginScreen.this,"Incorrect Log In Details",Toast.LENGTH_LONG).show();
             }
 
 

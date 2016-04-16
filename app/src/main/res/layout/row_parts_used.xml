@@ -43,7 +43,8 @@
         android:src="@drawable/ic_delete_black_24dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:onClick="deleteJobPart" />
+        android:onClick="deleteJobPart"
+        android:tint="@color/purple" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -53,7 +54,8 @@
         android:layout_toLeftOf="@+id/spares_row_delete_symbol"
         android:layout_marginRight="10dp"
         android:layout_alignParentTop="true"
-        android:onClick="editJobPart" />
+        android:onClick="editJobPart"
+        android:tint="@color/navy" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -63,6 +65,7 @@
         android:layout_alignParentTop="true"
         android:visibility="invisible"
         android:src="@drawable/ic_done_black_24dp"
-        android:onClick="editJobPart" />
+        android:onClick="editJobPart"
+        android:tint="@color/red" />
 
 </RelativeLayout>

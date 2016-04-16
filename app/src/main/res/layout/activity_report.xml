@@ -16,7 +16,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="#14cd8d"
+        android:background="@color/navy"
         android:layout_width="match_parent"
         android:id="@+id/layout4"
         android:paddingTop="16dp"
@@ -43,7 +43,8 @@
             android:src="@drawable/ic_camera_alt_black_36dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:onClick="openPhotographs" />
+            android:onClick="openPhotographs"
+            android:tint="@color/white" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,7 +54,8 @@
             android:layout_toLeftOf="@+id/go_to_pictures"
             android:layout_marginRight="12dp"
             android:src="@drawable/ic_videocam_black_36dp"
-            android:onClick="openVideos"></ImageView>
+            android:onClick="openVideos"
+            android:tint="@color/white"></ImageView>
 
     </RelativeLayout>
     <ScrollView
@@ -82,7 +84,8 @@
             android:text="@string/report_product_name"
             android:id="@+id/report_product_name"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textColor="@color/navy" />
 
 
         <TextView
@@ -115,7 +118,8 @@
             android:id="@+id/report_observations"
             android:layout_marginTop="32dp"
             android:layout_below="@+id/report_fault"
-            android:layout_alignStart="@+id/report_fault" />
+            android:layout_alignStart="@+id/report_fault"
+            android:textColor="@color/navy" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -158,12 +162,14 @@
             android:id="@+id/sparesHeader"
             android:layout_marginTop="16dp"
             android:layout_below="@+id/report_edit_text"
-            android:layout_alignStart="@+id/report_fault" />
+            android:layout_alignStart="@+id/report_fault"
+            android:textColor="@color/navy" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/report_add_part"
             android:layout_alignBottom="@+id/sparesHeader"
+            android:tint="@color/green"
             android:layout_marginTop="16dp"
             android:onClick="addJobPart"
             android:layout_alignParentRight="true"
@@ -177,7 +183,8 @@
             android:layout_alignBottom="@+id/sparesHeader"
             android:layout_toLeftOf="@+id/report_add_part"
             android:layout_marginRight="12dp"
-            android:onClick="scanBarcode" />
+            android:onClick="scanBarcode"
+            android:tint="@color/navy" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -188,7 +195,8 @@
             android:layout_alignBottom="@+id/sparesHeader"
             android:src="@drawable/ic_done_black_36dp"
             android:nestedScrollingEnabled="false"
-            android:onClick="saveJobPart" />
+            android:onClick="saveJobPart"
+            android:tint="@color/green" />
 
         <Spinner
             android:layout_width="wrap_content"
@@ -229,6 +237,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/report_edit_report"
             android:src="@drawable/ic_create_black_36dp"
+            android:tint="@color/green"
             android:onClick="editReport"
             android:layout_alignBottom="@+id/report_observations"
             android:layout_alignEnd="@+id/reportText" />
@@ -241,7 +250,8 @@
             android:layout_alignEnd="@+id/reportText"
             android:onClick="saveReport"
             android:visibility="invisible"
-            android:src="@drawable/ic_done_black_36dp" />
+            android:src="@drawable/ic_done_black_36dp"
+            android:tint="@color/navy" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -251,7 +261,8 @@
             android:layout_marginRight="12dp"
             android:onClick="recordReport"
             android:layout_alignTop="@+id/report_edit_report"
-            android:layout_toStartOf="@+id/report_edit_report" />
+            android:layout_toStartOf="@+id/report_edit_report"
+            android:tint="@color/navy" />
 
 
 

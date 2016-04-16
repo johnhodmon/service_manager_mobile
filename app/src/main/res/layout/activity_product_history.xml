@@ -17,7 +17,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="#14cd8d"
+        android:background="@color/navy"
         android:layout_width="match_parent"
         android:id="@+id/layout1"
         android:paddingTop="16dp"

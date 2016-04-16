@@ -10,7 +10,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/green"
+        android:background="@color/navy"
         android:layout_width="match_parent"
         android:id="@+id/layout100"
         android:paddingTop="16dp"
@@ -38,7 +38,8 @@
             android:onClick="captureVideo"
             android:src="@drawable/ic_video_call_black_36dp"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:tint="@color/white" />
     </RelativeLayout>
 
 

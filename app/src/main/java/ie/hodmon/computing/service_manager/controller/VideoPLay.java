@@ -1,9 +1,12 @@
 package ie.hodmon.computing.service_manager.controller;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -16,10 +19,16 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
+import java.io.IOException;
+
 import ie.hodmon.computing.service_manager.R;
+import ie.hodmon.computing.service_manager.connection.ConnectionAPI;
 import ie.hodmon.computing.service_manager.controller.ClassForCommonAttributes;
+import ie.hodmon.computing.service_manager.model.SessionWrapper;
+import ie.hodmon.computing.service_manager.push_notifications.RegistrationIntentService;
 
 public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, MediaController.MediaPlayerControl {
     private MediaPlayer mediaPlayer;
@@ -28,7 +37,6 @@ public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder
     private String address;
     private MediaController mc;
     private Handler handler = new Handler();
-
 
 
     @Override
@@ -40,15 +48,13 @@ public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder
         vidHolder.addCallback(this);
         mc = new MediaController(this);
         Intent intent = getIntent();
-        String url=intent.getStringExtra("url");
-        address="http://192.168.1.102"+url;
-        Log.v("VIDEO", "ADDRESS: "+address);
-
-
-
+        String url = intent.getStringExtra("url");
+        address = "http://192.168.1.102" + url;
+        Log.v("VIDEO", "ADDRESS: " + address);
 
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -66,17 +72,15 @@ public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder
     }
 
     @Override
-    public void surfaceCreated(SurfaceHolder holder)
-    {
+    public void surfaceCreated(SurfaceHolder holder) {
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDisplay(vidHolder);
-            mediaPlayer.setDataSource(address);
-            mediaPlayer.prepareAsync();
+
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        }
-        catch(Exception e){
+            new Play(this).execute();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -92,8 +96,7 @@ public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder
     }
 
     @Override
-    public void onPrepared(MediaPlayer mp)
-    {
+    public void onPrepared(MediaPlayer mp) {
 
         mc.setMediaPlayer(this);
         mc.setAnchorView(vidSurface);
@@ -148,5 +151,48 @@ public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder
         return 0;
     }
 
+    private class Play extends AsyncTask<Void, Void, Void> {
+
+        protected ProgressDialog dialog;
+        protected Context context;
+
+        public Play(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            this.dialog = new ProgressDialog(context, 1);
+            this.dialog.setMessage("Loading Video");
+            this.dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+
+            try {
+                mediaPlayer.setDataSource(address);
+                mediaPlayer.prepare();
+            } catch (IOException e) {
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+
+
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
+
+        }
+
+
+    }
 
 }
