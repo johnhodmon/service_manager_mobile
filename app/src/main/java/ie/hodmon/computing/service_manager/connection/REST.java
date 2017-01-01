@@ -34,7 +34,7 @@ public class REST
 
 
 
-    private static final String localURL = "http://192.168.1.102";
+    private static final String localURL = "http://192.168.8.100";
     private static final String cloudURL = "https://whispering-gorge-59927.herokuapp.com";
 
 
@@ -258,7 +258,7 @@ public class REST
     public static void uploadVideo(Video v)
     {
         try {
-            MultipartUtility mp = new MultipartUtility("http://192.168.1.102/videos", "UTF-8");
+            MultipartUtility mp = new MultipartUtility("http://192.168.8.100/videos", "UTF-8");
             mp.addFormField("job_id", ""+v.getJob_id());
             File videoFile=new File(v.getLocalUri().getPath());
             mp.addFilePart("video_attachment",videoFile);

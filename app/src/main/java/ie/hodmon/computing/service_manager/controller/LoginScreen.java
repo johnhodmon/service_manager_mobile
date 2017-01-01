@@ -58,6 +58,7 @@ public class LoginScreen extends ClassForCommonAttributes {
                         PreferenceManager.getDefaultSharedPreferences(context);
                 boolean sentToken = sharedPreferences
                         .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                Log.v("GCM","Sent token?"+sentToken);
 
             }
         };
@@ -98,6 +99,7 @@ public class LoginScreen extends ClassForCommonAttributes {
         if(connectedToInternet(this)) {
 
             new Login(this).execute("/login", sw);
+
         }
 
         else

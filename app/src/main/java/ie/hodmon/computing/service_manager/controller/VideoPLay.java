@@ -49,7 +49,7 @@ public class VideoPLay extends ClassForCommonAttributes implements SurfaceHolder
         mc = new MediaController(this);
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
-        address = "http://192.168.1.102" + url;
+        address = "http://192.168.8.100" + url;
         Log.v("VIDEO", "ADDRESS: " + address);
 
 
